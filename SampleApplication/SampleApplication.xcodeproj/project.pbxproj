@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,13 +14,12 @@
 		16C44C5A2C52872D00CE0CCE /* EnvironmentVars.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C592C52872D00CE0CCE /* EnvironmentVars.stencil */; };
 		16C44C722C57B95500CE0CCE /* env.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C702C57B95500CE0CCE /* env.xcconfig */; };
 		16C44C732C57B95500CE0CCE /* EnvironmentVars.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C712C57B95500CE0CCE /* EnvironmentVars.generated.swift */; };
-		16DB68C82D3AAD010059A680 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16DB68C72D3AAD010059A680 /* CheckoutComponents */; };
-		16DB68CB2D3AAD460059A680 /* CheckoutNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 16DB68CA2D3AAD460059A680 /* CheckoutNetwork */; };
 		16EFA2392C650D3A00157450 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFA2382C650D3A00157450 /* MainViewModel.swift */; };
 		16EFA23B2C650E1B00157450 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFA23A2C650E1B00157450 /* Constants.swift */; };
 		16FB25692C582DB40059348E /* PaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB25672C582DB40059348E /* PaymentSessionRequest.swift */; };
 		16FC05472C40170F00D75022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16FC05462C40170F00D75022 /* Assets.xcassets */; };
 		16FC054A2C40170F00D75022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16FC05492C40170F00D75022 /* Preview Assets.xcassets */; };
+		16FC056E2C4017A000D75022 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16FC056D2C4017A000D75022 /* CheckoutComponents */; };
 		951299022CBD788F00DC1715 /* PaymentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951299012CBD788F00DC1715 /* PaymentResultView.swift */; };
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
@@ -37,6 +36,7 @@
 		16EFA2382C650D3A00157450 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		16EFA23A2C650E1B00157450 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		16FB25672C582DB40059348E /* PaymentSessionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSessionRequest.swift; sourceTree = "<group>"; };
+		16FB25712C5A46720059348E /* checkout-ios-components */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "checkout-ios-components"; path = ..; sourceTree = "<group>"; };
 		16FC053F2C40170E00D75022 /* SampleApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16FC05422C40170E00D75022 /* SampleApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleApplication.swift; sourceTree = "<group>"; };
 		16FC05462C40170F00D75022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,8 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16DB68C82D3AAD010059A680 /* CheckoutComponents in Frameworks */,
-				16DB68CB2D3AAD460059A680 /* CheckoutNetwork in Frameworks */,
+				16FC056E2C4017A000D75022 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,18 +86,11 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		16DB68C62D3AAD010059A680 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		16FC05362C40170E00D75022 = {
 			isa = PBXGroup;
 			children = (
+				16FB25712C5A46720059348E /* checkout-ios-components */,
 				16FC05412C40170E00D75022 /* SampleApplication */,
-				16DB68C62D3AAD010059A680 /* Frameworks */,
 				16FC05402C40170E00D75022 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -187,8 +179,7 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				16DB68C72D3AAD010059A680 /* CheckoutComponents */,
-				16DB68CA2D3AAD460059A680 /* CheckoutNetwork */,
+				16FC056D2C4017A000D75022 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -220,8 +211,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
-				16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */,
+				16FC056C2C4017A000D75022 /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -490,34 +480,22 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../checkout-ios-components";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
-		16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */ = {
+		16FC056C2C4017A000D75022 /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/NetworkClient-iOS.git";
+			repositoryURL = "https://github.com/cko-mobile/checkout-ios-components.git";
 			requirement = {
-				branch = main;
+				branch = "feature/PIMOB-2650_cardholder_name_component_v1";
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		16DB68C72D3AAD010059A680 /* CheckoutComponents */ = {
+		16FC056D2C4017A000D75022 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */;
+			package = 16FC056C2C4017A000D75022 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
 			productName = CheckoutComponents;
-		};
-		16DB68CA2D3AAD460059A680 /* CheckoutNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */;
-			productName = CheckoutNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
