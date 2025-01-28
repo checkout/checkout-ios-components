@@ -37,5 +37,8 @@ playground.xcworkspace
 Package.resolved
 
 ## Files
-SampleApplication/SampleApplication/Configuration/env.xcconfig
-EnvironmentVars.generated.swift
+# Ignore all env.xcconfig files in any directory
+**/env.xcconfig
+
+# Ignore all EnvironmentVars.generated.swift files in any directory
+**/EnvironmentVars.generated.swift

@@ -14,43 +14,47 @@
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		BvnZBC3vxhEPNkex2jpwciKwtTE=
+		1/6NddI+9U35gPAyA7XyiVNOwbo=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		NWyk5x0mWYAqm+qBwNZudxCMJI8=
+		Q8W7HJbTJjcWrYutnCfkoVLEMN4=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		1MbOAbrsfP/AstP0d9/vfiAQio0=
+		EkkXmb0t36bDK+xs9r0BMAHFHKM=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		NWyk5x0mWYAqm+qBwNZudxCMJI8=
+		Q8W7HJbTJjcWrYutnCfkoVLEMN4=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		T4soMN1Ey2sDqnA+3uJmbbZshPg=
+		GI2LAREudbvD1ykTqK2SSgZsZ7c=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		BvnZBC3vxhEPNkex2jpwciKwtTE=
+		1/6NddI+9U35gPAyA7XyiVNOwbo=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		SWJfi5ds4RWtJyO8YWJ3bcHbveM=
+		4i0hYV8HBYeuzvhQ3t+27fHYdec=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		nEPSz/zDlAH1HofOzOze3t6/WpQ=
+		M6xdiSIamwpFDz6foUkmFntxFuE=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		SWJfi5ds4RWtJyO8YWJ3bcHbveM=
+		4i0hYV8HBYeuzvhQ3t+27fHYdec=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		R4lLyLoPVH7EgbUf0/cAacQWu6I=
+		wPMLHvtd+PNcKZtCC2rtN0qK0kQ=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		QsVujufU0BqTzQckjZYi4Qackec=
 		</data>
 		<key>ar.lproj/Localizable.strings</key>
 		<dict>
@@ -273,70 +277,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TbD8vSp6WeN2fUoQBXlpwX/nEUZ7xQTJYMRKgUuvyK4=
+			lmEqqvjaZVMLGBMVAPQ9v0j1HeMDdBHOt9Uvv2YE2gE=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xu9EdDiNusIpAbLfU2MQA5fxuS1IajPmmjisLik5Bg0=
+			6vq6hQH0zIe9O4vXXn4MGAW4/UN2UHRrlb73TYrDFaM=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WS5eNISRfpQq2NIKiDvSnr4kxmuSPJYD0uZMC1Q1rVE=
+			U4+7qL8fLbIdtn5GihWIGKbl1LiXquPieHwgbQYrE1o=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xu9EdDiNusIpAbLfU2MQA5fxuS1IajPmmjisLik5Bg0=
+			6vq6hQH0zIe9O4vXXn4MGAW4/UN2UHRrlb73TYrDFaM=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6TE5eNNCI6GGyckscFYOlkUFd0gq3CneRzQ4ZASoK+E=
+			ANpN0jku79e48ymoRJHkdkp1rGaytt56v0/5xt6krXQ=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TbD8vSp6WeN2fUoQBXlpwX/nEUZ7xQTJYMRKgUuvyK4=
+			lmEqqvjaZVMLGBMVAPQ9v0j1HeMDdBHOt9Uvv2YE2gE=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			N08q6ZpWKT6coSeOEA1/fJK2uKRBsXNx2OxqhADodVw=
+			Bw9IxBssMktuC2zJoKEyq0RtTqUZOCyj9gzVOFy74yA=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			aOV0OOXG7+wdD/PuUon+FZ3nhCkkpkF/aAfZeb2xIjw=
+			GUyfmTDr5WueZHTxGgYp+mhkpe+HRlraE/UEgEpOTKw=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			N08q6ZpWKT6coSeOEA1/fJK2uKRBsXNx2OxqhADodVw=
+			Bw9IxBssMktuC2zJoKEyq0RtTqUZOCyj9gzVOFy74yA=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dmi+U+ybLbHO1cKE7uFyXRy5MuhqP9i2iwiulXfC73E=
+			v8xMXvFUs9Cl1SuHww/7DnZhk1UJ8TdNNpsGd1+X+cc=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			V9fsX9qESw8IikRyFerFAHNQxG2CWGRXx9mfGr2bdjQ=
 			</data>
 		</dict>
 		<key>ar.lproj/Localizable.strings</key>

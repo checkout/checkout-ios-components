@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
+		16565B7D2D490B5400F6F413 /* CheckoutNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 16565B7C2D490B5400F6F413 /* CheckoutNetwork */; };
+		1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
 		16C44C542C5284BF00CE0CCE /* env-example.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C532C5284BF00CE0CCE /* env-example.xcconfig */; };
 		16C44C5A2C52872D00CE0CCE /* EnvironmentVars.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C592C52872D00CE0CCE /* EnvironmentVars.stencil */; };
 		16C44C722C57B95500CE0CCE /* env.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C702C57B95500CE0CCE /* env.xcconfig */; };
 		16C44C732C57B95500CE0CCE /* EnvironmentVars.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C712C57B95500CE0CCE /* EnvironmentVars.generated.swift */; };
-		16DB68C82D3AAD010059A680 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16DB68C72D3AAD010059A680 /* CheckoutComponents */; };
-		16DB68CB2D3AAD460059A680 /* CheckoutNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 16DB68CA2D3AAD460059A680 /* CheckoutNetwork */; };
 		16EFA2392C650D3A00157450 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFA2382C650D3A00157450 /* MainViewModel.swift */; };
 		16EFA23B2C650E1B00157450 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFA23A2C650E1B00157450 /* Constants.swift */; };
 		16FB25692C582DB40059348E /* PaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB25672C582DB40059348E /* PaymentSessionRequest.swift */; };
@@ -51,8 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16DB68C82D3AAD010059A680 /* CheckoutComponents in Frameworks */,
-				16DB68CB2D3AAD460059A680 /* CheckoutNetwork in Frameworks */,
+				1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */,
+				16565B7D2D490B5400F6F413 /* CheckoutNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,18 +87,10 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		16DB68C62D3AAD010059A680 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		16FC05362C40170E00D75022 = {
 			isa = PBXGroup;
 			children = (
 				16FC05412C40170E00D75022 /* SampleApplication */,
-				16DB68C62D3AAD010059A680 /* Frameworks */,
 				16FC05402C40170E00D75022 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -187,8 +179,8 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				16DB68C72D3AAD010059A680 /* CheckoutComponents */,
-				16DB68CA2D3AAD460059A680 /* CheckoutNetwork */,
+				1695611B2D440E3E00030923 /* CheckoutComponents */,
+				16565B7C2D490B5400F6F413 /* CheckoutNetwork */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -220,8 +212,8 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
-				16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */,
+				1695611A2D440E3E00030923 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -491,16 +483,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		1695611A2D440E3E00030923 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */ = {
+		16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/NetworkClient-iOS.git";
+			repositoryURL = "https://github.com/checkout/NetworkClient-iOS";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -509,15 +501,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		16DB68C72D3AAD010059A680 /* CheckoutComponents */ = {
+		16565B7C2D490B5400F6F413 /* CheckoutNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 16C8FEE12D3AA85800AADDAC /* XCLocalSwiftPackageReference "../../checkout-ios-components" */;
-			productName = CheckoutComponents;
-		};
-		16DB68CA2D3AAD460059A680 /* CheckoutNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16DB68C92D3AAD460059A680 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */;
+			package = 16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */;
 			productName = CheckoutNetwork;
+		};
+		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
