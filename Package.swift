@@ -17,12 +17,6 @@ let package = Package(
       ]
     ),
   ],
-  dependencies: [
-    .package(
-      url: "https://github.com/checkout/NetworkClient-iOS.git",
-      branch: "main"
-    ),
-  ],
   targets: [
     .binaryTarget(
       name: "CheckoutComponentsSDK",
