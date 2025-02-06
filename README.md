@@ -11,7 +11,6 @@
 - [Integration](#integration)
   - [Swift Package Manager](#swift-package-manager)
 - [Setting Up the Sample App](#setting-up-the-sample-app)
-- [Dependencies](#dependencies)
 - [Changelog](#changelog)
 
 ## Minimum Requirements
@@ -70,17 +69,6 @@ If you've never used it before, get started with Apple's step by step guide into
 
 >**⚠️ Important** <br>
 > The secret key is embedded in the Sample Application **only** for demonstration purposes. Never include a secret key in your production application. Instead, always use your backend API to generate a payment session securely.
-
-## Dependencies
-
-Ensure the Sample Application includes the `NetworkClient` package dependency: 
-
-- Repository:  <kbd>[NetworkClient-iOS](https://github.com/checkout/NetworkClient-iOS) ↗️</kbd> 
-- Branch: `main`
-  - Add `NetworkClient-iOS` to the application target using `main` branch. 
-  - Change `CheckoutNetworkFakeClient` target to `None`
-
-      <img width=50% src="./.github/media/network-client-1.png">
 
 ## Changelog
 

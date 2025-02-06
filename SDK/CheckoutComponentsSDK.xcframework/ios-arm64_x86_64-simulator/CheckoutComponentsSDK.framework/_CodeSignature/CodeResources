@@ -14,43 +14,43 @@
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		NUNN0ijEfaC4P6TNVC1milRoHzs=
+		Te8D9qi9a+VrFwQ3MYGvgqpxNjg=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		M+LWWWl476yG2s8VcUorHayTFLw=
+		B9QOZQZ9s4Kzu3OkHJAgVMHeHPE=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		EkkXmb0t36bDK+xs9r0BMAHFHKM=
+		658Yej3BHToiVHwtSJRNgJhSdKQ=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		M+LWWWl476yG2s8VcUorHayTFLw=
+		B9QOZQZ9s4Kzu3OkHJAgVMHeHPE=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		GRQYgTF84vzuLtRZEajb0pynUvs=
+		e/QjNB/+/jSAqXjbZGAxrwNQzKA=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		NUNN0ijEfaC4P6TNVC1milRoHzs=
+		Te8D9qi9a+VrFwQ3MYGvgqpxNjg=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		aGAt4r9/6Rff7giqQLKaI5ZS9oY=
+		0vpbQz67wguubTnpYvfJwosGcqI=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		M6xdiSIamwpFDz6foUkmFntxFuE=
+		aWqiWgG9bovoMsnuh+BeWvMUXcE=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		aGAt4r9/6Rff7giqQLKaI5ZS9oY=
+		0vpbQz67wguubTnpYvfJwosGcqI=
 		</data>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Eaqx3pRGtmrgxyPVUWxtnQthIRc=
+		Qfzc/meKXCwApxxoUxDZXg44Dgk=
 		</data>
 		<key>PrivacyInfo.xcprivacy</key>
 		<data>
@@ -83,7 +83,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>el-GR.lproj/Localizable.strings</key>
+		<key>el.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -236,7 +236,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hans.lproj/Localizable.strings</key>
+		<key>zh-CN.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -245,7 +245,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hant-HK.lproj/Localizable.strings</key>
+		<key>zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -254,7 +254,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hant.lproj/Localizable.strings</key>
+		<key>zh-TW.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -277,70 +277,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			wqC/ADJqDs+aRzEXJmX9r/cP78gjWnj3N0B7pTmIYgE=
+			6Cz7RHEiI4ZqmRr4YAzu4mxLYx6+FniiDCAjMY0K43g=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1spfoJ6tMrQbuX6YSWS1OVEUuKnZdwksOZscPVd3iqQ=
+			A+BQ0DxbcFeTQU6ERpsdvvL4oLRpGRxn6gvNAJTEBaU=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			U4+7qL8fLbIdtn5GihWIGKbl1LiXquPieHwgbQYrE1o=
+			z931J9XqK1X8tsx+WI48DeZIzpKwndOzmJoj6/ybJuU=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1spfoJ6tMrQbuX6YSWS1OVEUuKnZdwksOZscPVd3iqQ=
+			A+BQ0DxbcFeTQU6ERpsdvvL4oLRpGRxn6gvNAJTEBaU=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9+liub1m9s+zsZky4VK5xi8c1b9t3qJspoayFq1pMD0=
+			h6ZZZwvaExukTtiihCC8Br2FmihjvU/cuxa14fSZDmY=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wqC/ADJqDs+aRzEXJmX9r/cP78gjWnj3N0B7pTmIYgE=
+			6Cz7RHEiI4ZqmRr4YAzu4mxLYx6+FniiDCAjMY0K43g=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0/x9qur4M6dZXBg4XcujbtRAFmb6FBwzvd4x+WxagPU=
+			Xb+Z5nWqHCh5tVzRkJTDR0Ghiz8djni5Ji/PX5QL2n0=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GUyfmTDr5WueZHTxGgYp+mhkpe+HRlraE/UEgEpOTKw=
+			xhzFdxiUu122m6EmR0c5J7IGhuXsmsVB3XE9QT15jjs=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0/x9qur4M6dZXBg4XcujbtRAFmb6FBwzvd4x+WxagPU=
+			Xb+Z5nWqHCh5tVzRkJTDR0Ghiz8djni5Ji/PX5QL2n0=
 			</data>
 		</dict>
 		<key>Modules/CheckoutComponentsSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6W3qdYW3xlxFNCpjOfoSNtj8uI1laohx8lYCr66q0uo=
+			sHjCYffBdTuKBs38YSTvUgdB1rkFPaeueq4isP0/PSE=
 			</data>
 		</dict>
 		<key>PrivacyInfo.xcprivacy</key>
@@ -377,7 +377,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>el-GR.lproj/Localizable.strings</key>
+		<key>el.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -530,7 +530,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hans.lproj/Localizable.strings</key>
+		<key>zh-CN.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -539,7 +539,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hant-HK.lproj/Localizable.strings</key>
+		<key>zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -548,7 +548,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>zh-Hant.lproj/Localizable.strings</key>
+		<key>zh-TW.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>

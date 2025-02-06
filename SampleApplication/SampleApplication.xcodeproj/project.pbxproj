@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
-		16565B7D2D490B5400F6F413 /* CheckoutNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 16565B7C2D490B5400F6F413 /* CheckoutNetwork */; };
 		1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
@@ -23,6 +22,8 @@
 		16FC054A2C40170F00D75022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16FC05492C40170F00D75022 /* Preview Assets.xcassets */; };
 		951299022CBD788F00DC1715 /* PaymentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951299012CBD788F00DC1715 /* PaymentResultView.swift */; };
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
+		951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
+		951AE33B2D527A7400519900 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +52,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */,
 				1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */,
-				16565B7D2D490B5400F6F413 /* CheckoutNetwork in Frameworks */,
+				951AE33B2D527A7400519900 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +182,8 @@
 			name = SampleApplication;
 			packageProductDependencies = (
 				1695611B2D440E3E00030923 /* CheckoutComponents */,
-				16565B7C2D490B5400F6F413 /* CheckoutNetwork */,
+				951AE3372D5243E800519900 /* CheckoutComponents */,
+				951AE33A2D527A7400519900 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -212,8 +215,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				1695611A2D440E3E00030923 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
-				16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */,
+				951AE3392D527A7400519900 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -483,30 +485,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		1695611A2D440E3E00030923 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		951AE3392D527A7400519900 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/NetworkClient-iOS";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		16565B7C2D490B5400F6F413 /* CheckoutNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16565B7B2D490B5400F6F413 /* XCRemoteSwiftPackageReference "NetworkClient-iOS" */;
-			productName = CheckoutNetwork;
-		};
 		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		951AE3372D5243E800519900 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
