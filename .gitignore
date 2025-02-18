@@ -42,3 +42,6 @@ Package.resolved
 
 # Ignore all EnvironmentVars.generated.swift files in any directory
 **/EnvironmentVars.generated.swift
+
+## macOS
+.DS_Store
