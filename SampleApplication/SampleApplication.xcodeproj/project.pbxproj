@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
-		1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
 		16C44C542C5284BF00CE0CCE /* env-example.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C532C5284BF00CE0CCE /* env-example.xcconfig */; };
@@ -23,7 +22,6 @@
 		951299022CBD788F00DC1715 /* PaymentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951299012CBD788F00DC1715 /* PaymentResultView.swift */; };
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
 		951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
-		951AE33B2D527A7400519900 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,8 +51,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */,
-				1695611C2D440E3E00030923 /* CheckoutComponents in Frameworks */,
-				951AE33B2D527A7400519900 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,9 +177,7 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				1695611B2D440E3E00030923 /* CheckoutComponents */,
 				951AE3372D5243E800519900 /* CheckoutComponents */,
-				951AE33A2D527A7400519900 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -492,15 +486,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
 		951AE3372D5243E800519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
