@@ -21,6 +21,9 @@ extension MainViewModel {
         debugPrint("handleTap: Payment method: \(paymentMethod.name)")
         return true
       },
+      onTokenized: { tokenDetails in
+        debugPrint("onTokenized: Token: \(tokenDetails.token)")
+      },
       onSuccess: { [weak self] paymentMethod, paymentID in
         guard let self else { return }
         

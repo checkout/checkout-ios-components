@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.0.0-beta-4](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-4)
+
+Released on 13.03.2025
+
+Updates:
+
+- **Card Tokenisation Callback** – New callback is added - `onTokenized()` alongside a new function to trigger it `tokenize()`.
+
 ## [1.0.0-beta-3](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-3)
 
 Released on 11.02.2025

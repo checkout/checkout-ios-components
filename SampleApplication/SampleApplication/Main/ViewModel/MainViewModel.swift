@@ -18,7 +18,9 @@ final class MainViewModel: ObservableObject, Sendable {
   @Published var errorMessage: String = ""
 
   @Published var isDefaultAppearance = true
+  var showPayButton = true
 
+  private var component: CheckoutComponents.Actionable?
   private let networkLayer = NetworkLayer()
 }
 
@@ -27,8 +29,9 @@ extension MainViewModel {
     do {
       let paymentSession = try await createPaymentSession()
       let checkoutComponentsSDK = try await initialiseCheckoutComponentsSDK(with: paymentSession)
-      let componentInstance = try createComponent(with: checkoutComponentsSDK)
-      let renderedComponent = render(component: componentInstance)
+      let component = try createComponent(with: checkoutComponentsSDK)
+      self.component = component
+      let renderedComponent = render(component: component)
 
       checkoutComponentsView = renderedComponent
 
@@ -73,6 +76,7 @@ extension MainViewModel {
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> any CheckoutComponents.Actionable {
     return try checkoutComponentsSDK.create(
       .flow(options: [
+        .card(showPayButton: showPayButton, paymentButtonAction: .payment),
         .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox")
       ])
     )
@@ -80,12 +84,18 @@ extension MainViewModel {
 
   // Step 4: Render the created component to get the view to be shown
   func render(component: any CheckoutComponents.Actionable) -> AnyView? {
-
     // Check if component is available first
+
     if component.isAvailable {
       return component.render()
     } else {
       return nil
     }
+  }
+}
+
+extension MainViewModel {
+  func merchantTokenizationTapped() {
+    component?.tokenize()
   }
 }

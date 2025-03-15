@@ -15,6 +15,15 @@ struct MainView: View {
     Group {
       if let componentsView = viewModel.checkoutComponentsView {
         componentsView
+
+        if !viewModel.showPayButton {
+          Button {
+            viewModel.merchantTokenizationTapped()
+          } label: {
+            Text("Merchant Tokenization")
+          }
+
+        }
       } else {
         initialView()
       }
