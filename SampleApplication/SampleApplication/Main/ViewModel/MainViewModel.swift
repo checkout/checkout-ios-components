@@ -14,7 +14,7 @@ final class MainViewModel: ObservableObject {
 
   @Published var showPaymentResult: Bool = false
   @Published var paymentSucceeded: Bool = true
-  @Published var paymentID: String = ""
+  @Published var paymentResultText: String = ""
   @Published var errorMessage: String = ""
 
   @Published var isDefaultAppearance = true {
@@ -24,7 +24,7 @@ final class MainViewModel: ObservableObject {
   }
   var showPayButton = true
 
-  private var component: CheckoutComponents.Actionable?
+  private var component: Any?
   private let networkLayer = NetworkLayer()
 }
 
@@ -74,7 +74,7 @@ extension MainViewModel {
   }
 
   // Step 3: Create any component available
-  func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> any CheckoutComponents.Actionable {
+  func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
     return try checkoutComponentsSDK.create(
       .flow(options: [
         .card(showPayButton: showPayButton,
@@ -87,8 +87,12 @@ extension MainViewModel {
   }
 
   // Step 4: Render the created component to get the view to be shown
-  func render(component: any CheckoutComponents.Actionable) -> AnyView? {
+  func render(component: Any) -> AnyView? {
     // Check if component is available first
+
+    guard let component = component as? any CheckoutComponents.Renderable else {
+      return nil
+    }
 
     if component.isAvailable {
       return component.render()
@@ -105,7 +109,7 @@ extension MainViewModel {
     typealias Configuration = CheckoutComponents.AddressConfiguration
     
     let prefilledAddress = ContactData(address: .init(country: .unitedKingdom,
-                                                      addressLine1:  "Wenlock Works",
+                                                      addressLine1: "Wenlock Works",
                                                       addressLine2: "Shepherdess Walk",
                                                       city: "London",
                                                       zip: "N1 7BQ"),
@@ -127,11 +131,10 @@ extension MainViewModel {
 
 extension MainViewModel {
   func merchantTokenizationTapped() {
-    guard let component = component as? CheckoutComponents.Tokenizable else {
+    guard let component = component as? any CheckoutComponents.Tokenizable else {
       debugPrint("Component does not conform to Tokenizable. e.g. It might be an Address Component or alike")
       return
     }
-
     component.tokenize()
   }
 }

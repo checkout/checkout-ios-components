@@ -31,7 +31,7 @@ struct MainView: View {
     .sheet(isPresented: $viewModel.showPaymentResult) {
       PaymentResultView(
         isSuccess: viewModel.paymentSucceeded,
-        paymentID: viewModel.paymentID
+        paymentID: viewModel.paymentResultText
       )
     }
   }
