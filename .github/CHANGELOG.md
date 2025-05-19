@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.0.0-beta-7](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-7)
+
+Released on 15.05.2025
+
+Updates:
+
+- **User interaction Callback**  
+  – Added an `onChange` callback to give merchants control over the payment button. This allows them to customize the button's appearance and toggle its enabled state based on validation results by calling `isValid`. For example, merchants can require users to accept terms before enabling the button, depending on interactions with card fields or switching between payment methods. Once all conditions are satisfied, merchants can trigger the payment flow by calling `submit()`.
+- ** Public API changes** 
+  - The `Actionable` changed to a type alias that groups multiple protocols. A component conforming to `Actionable` can be described, rendered, tokenized, and submitted.
+  - The `Describable` represents the component’s name. 
+  - The `Callbacks` now return a component conforming to the `Describable` protocol instead of `Actionable`.
+
 ## [1.0.0-beta-6](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-6)
 
 Released on 15.04.2025
