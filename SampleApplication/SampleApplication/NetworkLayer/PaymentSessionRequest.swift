@@ -9,9 +9,11 @@ struct PaymentSessionRequest: Encodable {
   let successURL: String
   let failureURL: String
   let threeDS: ThreeDS
-
+  let processingChannelID: String?
+  
   enum CodingKeys: String, CodingKey {
     case threeDS = "3ds"
+    case processingChannelID = "processing_channel_id"
     case amount, currency, billing, successURL, failureURL
   }
 }

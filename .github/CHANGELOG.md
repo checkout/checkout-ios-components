@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.0.0-beta-9](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-9)
+
+Released on 24.06.2025
+
+Updates:
+  
+- ** New Implicitly Available Features** 
+  - Supported state selection for the US and Canada, with a dedicated ZIP code field for US users.
+  - Various internal improvements and maintenance updates.
+  - Fixed CVV length validation in the Card component based on the detected card scheme.
+  - Improved handling of edge cases related to card scheme selection.
+
+##
+
 ## [1.0.0-beta-8](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-8)
 
 Released on 02.06.2025

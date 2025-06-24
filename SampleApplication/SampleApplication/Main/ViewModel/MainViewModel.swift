@@ -51,15 +51,16 @@ extension MainViewModel {
 extension MainViewModel {
   // Step 1: Create Payment Session
   func createPaymentSession() async throws -> PaymentSession {
-    let request = PaymentSessionRequest(amount: 1,
-                                        currency: "GBP",
-                                        billing: .init(address: .init(country: "GB")),
-                                        successURL: Constants.successURL,
-                                        failureURL: Constants.failureURL,
-                                        threeDS: .init(enabled: true, attemptN3D: true))
+     let request = PaymentSessionRequest(amount: 1,
+                                         currency: "GBP",
+                                         billing: .init(address: .init(country: "GB")),
+                                         successURL: Constants.successURL,
+                                         failureURL: Constants.failureURL,
+                                         threeDS: .init(enabled: true, attemptN3D: true),
+                                         processingChannelID: nil)
 
-    return try await networkLayer.createPaymentSession(request: request)
-  }
+     return try await networkLayer.createPaymentSession(request: request)
+   }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
@@ -108,7 +109,7 @@ extension MainViewModel {
     typealias Address = CheckoutComponents.Address
     typealias Configuration = CheckoutComponents.AddressConfiguration
     
-    let prefilledAddress = ContactData(address: .init(country: .unitedKingdom,
+    let shippingAddress = ContactData(address: .init(country: .unitedKingdom,
                                                       addressLine1: "Wenlock Works",
                                                       addressLine2: "Shepherdess Walk",
                                                       city: "London",
@@ -119,7 +120,7 @@ extension MainViewModel {
                                                    lastName: "Doe"),
                                        email: "john_doe@checkout.com")
     
-    let addressConfiguration = Configuration.init(data: prefilledAddress,
+    let addressConfiguration = Configuration.init(data: shippingAddress,
                                                   fields: CheckoutComponents.AddressField.billing
                                                           + [.phone(isOptional: false)]) { collectedAddress in
       debugPrint("Collected address: \(collectedAddress)")
