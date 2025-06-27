@@ -30,6 +30,9 @@ extension MainViewModel {
 
       onTokenized: { tokenizationResult in
         debugPrint("onTokenized: Token: \(tokenizationResult.data)")
+        Task { @MainActor in
+          self.generatedToken = tokenizationResult.data.token
+        }
       },
 
       onSuccess: { [weak self] paymentMethod, paymentID in

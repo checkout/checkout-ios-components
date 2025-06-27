@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.0.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0)
+
+Released on 27.06.2025
+
+Updates:
+  
+- ** New Implicitly Available Features** 
+  - Sample application has more settings to custimize flow UI
+  - Flow SDK is now GA 
+
+##
+
 ## [1.0.0-beta-9](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.0-beta-9)
 
 Released on 24.06.2025

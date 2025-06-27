@@ -8,6 +8,11 @@ import CheckoutComponentsSDK
 
 import SwiftUI
 
+enum PaymentMethodType: CaseIterable {
+  case card
+  case applePay
+}
+
 @MainActor
 final class MainViewModel: ObservableObject {
   @Published var checkoutComponentsView: AnyView?
@@ -15,17 +20,28 @@ final class MainViewModel: ObservableObject {
   @Published var showPaymentResult: Bool = false
   @Published var paymentSucceeded: Bool = true
   @Published var paymentResultText: String = ""
+  @Published var generatedToken: String = ""
   @Published var errorMessage: String = ""
+  @Published var showPayButton: Bool = true
+  @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
+  @Published var selectedModuleType: ModuleType = .flow
+  @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
+  @Published var selectedLocale: String = CheckoutComponents.Locale.en_GB.rawValue
+  @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
+  @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
 
   @Published var isDefaultAppearance = true {
     didSet {
       NavigationHelper.navigationBarTitleTextColor(isDefaultAppearance ? .black : .white)
     }
   }
-  var showPayButton = true
-
+  
   private var component: Any?
   private let networkLayer = NetworkLayer()
+  
+  init() {
+    selectedPaymentMethodTypes = [.card, .applePay]
+  }
 }
 
 extension MainViewModel {
@@ -67,8 +83,10 @@ extension MainViewModel {
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
       publicKey: EnvironmentVars.publicKey,
-      environment: .sandbox,
+      environment: selectedEnvironment,
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
+      locale: selectedLocale,
+      translations: getTranslation(),
       callbacks: initialiseCallbacks())
 
     return CheckoutComponents(configuration: configuration)
@@ -76,15 +94,14 @@ extension MainViewModel {
 
   // Step 3: Create any component available
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
-    return try checkoutComponentsSDK.create(
-      .flow(options: [
-        .card(showPayButton: showPayButton,
-              paymentButtonAction: .payment,
-              addressConfiguration: addressConfiguration
-             ),
-        .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox")
-      ])
-    )
+    switch selectedModuleType {
+    case .flow:
+      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods))
+    case .card:
+      return try checkoutComponentsSDK.create(getCardPaymentMethod())
+    case .applePay:
+      return try checkoutComponentsSDK.create(getApplePayPaymentMethod())
+    }
   }
 
   // Step 4: Render the created component to get the view to be shown
@@ -104,29 +121,95 @@ extension MainViewModel {
 }
 
 extension MainViewModel {
-  var addressConfiguration: CheckoutComponents.AddressConfiguration {
-    typealias ContactData = CheckoutComponents.ContactData
-    typealias Address = CheckoutComponents.Address
-    typealias Configuration = CheckoutComponents.AddressConfiguration
-    
-    let shippingAddress = ContactData(address: .init(country: .unitedKingdom,
-                                                      addressLine1: "Wenlock Works",
-                                                      addressLine2: "Shepherdess Walk",
-                                                      city: "London",
-                                                      zip: "N1 7BQ"),
-                                       phone: .init(countryCode: "+$4",
-                                                    number: "1234567890"),
-                                       name: .init(firstName: "John",
-                                                   lastName: "Doe"),
-                                       email: "john_doe@checkout.com")
-    
-    let addressConfiguration = Configuration.init(data: shippingAddress,
-                                                  fields: CheckoutComponents.AddressField.billing
-                                                          + [.phone(isOptional: false)]) { collectedAddress in
-      debugPrint("Collected address: \(collectedAddress)")
+  var isCardSelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.card) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.card)
+      } else {
+        selectedPaymentMethodTypes.remove(.card)
+      }
     }
+  }
+  
+  var isApplePaySelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.applePay) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.applePay)
+      } else {
+        selectedPaymentMethodTypes.remove(.applePay)
+      }
+    }
+  }
+  
+  var selectedPaymentMethodsTitle: String {
+    var selectedMethods: [String] = []
+    
+    if isCardSelected {
+      selectedMethods.append("Card")
+    }
+    
+    if isApplePaySelected {
+      selectedMethods.append("Apple Pay")
+    }
+    
+    if selectedMethods.isEmpty {
+      return "Payment Methods"
+    } else {
+      return selectedMethods.joined(separator: ", ")
+    }
+  }
 
-    return addressConfiguration
+  // Computed property to get actual payment methods with current configuration
+  var selectedPaymentMethods: Set<CheckoutComponents.PaymentMethod> {
+    var methods: Set<CheckoutComponents.PaymentMethod> = []
+    
+    if selectedPaymentMethodTypes.contains(.card) {
+      methods.insert(getCardPaymentMethod())
+    }
+    
+    if selectedPaymentMethodTypes.contains(.applePay) {
+      methods.insert(getApplePayPaymentMethod())
+    }
+    
+    return methods
+  }
+  
+  func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
+    .card(showPayButton: showPayButton,
+          paymentButtonAction: paymentButtonAction,
+          addressConfiguration: selectedAddressConfiguration.addressConfiguration)
+  }
+  
+  func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {
+    .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox")
+  }
+  
+  func resetToDefaultConfiguration() {
+    checkoutComponentsView = nil
+    selectedModuleType = .flow
+    selectedPaymentMethodTypes = [.card, .applePay]
+    showPayButton = true
+    paymentButtonAction = .payment
+    selectedLocale = CheckoutComponents.Locale.en_GB.rawValue
+    selectedEnvironment = .sandbox
+    selectedAddressConfiguration = .prefillCustomized
+    isDefaultAppearance = true
+  }
+  
+  func getLocales() -> [String] {
+    CheckoutComponents.Locale.allCases.map(\.rawValue)
+  }
+  
+  func getTranslation() -> [String: [CheckoutComponents.TranslationKey : String]] {
+    guard selectedLocale == "Customised" else { return [:] }
+    
+    return [selectedLocale: [
+      .card: "😂",
+      .cardHolderName: "🤷🏻‍♂️",
+      .cardNumber: "🔢"
+    ]]
   }
 }
 

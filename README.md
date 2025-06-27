@@ -3,7 +3,6 @@
 
 #  Flow for Mobile iOS SDK
 
-![BETA](https://img.shields.io/badge/status-BETA-yellow)
 ![license](https://img.shields.io/github/license/checkout/checkout-ios-components.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/checkout/checkout-ios-components?label=spm)
 

@@ -6,6 +6,7 @@ import SwiftUI
 struct PaymentResultView: View {
   let isSuccess: Bool
   let paymentID: String
+  let token: String
 
   @Environment(\.presentationMode) var presentationMode
 
@@ -56,6 +57,14 @@ struct PaymentResultView: View {
         .animation(.easeIn(duration: 0.5).delay(0.5), value: animateMessage)
 
       Text("Payment ID: \(paymentID)")
+        .accessibilityIdentifier(AccessibilityIdentifier.PaymentResultView.paymentIDLabel.rawValue)
+        .font(.subheadline)
+        .foregroundColor(.gray)
+        .opacity(animateMessage ? 1 : 0)
+        .animation(.easeIn(duration: 0.5).delay(1.0), value: animateMessage)
+      
+      Text("Generated token: \(token)")
+        .accessibilityIdentifier(AccessibilityIdentifier.PaymentResultView.generatedTokenLabel.rawValue)
         .font(.subheadline)
         .foregroundColor(.gray)
         .opacity(animateMessage ? 1 : 0)
@@ -83,8 +92,8 @@ struct PaymentResultView: View {
 struct PaymentResultView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      PaymentResultView(isSuccess: true, paymentID: "ABC123XYZ")
-      PaymentResultView(isSuccess: false, paymentID: "Error: Payment Declined")
+      PaymentResultView(isSuccess: true, paymentID: "ABC123XYZ", token: "Token")
+      PaymentResultView(isSuccess: false, paymentID: "Error: Payment Declined", token: "Token")
     }
   }
 }
