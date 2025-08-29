@@ -28,6 +28,7 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
+		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView.swift"; sourceTree = "<group>"; };
 		A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComponentConfiguration.swift; sourceTree = "<group>"; };
+		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				16FB25672C582DB40059348E /* PaymentSessionRequest.swift */,
+				A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */,
 				16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */,
 			);
 			path = NetworkLayer;
@@ -278,6 +281,7 @@
 				16FB25692C582DB40059348E /* PaymentSessionRequest.swift in Sources */,
 				A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */,
 				16EFA2392C650D3A00157450 /* MainViewModel.swift in Sources */,
+				A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */,
 				16EFA23B2C650E1B00157450 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
