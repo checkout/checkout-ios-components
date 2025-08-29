@@ -20,9 +20,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  destination: "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest"
+  destination: "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.4"
   configuration: "Debug"
-  versionXcode: "16.0"
+  versionXcode: "16.4"
 
 jobs:
   analyze:
