@@ -17,14 +17,26 @@ enum MainViewState {
 struct MainView: View {
   @StateObject var viewModel = MainViewModel()
   @State private var viewState: MainViewState = .initial
+  
+  private var shouldShowUpdateAmountView: Bool {
+    viewModel.selectedComponentType != .card &&
+    viewModel.isShowUpdateView &&
+    viewState == .component &&
+    viewModel.handleSubmitManually
+  }
 
   var body: some View {
     Group {
+      if shouldShowUpdateAmountView {
+        updateAmountView()
+      }
+      
       initialView()
       
       switch viewState {
       case .initial:
         EmptyView()
+
       case .component:
         makeComponentView()
       case .settings:
@@ -43,20 +55,49 @@ struct MainView: View {
 }
 
 // MARK: Create an initial view to trigger the component creation
-
 extension MainView {
   @ViewBuilder
   func makeComponentView() -> some View {
     if let componentsView = viewModel.checkoutComponentsView {
       componentsView
 
-      if !viewModel.showPayButton {
-        Button {
+      switch viewModel.customButtonOperation {
+
+      case .tokenization:
+        Button("Merchant Tokenization") {
           viewModel.merchantTokenizationTapped()
-        } label: {
-          Text("Merchant Tokenization")
+        }
+        .padding()
+
+      case .submitPayment:
+        switch (viewModel.showCardPayButton, viewModel.showApplePayButton){
+        case (true, true):
+          EmptyView()
+
+        default:
+          Button("Submit") {
+            viewModel.submit()
+          }
+          .padding()
         }
       }
+    }
+  }
+
+  @ViewBuilder
+  func updateAmountView() -> some View {
+    VStack(alignment: .leading) {
+      Divider()
+      Text("Update Apple Pay amount - UI only")
+      HStack {
+        TextField("Amount", text: $viewModel.updatedAmount)
+          .keyboardType(.numberPad)
+        
+        Button("Apply") {
+          viewModel.updatePaymentAmount()
+        }
+      }
+      Divider()
     }
   }
 

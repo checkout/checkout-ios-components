@@ -1,6 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
-// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name CheckoutComponentsSDK
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name CheckoutComponentsSDK
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
 import Combine
 import DeveloperToolsSupport
 import Foundation
@@ -14,6 +15,24 @@ import _PassKit_SwiftUI
 import _StringProcessing
 import _SwiftConcurrencyShims
 extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct Address : Swift.Codable, Swift.Equatable, Swift.Hashable, Swift.Sendable {
+    public let addressLine1: Swift.String?
+    public let addressLine2: Swift.String?
+    public let city: Swift.String?
+    public let state: Swift.String?
+    public let zip: Swift.String?
+    public let country: CheckoutComponentsSDK.CheckoutComponents.Country
+    public init(country: CheckoutComponentsSDK.CheckoutComponents.Country, addressLine1: Swift.String? = nil, addressLine2: Swift.String? = nil, state: Swift.String? = nil, city: Swift.String? = nil, zip: Swift.String? = nil)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Address, b: CheckoutComponentsSDK.CheckoutComponents.Address) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+    public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
   public struct ColorTokens : Swift.Equatable, Swift.Sendable {
     public init(action: SwiftUICore.Color = .brightBlue, background: SwiftUICore.Color = .white, border: SwiftUICore.Color = .softGray, disabled: SwiftUICore.Color = .brightGray, error: SwiftUICore.Color = .deepRed, formBackground: SwiftUICore.Color = .white, formBorder: SwiftUICore.Color = .mediumGray, inverse: SwiftUICore.Color = .white, outline: SwiftUICore.Color = .lightBlue, primary: SwiftUICore.Color = .black, secondary: SwiftUICore.Color = .lightGray, success: SwiftUICore.Color = .checkoutGreen)
     public static func == (a: CheckoutComponentsSDK.CheckoutComponents.ColorTokens, b: CheckoutComponentsSDK.CheckoutComponents.ColorTokens) -> Swift.Bool
@@ -22,7 +41,7 @@ extension CheckoutComponentsSDK.CheckoutComponents {
 extension CheckoutComponentsSDK.CheckoutComponents {
   public enum PaymentMethod : Swift.Equatable, Swift.Hashable, Swift.Sendable {
     case card(showPayButton: Swift.Bool = true, paymentButtonAction: CheckoutComponentsSDK.CheckoutComponents.PaymentButtonAction = .payment, addressConfiguration: CheckoutComponentsSDK.CheckoutComponents.AddressConfiguration? = nil)
-    case applePay(merchantIdentifier: Swift.String)
+    case applePay(merchantIdentifier: Swift.String, showPayButton: Swift.Bool = true)
     public static func == (a: CheckoutComponentsSDK.CheckoutComponents.PaymentMethod, b: CheckoutComponentsSDK.CheckoutComponents.PaymentMethod) -> Swift.Bool
     public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
@@ -31,8 +50,32 @@ extension CheckoutComponentsSDK.CheckoutComponents {
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum SessionlessComponent : Swift.Sendable {
-    case address(configuration: CheckoutComponentsSDK.CheckoutComponents.AddressConfiguration)
+  public typealias PaymentID = Swift.String
+  public typealias SessionData = Swift.String
+  public struct Callbacks : Swift.Sendable {
+    public let onReady: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)?
+    public let handleTap: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) async -> Swift.Bool)?
+    public let onChange: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Submittable) -> Swift.Void)?
+    public let onCardBinChanged: (@Sendable (CheckoutComponentsSDK.CardMetadata) -> CheckoutComponentsSDK.CheckoutComponents.CallbackResult)?
+    public let onSubmit: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)?
+    public let onTokenized: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> CheckoutComponentsSDK.CheckoutComponents.CallbackResult)?
+    public let handleSubmit: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.SessionData) async -> CheckoutComponentsSDK.CheckoutComponents.APICallResult)?
+    public let onSuccess: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable, CheckoutComponentsSDK.CheckoutComponents.PaymentID) -> Swift.Void)?
+    public let onError: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Void)?
+    public init(onReady: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)? = nil, handleTap: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) async -> Swift.Bool)? = nil, onChange: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Submittable) -> Swift.Void)? = nil, onCardBinChanged: (@Sendable (CheckoutComponentsSDK.CardMetadata) -> CheckoutComponentsSDK.CheckoutComponents.CallbackResult)? = nil, onSubmit: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)? = nil, onTokenized: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> CheckoutComponentsSDK.CheckoutComponents.CallbackResult)? = nil, handleSubmit: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.SessionData) async -> CheckoutComponentsSDK.CheckoutComponents.APICallResult)? = nil, onSuccess: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable, CheckoutComponentsSDK.CheckoutComponents.PaymentID) -> Swift.Void)? = nil, onError: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Void)? = nil)
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum APICallResult : Swift.Sendable, Swift.Equatable {
+    case success(CheckoutComponentsSDK.CheckoutComponents.PaymentSessionSubmissionResult)
+    case failure
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.APICallResult, b: CheckoutComponentsSDK.CheckoutComponents.APICallResult) -> Swift.Bool
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct Font : Swift.Equatable, Swift.Sendable {
+    public init(font: SwiftUICore.Font, lineHeight: CoreFoundation.CGFloat, letterSpacing: CoreFoundation.CGFloat)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Font, b: CheckoutComponentsSDK.CheckoutComponents.Font) -> Swift.Bool
   }
 }
 public enum DeclineReason : Swift.String, Swift.Codable, Swift.Sendable {
@@ -48,15 +91,45 @@ public enum DeclineReason : Swift.String, Swift.Codable, Swift.Sendable {
     get
   }
 }
-extension SwiftUICore.Color {
-  public init(hex: Swift.String, alpha: Swift.Double = 1.0)
+public enum CommonUIConstants : Swift.Sendable {
+  public static let cornerRadius: CoreFoundation.CGFloat
+  public static let formCornerRadius: CoreFoundation.CGFloat
 }
-
-
+public struct CardMetadata : Swift.Codable, Swift.Equatable, Swift.Sendable {
+  public let bin: Swift.String
+  public let scheme: Swift.String
+  public let localSchemes: [Swift.String]?
+  public let cardType: Swift.String?
+  public let cardCategory: Swift.String?
+  public let currency: Swift.String?
+  public let issuer: Swift.String?
+  public let issuerCountry: Swift.String?
+  public let issuerCountryName: Swift.String?
+  public let productId: Swift.String?
+  public let productType: Swift.String?
+  public let subProductId: Swift.String?
+  public let regulatedIndicator: Swift.Bool?
+  public let regulatedType: Swift.String?
+  public static func == (a: CheckoutComponentsSDK.CardMetadata, b: CheckoutComponentsSDK.CardMetadata) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct BorderRadius : Swift.Equatable, Swift.Sendable {
-    public init(radius: CoreFoundation.CGFloat, corners: UIKit.UIRectCorner = .allCorners)
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.BorderRadius, b: CheckoutComponentsSDK.CheckoutComponents.BorderRadius) -> Swift.Bool
+  public struct Error : Foundation.LocalizedError, Swift.Equatable, Swift.Sendable {
+    public let type: CheckoutComponentsSDK.CheckoutComponents.ErrorType
+    public let errorCode: CheckoutComponentsSDK.CheckoutComponents.ErrorCode
+    public let details: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails
+    public enum ComponentType : Swift.String, Swift.Sendable {
+      case card
+      case applePay
+      case flow
+      public init?(rawValue: Swift.String)
+      public typealias RawValue = Swift.String
+      public var rawValue: Swift.String {
+        get
+      }
+    }
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Error, b: CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Bool
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents.Font {
@@ -65,18 +138,117 @@ extension CheckoutComponentsSDK.CheckoutComponents.Font {
     public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Font.Style, b: CheckoutComponentsSDK.CheckoutComponents.Font.Style) -> Swift.Bool
   }
 }
-public struct CheckoutComponents : Swift.Sendable {
-  public typealias Actionable = CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
-  public init(configuration: CheckoutComponentsSDK.CheckoutComponents.Configuration)
-  #if compiler(>=5.3) && $TypedThrows
-  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.PaymentMethod) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
-  #endif
-  #if compiler(>=5.3) && $TypedThrows
-  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.Component) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
-  #endif
-  #if compiler(>=5.3) && $TypedThrows
-  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.SessionlessComponent) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable
-  #endif
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum ErrorType : Swift.String, Swift.Equatable, Swift.Sendable {
+    case integration
+    case request
+    case paymentMethod
+    case submit
+    case validation
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public protocol Submittable : Swift.Sendable {
+    var isValid: Swift.Bool { get }
+    func submit()
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct PaymentSessionSubmissionResult : Swift.Codable, Swift.Equatable, Swift.Sendable {
+    public init(id: Swift.String, status: Swift.String, declineReason: CheckoutComponentsSDK.DeclineReason? = nil, type: Swift.String, action: CheckoutComponentsSDK.CheckoutComponents.Action? = nil)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.PaymentSessionSubmissionResult, b: CheckoutComponentsSDK.CheckoutComponents.PaymentSessionSubmissionResult) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct Action : Swift.Codable, Swift.Equatable, Swift.Sendable {
+    public init(type: Swift.String, url: Swift.String)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Action, b: CheckoutComponentsSDK.CheckoutComponents.Action) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct Phone : Swift.Codable, Swift.Equatable, Swift.Hashable, Swift.Sendable {
+    public let number: Swift.String
+    public let countryCode: Swift.String
+    public init(countryCode: Swift.String, number: Swift.String)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Phone, b: CheckoutComponentsSDK.CheckoutComponents.Phone) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+    public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct DesignTokens : Swift.Equatable, Swift.Sendable {
+    public typealias Fonts = CheckoutComponentsSDK.CheckoutComponents.Font.Style
+    public init(colorTokensMain: CheckoutComponentsSDK.CheckoutComponents.ColorTokens = .init(), fonts: CheckoutComponentsSDK.CheckoutComponents.DesignTokens.Fonts = .init(), borderButtonRadius: CheckoutComponentsSDK.CheckoutComponents.BorderRadius = .init(radius: CommonUIConstants.cornerRadius), borderFormRadius: CheckoutComponentsSDK.CheckoutComponents.BorderRadius = .init(radius: CommonUIConstants.formCornerRadius))
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.DesignTokens, b: CheckoutComponentsSDK.CheckoutComponents.DesignTokens) -> Swift.Bool
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  @_Concurrency.MainActor public func update(with updateDetails: CheckoutComponentsSDK.CheckoutComponents.UpdateDetails) throws(CheckoutComponentsSDK.CheckoutComponents.Error)
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum Locale : Swift.String, Swift.Sendable, Swift.CaseIterable {
+    case ar
+    case da_DK
+    case de_DE
+    case el
+    case en_GB
+    case es_ES
+    case fi_FI
+    case fil_PH
+    case fr_FR
+    case hi_IN
+    case id_ID
+    case it_IT
+    case ja_JP
+    case ms_MY
+    case nb_NO
+    case nl_NL
+    case pt_PT
+    case sv_SE
+    case th_TH
+    case vi_VN
+    case zh_CN
+    case zh_HK
+    case zh_TW
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [CheckoutComponentsSDK.CheckoutComponents.Locale]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [CheckoutComponentsSDK.CheckoutComponents.Locale] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+final public class PaymentSession : Swift.Decodable, Swift.Sendable {
+  final public let id: Swift.String
+  public init(id: Swift.String, paymentSessionSecret: Swift.String)
+  @objc deinit
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum Environment : Swift.Sendable {
+    case sandbox, production
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Environment, b: CheckoutComponentsSDK.CheckoutComponents.Environment) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
   public struct AddressConfiguration : Swift.Equatable, Swift.Hashable, Swift.Sendable {
@@ -88,22 +260,83 @@ extension CheckoutComponentsSDK.CheckoutComponents {
     }
   }
 }
+extension CheckoutComponentsSDK.CheckoutComponents.Font {
+  public static let button: CheckoutComponentsSDK.CheckoutComponents.Font
+  public static let input: CheckoutComponentsSDK.CheckoutComponents.Font
+  public static let label: CheckoutComponentsSDK.CheckoutComponents.Font
+  public static let footnote: CheckoutComponentsSDK.CheckoutComponents.Font
+  public static let subheading: CheckoutComponentsSDK.CheckoutComponents.Font
+}
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct Address : Swift.Codable, Swift.Equatable, Swift.Hashable, Swift.Sendable {
-    public let addressLine1: Swift.String?
-    public let addressLine2: Swift.String?
-    public let city: Swift.String?
-    public let state: Swift.String?
-    public let zip: Swift.String?
-    public let country: CheckoutComponentsSDK.CheckoutComponents.Country
-    public init(country: CheckoutComponentsSDK.CheckoutComponents.Country, addressLine1: Swift.String? = nil, addressLine2: Swift.String? = nil, state: Swift.String? = nil, city: Swift.String? = nil, zip: Swift.String? = nil)
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Address, b: CheckoutComponentsSDK.CheckoutComponents.Address) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
+  public enum SessionlessComponent : Swift.Sendable {
+    case address(configuration: CheckoutComponentsSDK.CheckoutComponents.AddressConfiguration)
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct ErrorDetails : Swift.Equatable, Swift.Sendable {
+    public let mobileSessionID: Swift.String
+    public let paymentSessionID: Swift.String?
+    public let type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType
+    public init(paymentSessionID: Swift.String?, mobileSessionID: Swift.String, type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails, b: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails) -> Swift.Bool
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public protocol Renderable : Swift.Sendable {
+    var isAvailable: Swift.Bool { get }
+    @_Concurrency.MainActor func render() -> SwiftUICore.AnyView
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum Component : Swift.Equatable {
+    case flow(options: Swift.Set<CheckoutComponentsSDK.CheckoutComponents.PaymentMethod> = [])
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Component, b: CheckoutComponentsSDK.CheckoutComponents.Component) -> Swift.Bool
+  }
+}
+public struct CheckoutComponents : Swift.Sendable {
+  public typealias Actionable = CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
+  public init(configuration: CheckoutComponentsSDK.CheckoutComponents.Configuration)
+  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.PaymentMethod) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
+  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.Component) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable & CheckoutComponentsSDK.CheckoutComponents.Submittable & CheckoutComponentsSDK.CheckoutComponents.Tokenizable
+  @_Concurrency.MainActor public func create(_ type: CheckoutComponentsSDK.CheckoutComponents.SessionlessComponent) throws(CheckoutComponentsSDK.CheckoutComponents.Error) -> any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Renderable
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct UpdateDetails : Swift.Codable, Swift.Equatable, Swift.Sendable {
+    public var currency: Swift.String?
+    public init(amount: Swift.Int)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.UpdateDetails, b: CheckoutComponentsSDK.CheckoutComponents.UpdateDetails) -> Swift.Bool
     public func encode(to encoder: any Swift.Encoder) throws
-    public var hashValue: Swift.Int {
-      get
-    }
     public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  @_hasMissingDesignatedInitializers final public class Configuration : Swift.Sendable {
+    convenience public init(paymentSession: CheckoutComponentsSDK.PaymentSession?, publicKey: Swift.String, environment: CheckoutComponentsSDK.CheckoutComponents.Environment, appearance: CheckoutComponentsSDK.CheckoutComponents.DesignTokens = .init(), locale: Swift.String? = nil, translations: [Swift.String : [CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.String]] = [:], callbacks: CheckoutComponentsSDK.CheckoutComponents.Callbacks) async throws(CheckoutComponentsSDK.CheckoutComponents.Error)
+    @objc deinit
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct BorderRadius : Swift.Equatable, Swift.Sendable {
+    public init(radius: CoreFoundation.CGFloat, corners: UIKit.UIRectCorner = .allCorners)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.BorderRadius, b: CheckoutComponentsSDK.CheckoutComponents.BorderRadius) -> Swift.Bool
+  }
+}
+public enum TimeoutHandlerError : Swift.Error {
+  case timeoutOccured
+  public static func == (a: CheckoutComponentsSDK.TimeoutHandlerError, b: CheckoutComponentsSDK.TimeoutHandlerError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
+public func withTimeout<Return>(isolation: isolated (any _Concurrency.Actor)? = #isolation, for duration: _Concurrency.ContinuousClock.Instant.Duration, @_inheritActorContext _ operation: @escaping @Sendable () async throws -> Return) async throws -> Return where Return : Swift.Sendable
+public func withTimeout<Return>(isolation: isolated (any _Concurrency.Actor)? = #isolation, nanoseconds: Swift.UInt64, @_inheritActorContext _ operation: @escaping @Sendable () async throws -> Return) async throws -> Return where Return : Swift.Sendable
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum CallbackResult : Swift.Sendable, Swift.Equatable {
+    case accepted
+    case rejected(message: Swift.String?)
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.CallbackResult, b: CheckoutComponentsSDK.CheckoutComponents.CallbackResult) -> Swift.Bool
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
@@ -169,50 +402,6 @@ extension CheckoutComponentsSDK.CheckoutComponents {
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum Environment : Swift.Sendable {
-    case sandbox, production
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Environment, b: CheckoutComponentsSDK.CheckoutComponents.Environment) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
-      get
-    }
-  }
-}
-public enum TimeoutHandlerError : Swift.Error {
-  case timeoutOccured
-  public static func == (a: CheckoutComponentsSDK.TimeoutHandlerError, b: CheckoutComponentsSDK.TimeoutHandlerError) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-#if compiler(>=5.3) && $OptionalIsolatedParameters && $ExpressionMacroDefaultArguments
-@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-public func withTimeout<Return>(isolation: isolated (any _Concurrency.Actor)? = #isolation, for duration: _Concurrency.ContinuousClock.Instant.Duration, @_inheritActorContext _ operation: @escaping @Sendable () async throws -> Return) async throws -> Return where Return : Swift.Sendable
-#endif
-#if compiler(>=5.3) && $OptionalIsolatedParameters && $ExpressionMacroDefaultArguments
-public func withTimeout<Return>(isolation: isolated (any _Concurrency.Actor)? = #isolation, nanoseconds: Swift.UInt64, @_inheritActorContext _ operation: @escaping @Sendable () async throws -> Return) async throws -> Return where Return : Swift.Sendable
-#endif
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct Phone : Swift.Codable, Swift.Equatable, Swift.Hashable, Swift.Sendable {
-    public let number: Swift.String
-    public let countryCode: Swift.String
-    public init(countryCode: Swift.String, number: Swift.String)
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Phone, b: CheckoutComponentsSDK.CheckoutComponents.Phone) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public func encode(to encoder: any Swift.Encoder) throws
-    public var hashValue: Swift.Int {
-      get
-    }
-    public init(from decoder: any Swift.Decoder) throws
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public protocol Describable : Swift.Sendable {
-    var name: Swift.String { get }
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
   public struct ContactData : Swift.Equatable, Swift.Hashable, Swift.Sendable {
     public let address: CheckoutComponentsSDK.CheckoutComponents.Address
     public let phone: CheckoutComponentsSDK.CheckoutComponents.Phone?
@@ -237,18 +426,65 @@ extension CheckoutComponentsSDK.CheckoutComponents {
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct ErrorDetails : Swift.Equatable, Swift.Sendable {
-    public let mobileSessionID: Swift.String
-    public let paymentSessionID: Swift.String?
-    public let type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType
-    public init(paymentSessionID: Swift.String?, mobileSessionID: Swift.String, type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails, b: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails) -> Swift.Bool
+  public struct TokenizationResult : Swift.Codable, Swift.Equatable, Swift.Sendable {
+    public let type: CheckoutComponentsSDK.CheckoutComponents.TokenType
+    public let data: CheckoutComponentsSDK.CheckoutComponents.TokenDetails
+    public let cardMetadata: CheckoutComponentsSDK.CardMetadata?
+    public let preferredScheme: Swift.String?
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.TokenizationResult, b: CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum Component : Swift.Equatable {
-    case flow(options: Swift.Set<CheckoutComponentsSDK.CheckoutComponents.PaymentMethod> = [])
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Component, b: CheckoutComponentsSDK.CheckoutComponents.Component) -> Swift.Bool
+  public protocol Tokenizable : Swift.Sendable {
+    func tokenize()
+  }
+}
+extension SwiftUICore.Color {
+  public init(hex: Swift.String, alpha: Swift.Double = 1.0)
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum AddressField : Swift.Equatable, Swift.Hashable, Swift.Sendable {
+    case country
+    case addressLine1(isOptional: Swift.Bool = false)
+    case addressLine2(isOptional: Swift.Bool = true)
+    case city(isOptional: Swift.Bool = false)
+    case zip(isOptional: Swift.Bool = false)
+    case state(isOptional: Swift.Bool = true)
+    case email(isOptional: Swift.Bool = true)
+    case firstName(isOptional: Swift.Bool = false)
+    case lastName(isOptional: Swift.Bool = false)
+    case phone(isOptional: Swift.Bool = true)
+    public static var billing: [CheckoutComponentsSDK.CheckoutComponents.AddressField] {
+      get
+    }
+    public static var shipping: [CheckoutComponentsSDK.CheckoutComponents.AddressField] {
+      get
+    }
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.AddressField, b: CheckoutComponentsSDK.CheckoutComponents.AddressField) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public protocol Describable : Swift.Sendable {
+    var name: Swift.String { get }
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum PaymentButtonAction : Swift.Equatable, Swift.Codable, Swift.Hashable, Swift.Sendable {
+    case payment
+    case tokenization
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.PaymentButtonAction, b: CheckoutComponentsSDK.CheckoutComponents.PaymentButtonAction) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+    public init(from decoder: any Swift.Decoder) throws
   }
 }
 extension SwiftUICore.Color {
@@ -260,6 +496,73 @@ extension SwiftUICore.Color {
   public static let softGray: SwiftUICore.Color
   public static let brightGray: SwiftUICore.Color
   public static let checkoutGreen: SwiftUICore.Color
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum ErrorCode : Foundation.LocalizedError, Swift.Equatable, Swift.Sendable {
+    case configurationInvalid(type: Swift.String)
+    case paymentMethodAttemptFailed(message: Swift.String)
+    case paymentSessionFailed(message: Swift.String)
+    case paymentRequestFailed(message: Swift.String)
+    case cardAuthenticationFailed(message: Swift.String)
+    case componentNotSupported(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
+    case paymentRequestDeclined(message: Swift.String)
+    case componentIsAvailableNotChecked(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
+    case callbackNotProvided
+    case methodNotSupported(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType, method: Swift.String)
+    case componentInvalid(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType, method: Swift.String)
+    case merchantRejectedTokenDetials
+    case merchantHandleSubmitCallbackFailed
+    case base64EncodingFailed
+    case updateParameterInvalid(parameterName: CheckoutComponentsSDK.CheckoutComponents.ErrorCode.UpdateParameter)
+    public enum UpdateParameter : Swift.String, Swift.Sendable {
+      case amount
+      case currency
+      public init?(rawValue: Swift.String)
+      public typealias RawValue = Swift.String
+      public var rawValue: Swift.String {
+        get
+      }
+    }
+    public var localizedDescription: Swift.String {
+      get
+    }
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.ErrorCode, b: CheckoutComponentsSDK.CheckoutComponents.ErrorCode) -> Swift.Bool
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public struct TokenDetails : Swift.Codable, Swift.Equatable, Swift.Sendable {
+    public let type: CheckoutComponentsSDK.CheckoutComponents.TokenType
+    public let token: Swift.String
+    public let expiresOn: Swift.String
+    public let expiryMonth: Swift.Int
+    public let expiryYear: Swift.Int
+    public let last4: Swift.String
+    public let bin: Swift.String
+    public let scheme: Swift.String?
+    public let schemeLocal: Swift.String?
+    public let cardType: Swift.String?
+    public let cardCategory: Swift.String?
+    public let issuer: Swift.String?
+    public let issuerCountry: Swift.String?
+    public let productId: Swift.String?
+    public let productType: Swift.String?
+    public let name: Swift.String?
+    public let billingAddress: CheckoutComponentsSDK.CheckoutComponents.Address?
+    public let phone: CheckoutComponentsSDK.CheckoutComponents.Phone?
+    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.TokenDetails, b: CheckoutComponentsSDK.CheckoutComponents.TokenDetails) -> Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+}
+extension CheckoutComponentsSDK.CheckoutComponents {
+  public enum TokenType : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
+    case card
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
 }
 extension CheckoutComponentsSDK.CheckoutComponents {
   public enum Country : Swift.String, Swift.Codable, Swift.CaseIterable, Swift.Sendable, Swift.Equatable {
@@ -527,280 +830,30 @@ extension CheckoutComponentsSDK.CheckoutComponents {
     }
   }
 }
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct Error : Foundation.LocalizedError, Swift.Equatable, Swift.Sendable {
-    public let type: CheckoutComponentsSDK.CheckoutComponents.ErrorType
-    public let errorCode: CheckoutComponentsSDK.CheckoutComponents.ErrorCode
-    public let details: CheckoutComponentsSDK.CheckoutComponents.ErrorDetails
-    public enum ComponentType : Swift.String, Swift.Sendable {
-      case card
-      case applePay
-      case flow
-      public init?(rawValue: Swift.String)
-      public typealias RawValue = Swift.String
-      public var rawValue: Swift.String {
-        get
-      }
-    }
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Error, b: CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Bool
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public protocol Tokenizable : Swift.Sendable {
-    func tokenize()
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct Font : Swift.Equatable, Swift.Sendable {
-    public init(font: SwiftUICore.Font, lineHeight: CoreFoundation.CGFloat, letterSpacing: CoreFoundation.CGFloat)
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.Font, b: CheckoutComponentsSDK.CheckoutComponents.Font) -> Swift.Bool
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public protocol Renderable : Swift.Sendable {
-    var isAvailable: Swift.Bool { get }
-    @_Concurrency.MainActor func render() -> SwiftUICore.AnyView
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct TokenDetails : Swift.Codable, Swift.Equatable, Swift.Sendable {
-    public let type: CheckoutComponentsSDK.CheckoutComponents.TokenType
-    public let token: Swift.String
-    public let expiresOn: Swift.String
-    public let expiryMonth: Swift.Int
-    public let expiryYear: Swift.Int
-    public let last4: Swift.String
-    public let bin: Swift.String
-    public let scheme: Swift.String?
-    public let schemeLocal: Swift.String?
-    public let cardType: Swift.String?
-    public let cardCategory: Swift.String?
-    public let issuer: Swift.String?
-    public let issuerCountry: Swift.String?
-    public let productId: Swift.String?
-    public let productType: Swift.String?
-    public let name: Swift.String?
-    public let billingAddress: CheckoutComponentsSDK.CheckoutComponents.Address?
-    public let phone: CheckoutComponentsSDK.CheckoutComponents.Phone?
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.TokenDetails, b: CheckoutComponentsSDK.CheckoutComponents.TokenDetails) -> Swift.Bool
-    public func encode(to encoder: any Swift.Encoder) throws
-    public init(from decoder: any Swift.Decoder) throws
-  }
-}
-final public class PaymentSession : Swift.Decodable, Swift.Sendable {
-  public init(id: Swift.String, paymentSessionSecret: Swift.String)
-  @objc deinit
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct CardMetadata : Swift.Codable, Swift.Equatable, Swift.Sendable {
-  public let bin: Swift.String
-  public let scheme: Swift.String
-  public let localSchemes: [Swift.String]?
-  public let cardType: Swift.String?
-  public let cardCategory: Swift.String?
-  public let currency: Swift.String?
-  public let issuer: Swift.String?
-  public let issuerCountry: Swift.String?
-  public let issuerCountryName: Swift.String?
-  public let productId: Swift.String?
-  public let productType: Swift.String?
-  public let subProductId: Swift.String?
-  public let regulatedIndicator: Swift.Bool?
-  public let regulatedType: Swift.String?
-  public static func == (a: CheckoutComponentsSDK.CardMetadata, b: CheckoutComponentsSDK.CardMetadata) -> Swift.Bool
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum PaymentButtonAction : Swift.Equatable, Swift.Codable, Swift.Hashable, Swift.Sendable {
-    case payment
-    case tokenization
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.PaymentButtonAction, b: CheckoutComponentsSDK.CheckoutComponents.PaymentButtonAction) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public func encode(to encoder: any Swift.Encoder) throws
-    public var hashValue: Swift.Int {
-      get
-    }
-    public init(from decoder: any Swift.Decoder) throws
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct DesignTokens : Swift.Equatable, Swift.Sendable {
-    public typealias Fonts = CheckoutComponentsSDK.CheckoutComponents.Font.Style
-    public init(colorTokensMain: CheckoutComponentsSDK.CheckoutComponents.ColorTokens = .init(), fonts: CheckoutComponentsSDK.CheckoutComponents.DesignTokens.Fonts = .init(), borderButtonRadius: CheckoutComponentsSDK.CheckoutComponents.BorderRadius = .init(radius: CommonUIConstants.cornerRadius), borderFormRadius: CheckoutComponentsSDK.CheckoutComponents.BorderRadius = .init(radius: CommonUIConstants.formCornerRadius))
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.DesignTokens, b: CheckoutComponentsSDK.CheckoutComponents.DesignTokens) -> Swift.Bool
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public protocol Submittable : Swift.Sendable {
-    var isValid: Swift.Bool { get }
-    func submit()
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum TokenType : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
-    case card
-    public init?(rawValue: Swift.String)
-    public typealias RawValue = Swift.String
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents.Font {
-  public static let button: CheckoutComponentsSDK.CheckoutComponents.Font
-  public static let input: CheckoutComponentsSDK.CheckoutComponents.Font
-  public static let label: CheckoutComponentsSDK.CheckoutComponents.Font
-  public static let footnote: CheckoutComponentsSDK.CheckoutComponents.Font
-  public static let subheading: CheckoutComponentsSDK.CheckoutComponents.Font
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public typealias PaymentID = Swift.String
-  public struct Callbacks : Swift.Sendable {
-    public let onReady: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)?
-    public let handleTap: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) async -> Swift.Bool)?
-    public let onChange: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Submittable) -> Swift.Void)?
-    public let onSubmit: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)?
-    public let onTokenized: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> Swift.Void)?
-    public let onSuccess: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable, CheckoutComponentsSDK.CheckoutComponents.PaymentID) -> Swift.Void)?
-    public let onError: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Void)?
-    public init(onReady: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)? = nil, handleTap: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) async -> Swift.Bool)? = nil, onChange: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable & CheckoutComponentsSDK.CheckoutComponents.Submittable) -> Swift.Void)? = nil, onSubmit: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable) -> Swift.Void)? = nil, onTokenized: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> Swift.Void)? = nil, onSuccess: (@Sendable (any CheckoutComponentsSDK.CheckoutComponents.Describable, CheckoutComponentsSDK.CheckoutComponents.PaymentID) -> Swift.Void)? = nil, onError: (@Sendable (CheckoutComponentsSDK.CheckoutComponents.Error) -> Swift.Void)? = nil)
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct TokenizationResult : Swift.Codable, Swift.Equatable, Swift.Sendable {
-    public let type: CheckoutComponentsSDK.CheckoutComponents.TokenType
-    public let data: CheckoutComponentsSDK.CheckoutComponents.TokenDetails
-    public let cardMetadata: CheckoutComponentsSDK.CardMetadata?
-    public let preferredScheme: Swift.String?
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.TokenizationResult, b: CheckoutComponentsSDK.CheckoutComponents.TokenizationResult) -> Swift.Bool
-    public func encode(to encoder: any Swift.Encoder) throws
-    public init(from decoder: any Swift.Decoder) throws
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum ErrorType : Swift.String, Swift.Equatable, Swift.Sendable {
-    case integration
-    case request
-    case paymentMethod
-    case submit
-    public init?(rawValue: Swift.String)
-    public typealias RawValue = Swift.String
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum Locale : Swift.String, Swift.Sendable, Swift.CaseIterable {
-    case ar
-    case da_DK
-    case de_DE
-    case el
-    case en_GB
-    case es_ES
-    case fi_FI
-    case fil_PH
-    case fr_FR
-    case hi_IN
-    case id_ID
-    case it_IT
-    case ja_JP
-    case ms_MY
-    case nb_NO
-    case nl_NL
-    case pt_PT
-    case sv_SE
-    case th_TH
-    case vi_VN
-    case zh_CN
-    case zh_HK
-    case zh_TW
-    public init?(rawValue: Swift.String)
-    public typealias AllCases = [CheckoutComponentsSDK.CheckoutComponents.Locale]
-    public typealias RawValue = Swift.String
-    nonisolated public static var allCases: [CheckoutComponentsSDK.CheckoutComponents.Locale] {
-      get
-    }
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public struct Configuration : Swift.Sendable {
-    #if compiler(>=5.3) && $TypedThrows
-    public init(paymentSession: CheckoutComponentsSDK.PaymentSession?, publicKey: Swift.String, environment: CheckoutComponentsSDK.CheckoutComponents.Environment, appearance: CheckoutComponentsSDK.CheckoutComponents.DesignTokens = .init(), locale: Swift.String? = nil, translations: [Swift.String : [CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.String]] = [:], callbacks: CheckoutComponentsSDK.CheckoutComponents.Callbacks) async throws(CheckoutComponentsSDK.CheckoutComponents.Error)
-    #endif
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum AddressField : Swift.Equatable, Swift.Hashable, Swift.Sendable {
-    case country
-    case addressLine1(isOptional: Swift.Bool = false)
-    case addressLine2(isOptional: Swift.Bool = true)
-    case city(isOptional: Swift.Bool = false)
-    case zip(isOptional: Swift.Bool = false)
-    case state(isOptional: Swift.Bool = true)
-    case email(isOptional: Swift.Bool = true)
-    case firstName(isOptional: Swift.Bool = false)
-    case lastName(isOptional: Swift.Bool = false)
-    case phone(isOptional: Swift.Bool = true)
-    public static var billing: [CheckoutComponentsSDK.CheckoutComponents.AddressField] {
-      get
-    }
-    public static var shipping: [CheckoutComponentsSDK.CheckoutComponents.AddressField] {
-      get
-    }
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.AddressField, b: CheckoutComponentsSDK.CheckoutComponents.AddressField) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
-      get
-    }
-  }
-}
-extension CheckoutComponentsSDK.CheckoutComponents {
-  public enum ErrorCode : Foundation.LocalizedError, Swift.Equatable, Swift.Sendable {
-    case configurationInvalid(type: Swift.String)
-    case paymentMethodAttemptFailed(message: Swift.String)
-    case paymentSessionFailed(message: Swift.String)
-    case paymentRequestFailed(message: Swift.String)
-    case cardAuthenticationFailed(message: Swift.String)
-    case componentNotSupported(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
-    case paymentRequestDeclined(message: Swift.String)
-    case componentIsAvailableNotChecked(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType)
-    case callbackNotProvided
-    case methodNotSupported(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType, method: Swift.String)
-    case componentInvalid(type: CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType, method: Swift.String)
-    public var localizedDescription: Swift.String {
-      get
-    }
-    public static func == (a: CheckoutComponentsSDK.CheckoutComponents.ErrorCode, b: CheckoutComponentsSDK.CheckoutComponents.ErrorCode) -> Swift.Bool
-  }
-}
-public enum CommonUIConstants : Swift.Sendable {
-  public static let cornerRadius: CoreFoundation.CGFloat
-  public static let formCornerRadius: CoreFoundation.CGFloat
-}
+
+
+extension CheckoutComponentsSDK.CheckoutComponents.Country : Swift.Hashable {}
+extension CheckoutComponentsSDK.CheckoutComponents.Country : Swift.RawRepresentable {}
 extension CheckoutComponentsSDK.DeclineReason : Swift.Equatable {}
 extension CheckoutComponentsSDK.DeclineReason : Swift.Hashable {}
 extension CheckoutComponentsSDK.DeclineReason : Swift.RawRepresentable {}
-extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.Equatable {}
-extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.Hashable {}
-extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.RawRepresentable {}
-extension CheckoutComponentsSDK.CheckoutComponents.Environment : Swift.Equatable {}
-extension CheckoutComponentsSDK.CheckoutComponents.Environment : Swift.Hashable {}
-extension CheckoutComponentsSDK.TimeoutHandlerError : Swift.Equatable {}
-extension CheckoutComponentsSDK.TimeoutHandlerError : Swift.Hashable {}
-extension CheckoutComponentsSDK.CheckoutComponents.Country : Swift.Hashable {}
-extension CheckoutComponentsSDK.CheckoutComponents.Country : Swift.RawRepresentable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType : Swift.Equatable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType : Swift.Hashable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Error.ComponentType : Swift.RawRepresentable {}
-extension CheckoutComponentsSDK.CheckoutComponents.TokenType : Swift.Hashable {}
-extension CheckoutComponentsSDK.CheckoutComponents.TokenType : Swift.RawRepresentable {}
 extension CheckoutComponentsSDK.CheckoutComponents.ErrorType : Swift.Hashable {}
 extension CheckoutComponentsSDK.CheckoutComponents.ErrorType : Swift.RawRepresentable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Locale : Swift.Equatable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Locale : Swift.Hashable {}
 extension CheckoutComponentsSDK.CheckoutComponents.Locale : Swift.RawRepresentable {}
+extension CheckoutComponentsSDK.CheckoutComponents.Environment : Swift.Equatable {}
+extension CheckoutComponentsSDK.CheckoutComponents.Environment : Swift.Hashable {}
+extension CheckoutComponentsSDK.TimeoutHandlerError : Swift.Equatable {}
+extension CheckoutComponentsSDK.TimeoutHandlerError : Swift.Hashable {}
+extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.Equatable {}
+extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.Hashable {}
+extension CheckoutComponentsSDK.CheckoutComponents.TranslationKey : Swift.RawRepresentable {}
+extension CheckoutComponentsSDK.CheckoutComponents.ErrorCode.UpdateParameter : Swift.Equatable {}
+extension CheckoutComponentsSDK.CheckoutComponents.ErrorCode.UpdateParameter : Swift.Hashable {}
+extension CheckoutComponentsSDK.CheckoutComponents.ErrorCode.UpdateParameter : Swift.RawRepresentable {}
+extension CheckoutComponentsSDK.CheckoutComponents.TokenType : Swift.Hashable {}
+extension CheckoutComponentsSDK.CheckoutComponents.TokenType : Swift.RawRepresentable {}

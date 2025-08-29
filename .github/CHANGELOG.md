@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.1.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.1.0)
+
+Released on 13.08.2025
+
+Updates:
+  
+- ** Public API Changes **  
+  - Updates `onTokenized` callback to return `APICallResult`, giving the merchants control over the payments by looking at the token details (accept or reject).
+  - Adds `update()` function to refresh the Apple Pay amount in the payment sheet UI. In this case, `handleSubmit` function must be used to submit the updated payment session.  
+  - Adds `showPayButton` property to Apple Pay component to let merchants to be able to hide the Apple Pay button. In this case, the merchants must follow Apple Pay Guideline and present Apple Pay logo as well as to abide by all the other requirements mentioned here: https://developer.apple.com/design/human-interface-guidelines/apple-pay
+
+- ** User Interaction Callbacks **  
+  - Adds `onCardBinChanged` to surface BIN changes, enabling scheme-specific discounts or hiding the payment button.
+  - Adds `handleSubmit` to submit the payment session request; to apply changes, submit the updated request with the provided `SessionData`.
+  
+- ** Bug Fixes **
+  - Fixes a bug that blocked some card numbers from going through.
+  
+##
+
 ## [1.0.1](https://github.com/checkout/checkout-ios-components/releases/tag/1.0.1)
 
 Released on 30.06.2025

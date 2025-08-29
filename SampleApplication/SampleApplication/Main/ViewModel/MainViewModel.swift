@@ -13,6 +13,11 @@ enum PaymentMethodType: CaseIterable {
   case applePay
 }
 
+enum CustomButtonOperation: String, CaseIterable {
+  case tokenization = "Tokenization"
+  case submitPayment = "Submit Payment"
+}
+
 @MainActor
 final class MainViewModel: ObservableObject {
   @Published var checkoutComponentsView: AnyView?
@@ -22,13 +27,19 @@ final class MainViewModel: ObservableObject {
   @Published var paymentResultText: String = ""
   @Published var generatedToken: String = ""
   @Published var errorMessage: String = ""
-  @Published var showPayButton: Bool = true
+  @Published var showCardPayButton: Bool = true
   @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
-  @Published var selectedModuleType: ModuleType = .flow
+  @Published var selectedComponentType: CheckoutComponent = .flow
   @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
   @Published var selectedLocale: String = CheckoutComponents.Locale.en_GB.rawValue
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
+  @Published var handleSubmitManually = false
+  @Published var updatedAmount = ""
+  @Published var isShowUpdateView = false
+  @Published var showApplePayButton: Bool = true
+  @Published var isAdvancedFeaturesExpanded: Bool = false
+  @Published var customButtonOperation: CustomButtonOperation = .submitPayment
 
   @Published var isDefaultAppearance = true {
     didSet {
@@ -36,6 +47,8 @@ final class MainViewModel: ObservableObject {
     }
   }
   
+  var paymentSessionId = ""
+  var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
   
@@ -48,9 +61,12 @@ extension MainViewModel {
   func makeComponent() async {
     do {
       let paymentSession = try await createPaymentSession()
+      paymentSessionId = paymentSession.id
       let checkoutComponentsSDK = try await initialiseCheckoutComponentsSDK(with: paymentSession)
+      createdCheckoutComponentsSDK = checkoutComponentsSDK
       let component = try createComponent(with: checkoutComponentsSDK)
       self.component = component
+      
       let renderedComponent = render(component: component)
 
       checkoutComponentsView = renderedComponent
@@ -94,7 +110,7 @@ extension MainViewModel {
 
   // Step 3: Create any component available
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
-    switch selectedModuleType {
+    switch selectedComponentType {
     case .flow:
       return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods))
     case .card:
@@ -177,25 +193,27 @@ extension MainViewModel {
   }
   
   func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
-    .card(showPayButton: showPayButton,
+    .card(showPayButton: showCardPayButton,
           paymentButtonAction: paymentButtonAction,
           addressConfiguration: selectedAddressConfiguration.addressConfiguration)
   }
   
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {
-    .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox")
+    .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox",
+              showPayButton: showApplePayButton)
   }
   
   func resetToDefaultConfiguration() {
     checkoutComponentsView = nil
-    selectedModuleType = .flow
+    selectedComponentType = .flow
     selectedPaymentMethodTypes = [.card, .applePay]
-    showPayButton = true
+    showCardPayButton = true
     paymentButtonAction = .payment
     selectedLocale = CheckoutComponents.Locale.en_GB.rawValue
     selectedEnvironment = .sandbox
     selectedAddressConfiguration = .prefillCustomized
     isDefaultAppearance = true
+    updatedAmount = ""
   }
   
   func getLocales() -> [String] {
@@ -214,11 +232,62 @@ extension MainViewModel {
 }
 
 extension MainViewModel {
+  // Tokenization is only operational for the card component to tokenize the card details input by the user
   func merchantTokenizationTapped() {
     guard let component = component as? any CheckoutComponents.Tokenizable else {
-      debugPrint("Component does not conform to Tokenizable. e.g. It might be an Address Component or alike")
+      print("Component does not conform to Tokenizable. e.g. It might be an Address Component or alike")
       return
     }
     component.tokenize()
+  }
+}
+
+extension MainViewModel {
+  // `submit()` function is useful for the cases where you want a central control for payment submission, orchestrated by your own payment button
+  func submit() {
+    guard let component = component as? any CheckoutComponents.Submittable else {
+      print("Component does not conform to Submittable. e.g. It might be an Address Component or alike")
+      return
+    }
+
+    // Check the validity of the component before calling the submit function.
+    guard component.isValid else {
+      let debugString =
+      """
+      Component did not pass the validation checks. Input fields might be wrongly filled in.
+      If you want to display the validation error texts, call `submit()` function without calling `component.isValid`.
+      Components without any input fields are always marked isValid as true.
+      """
+      print(debugString)
+      return
+    }
+
+    component.submit()
+  }
+}
+
+extension MainViewModel {
+  // Calling .update(with:) function just updates the UI,
+  // for updating the payment session you have to provide handleSubmit callback.
+  func updatePaymentAmount() {
+    guard let amount = Int(updatedAmount) else { return }
+    
+    do {
+      let updateDetails = CheckoutComponents.UpdateDetails(amount: amount)
+      try createdCheckoutComponentsSDK?.update(with: updateDetails)
+    } catch {
+      errorMessage = error.localizedDescription
+      print("Update amount error: \(error.localizedDescription).\nCheck if your input is correct.")
+    }
+  }
+  
+  func submitPaymentSession(with submitData: String) async throws -> CheckoutComponents.PaymentSessionSubmissionResult {
+    let submitPaymentRequest = SubmitPaymentSessionRequest(sessionData: submitData,
+                                                           amount: 100,
+                                                           threeDS: ThreeDS(enabled: false,
+                                                                            attemptN3D: false))
+    
+    return try await networkLayer.submitPaymentSession(paymentSessionId: paymentSessionId,
+                                                       request: submitPaymentRequest)
   }
 }
