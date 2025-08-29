@@ -26,6 +26,7 @@ enum AccessibilityIdentifier {
     case payment = "payment"
     case tokenize = "tokenize"
     case showPayButtonPicker = "show_pay_button_picker"
+    case submitPaymentMethodView = "submit_payment_method_view"
   }
   
   enum PaymentResultView: String {
