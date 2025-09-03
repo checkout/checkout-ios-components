@@ -7,6 +7,7 @@ import CheckoutComponentsSDK
 #endif
 
 import SwiftUI
+import Checkout3DS
 
 enum PaymentMethodType: CaseIterable {
   case card
@@ -28,7 +29,7 @@ final class MainViewModel: ObservableObject {
   @Published var generatedToken: String = ""
   @Published var errorMessage: String = ""
   @Published var showCardPayButton: Bool = true
-  @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
+  @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .tokenization
   @Published var selectedComponentType: CheckoutComponent = .flow
   @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
   @Published var selectedLocale: String = CheckoutComponents.Locale.en_GB.rawValue
@@ -50,8 +51,12 @@ final class MainViewModel: ObservableObject {
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
-  private let networkLayer = NetworkLayer()
-  
+  let networkLayer = NetworkLayer()
+  let amount: Int = 100
+  let currency: String = "GBP"
+
+  lazy var checkout3DSSDK: Checkout3DSService = { .init(environment: .sandbox) }()
+
   init() {
     selectedPaymentMethodTypes = [.card, .applePay]
   }
@@ -83,13 +88,13 @@ extension MainViewModel {
 extension MainViewModel {
   // Step 1: Create Payment Session
   func createPaymentSession() async throws -> PaymentSession {
-     let request = PaymentSessionRequest(amount: 1,
-                                         currency: "GBP",
+     let request = PaymentSessionRequest(amount: amount,
+                                         currency: currency,
                                          billing: .init(address: .init(country: "GB")),
                                          successURL: Constants.successURL,
                                          failureURL: Constants.failureURL,
                                          threeDS: .init(enabled: true, attemptN3D: true),
-                                         processingChannelID: nil)
+                                         processingChannelID: EnvironmentVars.processingChannelID)
 
      return try await networkLayer.createPaymentSession(request: request)
    }

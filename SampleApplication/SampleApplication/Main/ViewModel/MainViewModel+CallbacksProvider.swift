@@ -71,6 +71,7 @@ extension MainViewModel {
       debugPrint("onTokenized: Token: \(tokenizationResult.data)")
       Task { @MainActor in
         self.generatedToken = tokenizationResult.data.token
+        self.authenticate3DS(cardToken: tokenizationResult.data.token)
       }
       
       return .accepted
