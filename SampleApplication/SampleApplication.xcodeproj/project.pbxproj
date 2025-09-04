@@ -11,6 +11,11 @@
 		16970E062E68C2D400C182DF /* Checkout3DSPackages in Frameworks */ = {isa = PBXBuildFile; productRef = 16970E052E68C2D400C182DF /* Checkout3DSPackages */; };
 		16970E082E68C37300C182DF /* MainViewModel+3DSSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16970E072E68C37300C182DF /* MainViewModel+3DSSDK.swift */; };
 		16970E212E68EAD100C182DF /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16970E202E68EAD100C182DF /* CheckoutComponents */; };
+		16970E242E698E8300C182DF /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
+		16970E252E698E8300C182DF /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
+		16970E262E698E8300C182DF /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
+		16970E392E698F0B00C182DF /* FingerprintPro in Frameworks */ = {isa = PBXBuildFile; productRef = 16970E382E698F0B00C182DF /* FingerprintPro */; };
+		16970E3C2E698F2500C182DF /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16970E3B2E698F2500C182DF /* CheckoutComponents */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16A5BCA92D835918007B79C0 /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
@@ -68,9 +73,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16970E262E698E8300C182DF /* CheckoutComponents in Frameworks */,
+				16970E252E698E8300C182DF /* CheckoutComponents in Frameworks */,
+				16970E242E698E8300C182DF /* CheckoutComponents in Frameworks */,
 				16970E062E68C2D400C182DF /* Checkout3DSPackages in Frameworks */,
 				16A5BCA92D835918007B79C0 /* Risk in Frameworks */,
 				16970E212E68EAD100C182DF /* CheckoutComponents in Frameworks */,
+				16970E3C2E698F2500C182DF /* CheckoutComponents in Frameworks */,
+				16970E392E698F0B00C182DF /* FingerprintPro in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +231,8 @@
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16970E052E68C2D400C182DF /* Checkout3DSPackages */,
 				16970E202E68EAD100C182DF /* CheckoutComponents */,
+				16970E382E698F0B00C182DF /* FingerprintPro */,
+				16970E3B2E698F2500C182DF /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -253,7 +265,8 @@
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
 				16970E042E68C2D400C182DF /* XCRemoteSwiftPackageReference "checkout-3ds-sdk-ios" */,
-				16970E1F2E68EAD100C182DF /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				16970E372E698F0B00C182DF /* XCRemoteSwiftPackageReference "fingerprintjs-pro-ios" */,
+				16970E3A2E698F2500C182DF /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -529,7 +542,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		16970E1F2E68EAD100C182DF /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		16970E3A2E698F2500C182DF /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
@@ -542,6 +555,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.2.6;
+			};
+		};
+		16970E372E698F0B00C182DF /* XCRemoteSwiftPackageReference "fingerprintjs-pro-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fingerprintjs/fingerprintjs-pro-ios";
+			requirement = {
+				kind = exactVersion;
+				version = 2.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -557,6 +578,15 @@
 			productName = Checkout3DSPackages;
 		};
 		16970E202E68EAD100C182DF /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		16970E382E698F0B00C182DF /* FingerprintPro */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16970E372E698F0B00C182DF /* XCRemoteSwiftPackageReference "fingerprintjs-pro-ios" */;
+			productName = FingerprintPro;
+		};
+		16970E3B2E698F2500C182DF /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};

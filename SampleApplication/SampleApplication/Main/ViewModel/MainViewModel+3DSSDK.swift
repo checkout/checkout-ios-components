@@ -46,7 +46,12 @@ extension MainViewModel {
         switch result {
         case .success(let authenticationResult):
           print(authenticationResult)
-          continuation.resume()
+
+          if authenticationResult.transactionStatus == "Y" {
+            continuation.resume()
+          } else {
+            continuation.resume(throwing: "3DS Authentication Failed")
+          }
 
         case .failure(let error):
           continuation.resume(throwing: error)
@@ -65,3 +70,5 @@ extension MainViewModel {
     self.showPaymentResult = true
   }
 }
+
+extension String: @retroactive Error {}
