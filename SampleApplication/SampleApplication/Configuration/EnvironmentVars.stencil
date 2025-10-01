@@ -3,4 +3,5 @@ struct EnvironmentVars {
     /// Generated using 'EnvironmentVars.stencil' template
     static let publicKey = "{{ argument.COMPONENTS_PUBLIC_KEY }}"
     static let secretKey = "{{ argument.COMPONENTS_SECRET_KEY }}"
+    static let processingChannelID = "{{ argument.COMPONENTS_PROCESSING_CHANNEL_ID }}"
 }

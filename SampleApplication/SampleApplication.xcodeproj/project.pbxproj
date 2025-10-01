@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
-		16A5BCA92D835918007B79C0 /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
+		16A28E2C2E71769F003668B9 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
 		16C44C542C5284BF00CE0CCE /* env-example.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C532C5284BF00CE0CCE /* env-example.xcconfig */; };
 		16C44C5A2C52872D00CE0CCE /* EnvironmentVars.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 16C44C592C52872D00CE0CCE /* EnvironmentVars.stencil */; };
@@ -22,7 +22,6 @@
 		16FC054A2C40170F00D75022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16FC05492C40170F00D75022 /* Preview Assets.xcassets */; };
 		951299022CBD788F00DC1715 /* PaymentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951299012CBD788F00DC1715 /* PaymentResultView.swift */; };
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
-		951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
 		953809282D92D09E003B5C21 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953809272D92D09E003B5C21 /* NavigationHelper.swift */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
@@ -34,6 +33,7 @@
 /* Begin PBXFileReference section */
 		161E3F572CE26DD10060A628 /* SampleApplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApplication.entitlements; sourceTree = "<group>"; };
 		164BC0632CDE772B00F5416F /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		16970E612E69F5B300C182DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
 		16C44C532C5284BF00CE0CCE /* env-example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "env-example.xcconfig"; sourceTree = "<group>"; };
 		16C44C592C52872D00CE0CCE /* EnvironmentVars.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = EnvironmentVars.stencil; sourceTree = "<group>"; };
@@ -61,8 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16A5BCA92D835918007B79C0 /* Risk in Frameworks */,
-				951AE3382D5243E800519900 /* CheckoutComponents in Frameworks */,
+				16A28E2C2E71769F003668B9 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +116,7 @@
 		16FC05412C40170E00D75022 /* SampleApplication */ = {
 			isa = PBXGroup;
 			children = (
+				16970E612E69F5B300C182DF /* Info.plist */,
 				161E3F572CE26DD10060A628 /* SampleApplication.entitlements */,
 				959FEF5A2C805CBB001D7C20 /* Constants */,
 				959FEF5B2C805CCB001D7C20 /* Main */,
@@ -206,6 +206,7 @@
 				951AE3372D5243E800519900 /* CheckoutComponents */,
 				951AE33A2D527A7400519900 /* CheckoutComponents */,
 				16A5BCA82D835918007B79C0 /* Risk */,
+				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -237,7 +238,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				951AE3392D527A7400519900 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				16A28E2A2E71769F003668B9 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -425,6 +426,7 @@
 				DEVELOPMENT_TEAM = E32XBQK4Q5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApplication/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Checkout.com;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -463,6 +465,7 @@
 				DEVELOPMENT_TEAM = E32XBQK4Q5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApplication/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Checkout.com;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -512,7 +515,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		951AE3392D527A7400519900 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		16A28E2A2E71769F003668B9 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
@@ -520,6 +523,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		16A28E2B2E71769F003668B9 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};

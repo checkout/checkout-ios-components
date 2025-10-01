@@ -34,6 +34,7 @@ extension MainView {
       localeView
 
       advancedFeaturesView
+      rememberMeConfigurationsView
     }
     .padding(.horizontal)
   }
@@ -160,43 +161,70 @@ extension MainView {
   }
 
   var advancedFeaturesView: some View {
-    VStack(alignment: .leading) {
-      Button(action: {
-        withAnimation(.easeInOut(duration: 0.3)) {
-          viewModel.isAdvancedFeaturesExpanded.toggle()
-        }
-      }) {
-        HStack {
-          Text("Advanced Features")
+    expandableSection(title: "Advanced Features",
+                      isExpanded: $viewModel.isAdvancedFeaturesExpanded) {
+      VStack(alignment: .leading, spacing: 12) {
+        cardOptionsView
+        showApplePayButtonView
 
-          Spacer()
-
-          Image(systemName: viewModel.isAdvancedFeaturesExpanded ? "chevron.up" : "chevron.down")
-            .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 8)
-      }
-      .buttonStyle(PlainButtonStyle())
-
-      if viewModel.isAdvancedFeaturesExpanded {
         VStack(alignment: .leading, spacing: 12) {
-          cardOptionsView
-          showApplePayButtonView
-
-          VStack(alignment: .leading, spacing: 12) {
-            submitPaymentMethodView
-            if viewModel.handleSubmitManually {
-              updateAmountSettingView
-            } else {
-              customButtonOperationView
-            }
+          submitPaymentMethodView
+          if viewModel.handleSubmitManually {
+            updateAmountSettingView
+          } else {
+            customButtonOperationView
           }
-
-          addressConfigurationView
         }
-        .padding(.leading, 16)
-        .transition(.opacity.combined(with: .slide))
+
+        addressConfigurationView
       }
+      .padding(.leading, 16)
+      .transition(.opacity.combined(with: .slide))
+    }
+  }
+  
+  var rememberMeConfigurationsView: some View {
+    expandableSection(title: "RememberMe Configurations",
+                      isExpanded: $viewModel.isRememberMeExpanded) {
+      VStack(alignment: .leading, spacing: 12) {
+        Toggle("Enable Remember Me", isOn: $viewModel.showRememberMe)
+          .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showRememberMeToggle.rawValue)
+
+        if viewModel.showRememberMe {
+          Toggle("Show Remember Me pay button", isOn: $viewModel.showRememberMePayButton)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showRememberMePayButtonToggle.rawValue)
+
+          userEmailView
+          countryCodeView
+          userPhoneNumberView
+        }
+      }
+      .padding(.leading, 16)
+      .transition(.opacity.combined(with: .slide))
+    }
+  }
+  
+  var userEmailView: some View {
+    HStack {
+      Text("Email: ")
+      TextField("Email", text: $viewModel.userEmail)
+        .keyboardType(.emailAddress)
+    }
+  }
+  
+  var countryCodeView: some View {
+    HStack {
+      Text("Country Code: ")
+      TextField("Country Code", text: $viewModel.userCountryCode)
+        .keyboardType(.phonePad)
+    }
+  }
+  
+  var userPhoneNumberView: some View {
+    HStack {
+      Text("Phone Number: ")
+      TextField("Phone Number", text: $viewModel.userPhoneNumber)
+        .keyboardType(.phonePad)
     }
   }
 
@@ -232,6 +260,40 @@ extension MainView {
     Toggle("Show update amount view", isOn: $viewModel.isShowUpdateView)
   }
 
+}
+
+extension MainView {
+  @ViewBuilder
+  func expandableSection<Content: View>(title: String,
+                                        isExpanded: Binding<Bool>,
+                                        @ViewBuilder content: () -> Content) -> some View {
+    VStack(alignment: .leading) {
+      Button(action: {
+        withAnimation(.easeInOut(duration: 0.3)) {
+          isExpanded.wrappedValue.toggle()
+        }
+      }) {
+        HStack {
+          Text(title)
+          
+          Spacer()
+          
+          Image(systemName: isExpanded.wrappedValue ? "chevron.up" : "chevron.down")
+            .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 8)
+      }
+      .buttonStyle(PlainButtonStyle())
+      
+      if isExpanded.wrappedValue {
+        VStack(alignment: .leading, spacing: 12) {
+          content()
+        }
+        .padding(.leading, 16)
+        .transition(.opacity.combined(with: .slide))
+      }
+    }
+  }
 }
 
 #Preview {
