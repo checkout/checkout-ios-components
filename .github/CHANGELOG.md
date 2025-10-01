@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.2.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.0)
+
+Released on 13.08.2025
+
+Updates:
+  
+- ** Remember Me Feature Implementation **  
+  - The Remember Me feature enables customers to save their card details during checkout. The next time the customer shops at any merchant that has Remember Me enabled, we display their saved card details. This means you can provide a faster checkout experience even if the customer did not save their details directly with you.  
+  
+- ** Bug Fixes **
+  - Bugfix for optional phone number in address component blocking the payments.
+  - Update Cartes Bancaires logo.
+  
+##
+
 ## [1.1.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.1.0)
 
 Released on 13.08.2025

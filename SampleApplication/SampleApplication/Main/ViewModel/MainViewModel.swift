@@ -40,6 +40,13 @@ final class MainViewModel: ObservableObject {
   @Published var showApplePayButton: Bool = true
   @Published var isAdvancedFeaturesExpanded: Bool = false
   @Published var customButtonOperation: CustomButtonOperation = .submitPayment
+  
+  @Published var isRememberMeExpanded: Bool = false
+  @Published var userEmail: String = ""
+  @Published var userPhoneNumber: String = ""
+  @Published var userCountryCode: String = ""
+  @Published var showRememberMe: Bool = true
+  @Published var showRememberMePayButton: Bool = true
 
   @Published var isDefaultAppearance = true {
     didSet {
@@ -89,7 +96,7 @@ extension MainViewModel {
                                          successURL: Constants.successURL,
                                          failureURL: Constants.failureURL,
                                          threeDS: .init(enabled: true, attemptN3D: true),
-                                         processingChannelID: nil)
+                                         processingChannelID: EnvironmentVars.processingChannelID)
 
      return try await networkLayer.createPaymentSession(request: request)
    }
@@ -192,10 +199,25 @@ extension MainViewModel {
     return methods
   }
   
+  var phoneModel: CheckoutComponents.Phone? {
+    .init(countryCode: userCountryCode, number: userPhoneNumber)
+  }
+  
   func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
-    .card(showPayButton: showCardPayButton,
-          paymentButtonAction: paymentButtonAction,
-          addressConfiguration: selectedAddressConfiguration.addressConfiguration)
+    // Build Remember Me configuration conditionally
+    let rememberMeConfig: CheckoutComponents.RememberMeConfiguration? = {
+      guard showRememberMe else { return nil }
+      let data = CheckoutComponents.RememberMeConfiguration.Data(
+        email: userEmail.isEmpty ? nil : userEmail,
+        phone: phoneModel
+      )
+      return .init(data: data, showPayButton: showRememberMePayButton)
+    }()
+
+    return .card(showPayButton: showCardPayButton,
+                 paymentButtonAction: paymentButtonAction,
+                 addressConfiguration: selectedAddressConfiguration.addressConfiguration,
+                 rememberMeConfiguration: rememberMeConfig)
   }
   
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {

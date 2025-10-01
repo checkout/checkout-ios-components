@@ -58,27 +58,29 @@ struct MainView: View {
 extension MainView {
   @ViewBuilder
   func makeComponentView() -> some View {
-    if let componentsView = viewModel.checkoutComponentsView {
-      componentsView
-
-      switch viewModel.customButtonOperation {
-
-      case .tokenization:
-        Button("Merchant Tokenization") {
-          viewModel.merchantTokenizationTapped()
-        }
-        .padding()
-
-      case .submitPayment:
-        switch (viewModel.showCardPayButton, viewModel.showApplePayButton){
-        case (true, true):
-          EmptyView()
-
-        default:
-          Button("Submit") {
-            viewModel.submit()
+    ScrollView {
+      if let componentsView = viewModel.checkoutComponentsView {
+        componentsView
+        
+        switch viewModel.customButtonOperation {
+          
+        case .tokenization:
+          Button("Merchant Tokenization") {
+            viewModel.merchantTokenizationTapped()
           }
           .padding()
+          
+        case .submitPayment:
+          switch (viewModel.showCardPayButton, viewModel.showApplePayButton){
+          case (true, true):
+            EmptyView()
+            
+          default:
+            Button("Submit") {
+              viewModel.submit()
+            }
+            .padding()
+          }
         }
       }
     }

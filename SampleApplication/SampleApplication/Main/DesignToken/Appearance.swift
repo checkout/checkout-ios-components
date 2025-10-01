@@ -13,52 +13,37 @@ struct DarkTheme {
   let designToken: CheckoutComponents.DesignTokens
 
   init() {
+    // Balanced, high-contrast dark palette
     let colorTokens: CheckoutComponents.ColorTokens = .init(
-      action: Color(hex: "#FFFF00"),
-      background: Color(hex: "#17201E"),
-      border: Color(hex: "#00CC2D"),
-      disabled: Color(hex: "#BBFFB9"),
-      error: Color(hex: "#FF0000"),
-      formBackground: Color(hex: "#24302D"),
-      formBorder: .white,
-      inverse: .black,
-      outline: Color(hex: "#B1B1B1"),
-      primary: Color(hex: "#B1B1B1"),
-      secondary: .white
+      action: .brightBlue,                         // CTA background
+      background: Color(hex: "#0D1117"),           // App background
+      border: Color(hex: "#30363D"),               // Neutral border
+      disabled: Color(hex: "#6E7681"),             // Placeholder/disabled
+      error: .deepRed,                              // Error states
+      formBackground: Color(hex: "#161B22"),       // Cards/inputs surface
+      formBorder: Color(hex: "#30363D"),           // Input borders
+      inverse: .white,                              // Text on action
+      outline: .lightBlue,                          // Focus/outline
+      primary: Color(hex: "#C9D1D9"),              // Primary text
+      secondary: Color(hex: "#8B949E"),            // Secondary text
+      success: .checkoutGreen                       // Success states
     )
-    
-    let buttonFont: CheckoutComponents.Font = .init(
-      font: .custom("HelveticaNeue-Bold", size: 20),
-      lineHeight: 2,
-      letterSpacing: 2
+
+    // Use SDK’s default font styles to respect Dynamic Type and avoid overflow
+    let fonts = CheckoutComponents.Font.Style(
+      button: .button,
+      footnote: .footnote,
+      input: .input,
+      label: .label,
+      subheading: .subheading
     )
-    
-    let subheadingFont: CheckoutComponents.Font = .init(
-      font: .custom("HelveticaNeue-Light", size: 20),
-      lineHeight: 2,
-      letterSpacing: 2
+
+    // Consistent, all-corner radii (no asymmetric corners)
+    self.designToken = .init(
+      colorTokensMain: colorTokens,
+      fonts: fonts,
+      borderButtonRadius: .init(radius: 12),
+      borderFormRadius: .init(radius: 12)
     )
-    
-    let inputFont: CheckoutComponents.Font = .init(
-      font: .custom("HelveticaNeue-Bold", size: 20),
-      lineHeight: 2,
-      letterSpacing: 2
-    )
-    
-    let labelFont: CheckoutComponents.Font = .init(
-      font: .custom("HelveticaNeue-Bold", size: 20),
-      lineHeight: 2,
-      letterSpacing: 2
-    )
-    
-    self.designToken = .init(colorTokensMain: colorTokens,
-                             fonts: .init(button: buttonFont,
-                                          input: inputFont,
-                                          label: labelFont,
-                                          subheading: subheadingFont),
-                             borderButtonRadius: .init(radius: 40,
-                                                 corners: [.topLeft, .bottomRight]),
-                             borderFormRadius: .init(radius: 20,
-                                                     corners: [.topLeft, .topRight]))
   }
 }

@@ -5,6 +5,11 @@
 ## User settings
 xcuserdata/
 
+## KMP Project as a reference
+KMPProject/
+
+Documentation/
+
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout
@@ -43,3 +48,5 @@ Package.resolved
 
 # Ignore all EnvironmentVars.generated.swift files in any directory
 **/EnvironmentVars.generated.swift
+
+.DS_Store
