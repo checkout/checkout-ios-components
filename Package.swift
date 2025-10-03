@@ -41,16 +41,17 @@ let package = Package(
       path: "CheckoutComponentsPackage"
     ),
 
-      .binaryTarget(
-        name: "CheckoutComponentsSDK",
-        url: sdkURL,
-        checksum: sdkChecksum
-      ),
+    .binaryTarget(
+      name: "CheckoutComponentsSDK",
+      url: "https://github.com/checkout/checkout-ios-components/releases/download/1.2.1/CheckoutComponentsSDK.xcframework.zip",
+      checksum: "1c34c13c25271ad8590d5475fbe5be60dcbf6a06bdc645d52795e405f8e61c6c"
+    ),
 
-      .binaryTarget(
-        name: "CheckoutKMPRememberMe",
-        url: kmpURL,
-        checksum: kmpChecksum
+    .binaryTarget(
+      name: "CheckoutComponentsSDK",
+      url: "https://github.com/checkout/checkout-ios-components/releases/download/1.2.1/CheckoutComponentsSDK.xcframework.zip",
+      checksum: "1c34c13c25271ad8590d5475fbe5be60dcbf6a06bdc645d52795e405f8e61c6c"
+    ),
       )
   ]
 )
