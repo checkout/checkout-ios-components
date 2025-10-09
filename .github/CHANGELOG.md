@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.2.2](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.2)
+
+Released on 09.10.2025
+
+Updates:
+  
+- Minor bugfixes.
+  
+##
+
 ## [1.2.1](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.1)
 
 Released on 13.08.2025
