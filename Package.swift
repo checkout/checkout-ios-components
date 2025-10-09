@@ -1,11 +1,11 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "1.2.1"
+let releaseVersion = "1.2.2"
 let githubRepo = "checkout/checkout-ios-components"
 
 let sdkChecksum = "517b0f9d572087dcb6b400c6b699063aab12712fb201d6a67d8465a0c25f8f78"
-let kmpChecksum = "51a3b293f4d7c0b932c0b6693bb3cd170c98f036d8c2dea2687b06a94e72405e"
+let kmpChecksum = "99d0d96f9e53b60613d3d1e34c77ecd4abf54789f0bdd395f803d3e6c8e9fede"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let kmpURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutKMPRememberMe.xcframework.zip"
