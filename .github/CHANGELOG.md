@@ -5,23 +5,13 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
-## [1.2.3](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.3)
+## [1.2.4](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.4)
 
-Released on 10.10.2025
-
-Updates:
-  
-- Fix App store signing issues
-  
-##
-
-## [1.2.2](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.2)
-
-Released on 09.10.2025
+Released on 13.10.2025
 
 Updates:
   
-- Minor bugfixes.
+- Fix an error relevant to a dependency being unsigned.
   
 ##
 
