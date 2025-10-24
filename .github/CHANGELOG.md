@@ -5,13 +5,30 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.2.5](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.5)
+
+Released on 24.10.2025
+
+Updates:
+  
+- **Improvements**
+  - Mandatory Address: Made the Address component required when configured, with clearer validation and messaging.
+  - Australia states: Added state/territory support and validation for AU addresses.
+
+- **Bug Fixes**
+  - Resolved UX validation issues for Flow card fields for consistent inline and on-submit errors.
+  - CVV is no longer cleared when editing the card number.
+  - Fixed CVV validation when the value starts with 0.
+
+##
+
 ## [1.2.4](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.4)
 
 Released on 13.10.2025
 
 Updates:
   
-- Fix an error relevant to a dependency being unsigned.
+- Fixes a bug relevant to the invalid signature of a dependency.
   
 ##
 
