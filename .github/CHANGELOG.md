@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.2.6](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.6)
+
+Released on 05.11.2025
+
+Updates:
+  
+- **Improvements**
+  - Handle Maestro cards on Mastercard rails.
+
+##
+
 ## [1.2.5](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.5)
 
 Released on 24.10.2025
