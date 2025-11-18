@@ -1,0 +1,47 @@
+# IMPORTANT: Swift Package Manager does NOT support Git LFS
+# SPM performs shallow clones that don't fetch LFS objects
+# Files that SPM needs to check out the package MUST NOT be tracked by LFS
+# 
+# This package uses binaryTarget with URLs pointing to GitHub releases,
+# so binary frameworks are downloaded, not stored in the repo
+
+# CRITICAL: Exclude all files that SPM needs from LFS
+# These files must be regular Git files, not LFS pointers
+
+# Package manifest - REQUIRED by SPM
+Package.swift -filter -diff -merge
+
+# Source files - REQUIRED by SPM
+*.swift -filter -diff -merge
+
+# Swift interface files - may be needed by SPM
+*.swiftinterface -filter -diff -merge
+*.swiftdoc -filter -diff -merge
+
+# Source code directories - REQUIRED by SPM
+CheckoutComponentsPackage/** -filter -diff -merge
+
+# JSON files in package source - may be needed
+CheckoutComponentsPackage/**/*.json -filter -diff -merge
+
+# Only track truly optional files that won't break SPM checkout
+# These are typically documentation/media files that aren't needed for package resolution
+
+# Documentation images (optional - only in .github directory)
+.github/**/*.png filter=lfs diff=lfs merge=lfs -text
+.github/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+.github/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+.github/**/*.gif filter=lfs diff=lfs merge=lfs -text
+.github/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+
+# Sample app assets (optional - not needed for package resolution)
+SampleApplication/**/*.png filter=lfs diff=lfs merge=lfs -text
+SampleApplication/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+SampleApplication/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+
+# Binary frameworks (only if stored in repo - this package uses URLs instead)
+# Uncomment only if you store frameworks in the repo (not recommended for SPM packages)
+# *.xcframework filter=lfs diff=lfs merge=lfs -text
+# *.framework filter=lfs diff=lfs merge=lfs -text
+# *.xcframework.zip filter=lfs diff=lfs merge=lfs -text
+

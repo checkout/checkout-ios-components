@@ -27,7 +27,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
-      from: "4.0.0"
+      from: "4.0.1"
     )
   ],
   targets: [
