@@ -12,7 +12,7 @@ Released on 19.11.2025
 Updates:
   
 - **Improvements**
-  - Merchant has the control to show or hide Card hoilder name field.
+  - Merchant has the control to show or hide Card holder name field.
   - Apple Pay payment request is accurately reflect the total type (PKPaymentSummaryItemType) value.
   - Upgrade minumum Risk SDK version to be 4.0.1
 
