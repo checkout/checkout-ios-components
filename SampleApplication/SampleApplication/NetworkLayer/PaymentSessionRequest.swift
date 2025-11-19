@@ -10,10 +10,12 @@ struct PaymentSessionRequest: Encodable {
   let failureURL: String
   let threeDS: ThreeDS
   let processingChannelID: String?
+  let paymentMethodConfiguration: PaymentMethodConfiguration
   
   enum CodingKeys: String, CodingKey {
     case threeDS = "3ds"
     case processingChannelID = "processing_channel_id"
+    case paymentMethodConfiguration = "payment_method_configuration"
     case amount, currency, billing, successURL, failureURL
   }
 }
@@ -33,4 +35,12 @@ struct ThreeDS: Encodable {
     case attemptN3D = "attempt_n3d"
     case enabled
   }
+}
+
+struct PaymentMethodConfiguration: Encodable {
+  let applepay: ApplePayConfiguration
+}
+
+struct ApplePayConfiguration: Encodable {
+  let totalType: String
 }

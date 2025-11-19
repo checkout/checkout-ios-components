@@ -34,6 +34,8 @@ final class MainViewModel: ObservableObject {
   @Published var selectedLocale: String = CheckoutComponents.Locale.en_GB.rawValue
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
+  @Published var selectedApplePayType: ApplePayType = .final
+  @Published var displayCardHolderName: CheckoutComponents.DisplayCardHolderName = .top
   @Published var handleSubmitManually = false
   @Published var updatedAmount = ""
   @Published var isShowUpdateView = false
@@ -96,7 +98,8 @@ extension MainViewModel {
                                          successURL: Constants.successURL,
                                          failureURL: Constants.failureURL,
                                          threeDS: .init(enabled: true, attemptN3D: true),
-                                         processingChannelID: EnvironmentVars.processingChannelID)
+                                         processingChannelID: EnvironmentVars.processingChannelID,
+                                         paymentMethodConfiguration: .init(applepay: .init(totalType: selectedApplePayType.rawValue)))
 
      return try await networkLayer.createPaymentSession(request: request)
    }
@@ -215,6 +218,7 @@ extension MainViewModel {
     }()
 
     return .card(showPayButton: showCardPayButton,
+                 displayCardHolderName: displayCardHolderName,
                  paymentButtonAction: paymentButtonAction,
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
