@@ -14,7 +14,7 @@ Updates:
 - **Improvements**
   - Merchant has the control to show or hide Card holder name field.
   - Apple Pay payment request accurately reflects the total type (PKPaymentSummaryItemType) value.
-  - Upgrade minumum Risk SDK version to be 4.0.1
+  - Upgrade minimum Risk SDK version to be 4.0.1
 
 ## [1.2.6](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.6)
 
