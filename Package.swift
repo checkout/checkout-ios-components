@@ -1,10 +1,10 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "1.2.6"
+let releaseVersion = "1.3.0"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "b911cd0edaba2d8e8f2e43f1c62650c3fe746935635230c189d90eb446bfffe2"
+let sdkChecksum = "7b611f082f77ae16e42bce779de85c77d145a3b72b3dd2f23265e8ca8114a8b0"
 let kmpChecksum = "737407dfadcf271a257684257e20cf7c731b9e6f7f56daea6c22836e06328fa0"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
@@ -41,17 +41,16 @@ let package = Package(
       path: "CheckoutComponentsPackage"
     ),
 
-    .binaryTarget(
-      name: "CheckoutComponentsSDK",
-      url: "https://github.com/checkout/checkout-ios-components/releases/download/1.3.0/CheckoutComponentsSDK.xcframework.zip",
-      checksum: "09cbbce534e9f5d460aa2eee61ee298c8881dabb2aed17a53066e983357215cb"
-    ),
+      .binaryTarget(
+        name: "CheckoutComponentsSDK",
+        url: sdkURL,
+        checksum: sdkChecksum
+      ),
 
-    .binaryTarget(
-      name: "CheckoutComponentsSDK",
-      url: "https://github.com/checkout/checkout-ios-components/releases/download/1.3.0/CheckoutComponentsSDK.xcframework.zip",
-      checksum: "09cbbce534e9f5d460aa2eee61ee298c8881dabb2aed17a53066e983357215cb"
-    ),
+      .binaryTarget(
+        name: "CheckoutKMPRememberMe",
+        url: kmpURL,
+        checksum: kmpChecksum
       )
   ]
 )
