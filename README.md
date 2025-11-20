@@ -42,7 +42,7 @@ SPM sometimes has caching issues, it's better to do some clean up before upgradi
 - close xcode
 In terminal:
 - Run `brew install git-lfs`
-- cd to your project folder then Run these to clear cache 
+- cd to your project folder then run these to clear cache 
 ```
 rm -rf ~/Library/Caches/org.swift.swiftpm
 rm -rf ~/Library/org.swift.swiftpm
