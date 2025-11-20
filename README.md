@@ -19,7 +19,7 @@
 - Swift 6
 - arm64
 >**⚠️ Note** <br>
-we dropped the support for x86. As of April 2025, Apple requires all apps submitted to the App Store to be built by Xcode 16+ which can’t be downloaded on an Intel chip MacBook. Hence there is no use case for the old architecture. We only support arm64 architecture.
+We dropped the support for x86. As of April 2025, Apple requires all apps submitted to the App Store to be built by Xcode 16+ which can’t be downloaded on an Intel chip MacBook. Hence there is no use case for the old architecture. We only support arm64 architecture.
 
 ## Integration
 
