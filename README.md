@@ -53,28 +53,19 @@ SPM sometimes has caching issues, it's better to do some clean up before upgradi
 rm -rf ~/Library/Caches/org.swift.swiftpm
 rm -rf ~/Library/org.swift.swiftpm
 rm -rf ~/.swiftpm
-rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
-rm -rf ~/Library/Developer/Xcode/SourcePackages
-rm -rf ~/Library/Developer/Xcode/DerivedData
-rm -rf ~/Library/Developer/Xcode/Archives
-rm -rf ~/Library/Developer/Xcode/Products
-rm -rf ~/Library/Caches/com.apple.dt.Xcode
+rm -f ~/.swiftpm/configuration/mirrors.json
+rm -f ~/.swiftpm/configuration/registries.json
 rm -rf .build .swiftpm
 rm -f Package.resolved
 swift package reset
-rm -rf ~/Library/Caches/org.swift.swiftpm
-rm -rf ~/Library/org.swift.swiftpm
-rm -rf ~/.swiftpm
-rm -f ~/.swiftpm/configuration/mirrors.json
-rm -f ~/.swiftpm/configuration/registries.json
-rm -rf ~/Library/Developer/Xcode/SourcePackages
-rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
+rm -rf ~/Library/Caches/com.apple.dt.Xcode
 rm -rf ~/Library/Developer/Xcode/DerivedData
 rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
 rm -rf ~/Library/Developer/Xcode/DerivedData/PrecompiledHeaders
-rm -rf ~/Library/Caches/com.apple.dt.Xcode
-rm -rf ~/Library/Developer/Xcode/Products
 rm -rf ~/Library/Developer/Xcode/Archives
+rm -rf ~/Library/Developer/Xcode/Products
+rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
+rm -rf ~/Library/Developer/Xcode/SourcePackages
 rm -rf ~/Library/Caches/com.apple.nsurlsessiond
 rm -rf ~/Library/Caches/com.apple.CFNetwork
 ```
