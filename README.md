@@ -14,9 +14,12 @@
 
 ## Minimum Requirements
 
-- iOS 15
-- Xcode 16
+- iOS 15+
+- Xcode 16+
 - Swift 6
+- arm64
+>**⚠️ Note** <br>
+We dropped the support for x86. As of April 2025, Apple requires all apps submitted to the App Store to be built by Xcode 16+ which can’t be downloaded on an Intel chip MacBook. Hence there is no use case for the old architecture. We only support arm64 architecture.
 
 ## Integration
 
@@ -33,9 +36,40 @@ For detailed integration steps, refer to our
 >You can choose to automatically downgrade your payment to a non-3DS payment if there are any technical issues during the 3DS authentication process that would otherwise cause the payment to fail. To do this, set the attemptN3D field in your request to true and we'll automatically attempt to process the payment without 3DS authentication <kbd>[More info](https://www.checkout.com/docs/payments/authenticate-payments) ↗️</kbd></samp>
 
 ### Swift Package Manager
+>**⚠️ Important** <br>
+> SPM (Swift Package Manager) and CocoaPods can usually coexist in the same project without issues. That said, since CocoaPods is now in maintenance mode, the iOS team made a tech decision to officially support only SPM going forward. It’s simpler to manage and already works well alongside CocoaPods if needed.
+
 <kbd>[Swift Package Manager](https://swift.org/package-manager/)  ↗️ </kbd> integrated with the Swift build system to automate the process of downloading, compiling, and linking dependencies. It should work out of the box on latest Xcode projects since Xcode 11 and has had a lot of community support, seeing huge adoption over the recent years. This is our preferred distribution method for Frames iOS and is the easiest one to integrate, keep updated and build around.
 
 If you've never used it before, get started with Apple's step by step guide into <kbd>[adding package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app)  ↗️</kbd> to your app
+
+
+SPM sometimes has caching issues, it's better to do some clean up before upgrading to a new release.
+- close Xcode
+- In terminal:
+- Run `brew install git-lfs`
+- cd to your project folder then run these to clear cache 
+```
+rm -rf ~/Library/Caches/org.swift.swiftpm
+rm -rf ~/Library/org.swift.swiftpm
+rm -rf ~/.swiftpm
+rm -f ~/.swiftpm/configuration/mirrors.json
+rm -f ~/.swiftpm/configuration/registries.json
+rm -rf .build .swiftpm
+rm -f Package.resolved
+swift package reset
+rm -rf ~/Library/Caches/com.apple.dt.Xcode
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+rm -rf ~/Library/Developer/Xcode/DerivedData/PrecompiledHeaders
+rm -rf ~/Library/Developer/Xcode/Archives
+rm -rf ~/Library/Developer/Xcode/Products
+rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
+rm -rf ~/Library/Developer/Xcode/SourcePackages
+rm -rf ~/Library/Caches/com.apple.nsurlsessiond
+rm -rf ~/Library/Caches/com.apple.CFNetwork
+```
+- Build the project using `xcodebuild -resolvePackageDependencies`
 
 ## Setting Up the Sample App
 
