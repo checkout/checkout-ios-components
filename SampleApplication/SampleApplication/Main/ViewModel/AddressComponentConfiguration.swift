@@ -14,7 +14,7 @@ enum AddressComponentConfiguration: String, CaseIterable {
   case prefillBilling = "Prefill billing"
   case prefillCustomized = "Prefill customized"
   case noPrefill = "No prefill"
-  case addressOnly = "Adress Only"
+  case addressOnly = "Address Only"
   case noPhone = "No phone"
   case noName = "No name"
   case noEmail = "No email"
