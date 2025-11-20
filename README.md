@@ -17,6 +17,9 @@
 - iOS 15+
 - Xcode 16+
 - Swift 6
+- arm64
+>**⚠️ Note** <br>
+we dropped the support X86. As of April 2025, Apple requires all app submitted to the App Store to be built by Xcode 16+ which can’t be downloaded on an Intel chip MacBook. Hence there is no use case for the old architecture. We only support arm64 architecture.
 
 ## Integration
 
@@ -33,6 +36,9 @@ For detailed integration steps, refer to our
 >You can choose to automatically downgrade your payment to a non-3DS payment if there are any technical issues during the 3DS authentication process that would otherwise cause the payment to fail. To do this, set the attemptN3D field in your request to true and we'll automatically attempt to process the payment without 3DS authentication <kbd>[More info](https://www.checkout.com/docs/payments/authenticate-payments) ↗️</kbd></samp>
 
 ### Swift Package Manager
+>**⚠️ Important** <br>
+> SPM (Swift Package Manager) and CocoaPods can usually coexist in the same project without issues. That said, since CocoaPods is now in maintenance mode, the iOS team made a tech decision to officially support only SPM going forward. It’s simpler to manage and already works well alongside CocoaPods if needed.
+
 <kbd>[Swift Package Manager](https://swift.org/package-manager/)  ↗️ </kbd> integrated with the Swift build system to automate the process of downloading, compiling, and linking dependencies. It should work out of the box on latest Xcode projects since Xcode 11 and has had a lot of community support, seeing huge adoption over the recent years. This is our preferred distribution method for Frames iOS and is the easiest one to integrate, keep updated and build around.
 
 If you've never used it before, get started with Apple's step by step guide into <kbd>[adding package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app)  ↗️</kbd> to your app
