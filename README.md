@@ -14,8 +14,8 @@
 
 ## Minimum Requirements
 
-- iOS 15
-- Xcode 16
+- iOS 15+
+- Xcode 16+
 - Swift 6
 
 ## Integration
@@ -36,6 +36,43 @@ For detailed integration steps, refer to our
 <kbd>[Swift Package Manager](https://swift.org/package-manager/)  ↗️ </kbd> integrated with the Swift build system to automate the process of downloading, compiling, and linking dependencies. It should work out of the box on latest Xcode projects since Xcode 11 and has had a lot of community support, seeing huge adoption over the recent years. This is our preferred distribution method for Frames iOS and is the easiest one to integrate, keep updated and build around.
 
 If you've never used it before, get started with Apple's step by step guide into <kbd>[adding package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app)  ↗️</kbd> to your app
+
+
+SPM sometimes has caching issues, it's better to do some clean up before upgrading to new release 
+- close xcode
+In terminal:
+- Run `brew install git-lfs`
+- cd to your project folder then Run these to clear cache 
+```
+rm -rf ~/Library/Caches/org.swift.swiftpm
+rm -rf ~/Library/org.swift.swiftpm
+rm -rf ~/.swiftpm
+rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
+rm -rf ~/Library/Developer/Xcode/SourcePackages
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf ~/Library/Developer/Xcode/Archives
+rm -rf ~/Library/Developer/Xcode/Products
+rm -rf ~/Library/Caches/com.apple.dt.Xcode
+rm -rf .build .swiftpm
+rm -f Package.resolved
+swift package reset
+rm -rf ~/Library/Caches/org.swift.swiftpm
+rm -rf ~/Library/org.swift.swiftpm
+rm -rf ~/.swiftpm
+rm -f ~/.swiftpm/configuration/mirrors.json
+rm -f ~/.swiftpm/configuration/registries.json
+rm -rf ~/Library/Developer/Xcode/SourcePackages
+rm -rf ~/Library/Caches/com.apple.dt.Xcode/SourcePackages
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+rm -rf ~/Library/Developer/Xcode/DerivedData/PrecompiledHeaders
+rm -rf ~/Library/Caches/com.apple.dt.Xcode
+rm -rf ~/Library/Developer/Xcode/Products
+rm -rf ~/Library/Developer/Xcode/Archives
+rm -rf ~/Library/Caches/com.apple.nsurlsessiond
+rm -rf ~/Library/Caches/com.apple.CFNetwork
+```
+- Build project with this  `-resolvePackageDependencies`
 
 ## Setting Up the Sample App
 
