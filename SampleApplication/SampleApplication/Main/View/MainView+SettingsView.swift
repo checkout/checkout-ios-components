@@ -25,6 +25,11 @@ enum CheckoutComponent: String, CaseIterable {
   }
 }
 
+enum ApplePayType: String, CaseIterable {
+  case final
+  case pending
+}
+
 extension MainView {
   var settingView: some View {
     VStack(alignment: .leading) {
@@ -166,6 +171,8 @@ extension MainView {
       VStack(alignment: .leading, spacing: 12) {
         cardOptionsView
         showApplePayButtonView
+        applePayTypeView
+        cardHolderNamePositionView
 
         VStack(alignment: .leading, spacing: 12) {
           submitPaymentMethodView
@@ -253,6 +260,34 @@ extension MainView {
         }
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.addressPicker.rawValue)
+    }
+  }
+  
+  var applePayTypeView: some View {
+    HStack {
+      Text("Apple Pay type:")
+
+      Picker("Apple Pay type", selection: $viewModel.selectedApplePayType) {
+        ForEach(ApplePayType.allCases, id: \.self) {
+          Text($0.rawValue.capitalized)
+            .accessibilityIdentifier($0.rawValue)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.applePayTypePicker.rawValue)
+    }
+  }
+  
+  var cardHolderNamePositionView: some View {
+    HStack {
+      Text("Display Cardholder Name:")
+
+      Picker("Display Cardholder Name", selection: $viewModel.displayCardHolderName) {
+        ForEach(CheckoutComponents.DisplayCardHolderName.allCases, id: \.self) {
+          Text($0.rawValue.capitalized)
+            .accessibilityIdentifier($0.rawValue)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.displayCardholderNamePicker.rawValue)
     }
   }
 
