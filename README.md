@@ -44,7 +44,7 @@ For detailed integration steps, refer to our
 If you've never used it before, get started with Apple's step by step guide into <kbd>[adding package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app)  ↗️</kbd> to your app
 
 
-SPM sometimes has caching issues, it's better to do some clean up before upgrading to new release.
+SPM sometimes has caching issues, it's better to do some clean up before upgrading to a new release.
 - close Xcode
 - In terminal:
 - Run `brew install git-lfs`
