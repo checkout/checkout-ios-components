@@ -72,7 +72,7 @@ rm -rf ~/Library/Developer/Xcode/Archives
 rm -rf ~/Library/Caches/com.apple.nsurlsessiond
 rm -rf ~/Library/Caches/com.apple.CFNetwork
 ```
-- Build project with this  `-resolvePackageDependencies`
+- Build project with this `-resolvePackageDependencies`
 
 ## Setting Up the Sample App
 
