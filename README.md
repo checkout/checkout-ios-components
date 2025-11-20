@@ -40,7 +40,7 @@ If you've never used it before, get started with Apple's step by step guide into
 
 SPM sometimes has caching issues, it's better to do some clean up before upgrading to new release.
 - close Xcode
-In terminal:
+- In terminal:
 - Run `brew install git-lfs`
 - cd to your project folder then run these to clear cache 
 ```
