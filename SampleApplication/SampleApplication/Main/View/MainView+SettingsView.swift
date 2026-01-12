@@ -32,16 +32,18 @@ enum ApplePayType: String, CaseIterable {
 
 extension MainView {
   var settingView: some View {
-    VStack(alignment: .leading) {
-      sdkOptionsView
-      environmentView
-      appearanceView
-      localeView
+    ScrollView {
+      VStack(alignment: .leading) {
+        sdkOptionsView
+        environmentView
+        appearanceView
+        localeView
 
-      advancedFeaturesView
-      rememberMeConfigurationsView
+        advancedFeaturesView
+        rememberMeConfigurationsView
+      }
+      .padding(.horizontal)
     }
-    .padding(.horizontal)
   }
 
   var sdkOptionsView: some View {
@@ -173,6 +175,9 @@ extension MainView {
         showApplePayButtonView
         applePayTypeView
         cardHolderNamePositionView
+        cardAcceptedCardSchemesView
+        applePayAcceptedCardSchemesView
+        rememberMeAcceptedCardSchemesView
 
         VStack(alignment: .leading, spacing: 12) {
           submitPaymentMethodView
@@ -289,6 +294,66 @@ extension MainView {
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.displayCardholderNamePicker.rawValue)
     }
+  }
+  
+  private var allCardSchemes: [CardScheme] {
+    [
+      .americanExpress, .cartesBancaires,
+      .chinaUnionPay, .dinersClub,
+      .discover, .jcb,
+      .mada, .mastercard,
+      .visa, .maestro
+    ]
+  }
+
+  func acceptedCardSchemesPicker(title: String,
+                               selectedSchemes: Binding<Set<CardScheme>>,
+                               accessibilityIdentifierSuffix: String) -> some View {
+  DisclosureGroup {
+    ForEach(allCardSchemes, id: \.self) { scheme in
+      Button(action: {
+        if selectedSchemes.wrappedValue.contains(scheme) {
+          selectedSchemes.wrappedValue.remove(scheme)
+        } else {
+          selectedSchemes.wrappedValue.insert(scheme)
+        }
+      }) {
+        HStack {
+          Text(scheme.rawValue.capitalized)
+          Spacer()
+          if selectedSchemes.wrappedValue.contains(scheme) {
+            Image(systemName: "checkmark")
+              .foregroundColor(.accentColor)
+          }
+        }
+        .contentShape(Rectangle())
+      }
+      .buttonStyle(.plain)
+    }
+  } label: {
+    Text(title)
+      .foregroundColor(.primary)
+      .multilineTextAlignment(.leading)
+  }
+  .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.acceptedCardSchemesPicker.rawValue + accessibilityIdentifierSuffix)
+}
+
+  var cardAcceptedCardSchemesView: some View {
+    acceptedCardSchemesPicker(title: "Card accepted card schemes:",
+                              selectedSchemes: $viewModel.cardAcceptedCardSchemes,
+                              accessibilityIdentifierSuffix: "_card")
+  }
+
+  var applePayAcceptedCardSchemesView: some View {
+    acceptedCardSchemesPicker(title: "Apple Pay accepted card schemes:",
+                              selectedSchemes: $viewModel.applePayAcceptedCardSchemes,
+                              accessibilityIdentifierSuffix: "_apple_pay")
+  }
+  
+  var rememberMeAcceptedCardSchemesView: some View {
+    acceptedCardSchemesPicker(title: "Remember Me accepted card schemes:",
+                              selectedSchemes: $viewModel.rememberMeAcceptedCardSchemes,
+                              accessibilityIdentifierSuffix: "_remember_me")
   }
 
   var updateAmountSettingView: some View {

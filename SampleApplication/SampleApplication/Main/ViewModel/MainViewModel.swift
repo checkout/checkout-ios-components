@@ -36,6 +36,9 @@ final class MainViewModel: ObservableObject {
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
   @Published var displayCardHolderName: CheckoutComponents.DisplayCardHolderName = .top
+  @Published var cardAcceptedCardSchemes: Set<CardScheme> = []
+  @Published var applePayAcceptedCardSchemes: Set<CardScheme> = []
+  @Published var rememberMeAcceptedCardSchemes: Set<CardScheme> = []
   @Published var handleSubmitManually = false
   @Published var updatedAmount = ""
   @Published var isShowUpdateView = false
@@ -214,19 +217,22 @@ extension MainViewModel {
         email: userEmail.isEmpty ? nil : userEmail,
         phone: phoneModel
       )
-      return .init(data: data, showPayButton: showRememberMePayButton)
+      return .init(data: data, showPayButton: showRememberMePayButton,
+                  acceptedCardSchemes: rememberMeAcceptedCardSchemes)
     }()
 
     return .card(showPayButton: showCardPayButton,
-                 displayCardHolderName: displayCardHolderName,
                  paymentButtonAction: paymentButtonAction,
+                 cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
+                                       acceptedCardSchemes: cardAcceptedCardSchemes),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
   }
   
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {
-    .applePay(merchantIdentifier: "merchant.com.flow.checkout.sandbox",
-              showPayButton: showApplePayButton)
+    .applePay(merchantIdentifier: "merchant.com.ios.mobile.flow.sandbox",
+              showPayButton: showApplePayButton,
+              applePayConfiguration: .init(acceptedCardSchemes: applePayAcceptedCardSchemes))
   }
   
   func resetToDefaultConfiguration() {
