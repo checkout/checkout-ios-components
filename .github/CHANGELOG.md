@@ -5,16 +5,33 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
-## [1.3.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.3.0)
+## [1.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.4.0)
 
-Released on 19.11.2025
+Released on 12.01.2026
 
 Updates:
+
+- **Improvements**
+  - Added accepted card scheme field to card, ApplePay and RememberMe components.
   
+- **Bug Fixes**
+
+##
+
+
+## [1.3.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.3.0)
+
+Released on 02.12.2025
+
+Updates:
+
 - **Improvements**
   - Merchant has the control to show or hide Card holder name field.
   - Apple Pay payment request accurately reflects the total type (PKPaymentSummaryItemType) value.
   - Upgrade minimum Risk SDK version to be 4.0.1
+
+##
+
 
 ## [1.2.6](https://github.com/checkout/checkout-ios-components/releases/tag/1.2.6)
 
@@ -22,8 +39,8 @@ Released on 05.11.2025
 
 Updates:
   
-- **Bug Fixes**
-  - Added support for Maestro cards when Mastercard is enabled.
+- **Improvements**
+  - Handle Maestro cards on Mastercard rails.
 
 ##
 
