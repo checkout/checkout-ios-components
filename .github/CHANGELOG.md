@@ -5,14 +5,38 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.5.0)
+
+Released on 12.02.2026
+
+Updates:
+
+- **What's new**
+  - [Added] Support Mada in RememberMe component (making cvv mandatory for Mada cards). Both cobranded schemes are also shown for a saved card and during scheme detection during first time payments.
+  
+- **Bug Fixes**
+
+##
+
 ## [1.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.4.0)
 
 Released on 12.01.2026
 
 Updates:
 
-- **Improvements**
-  - Added accepted card scheme field to card, ApplePay and RememberMe components.
+- **What's new**
+  - Added Accepted card scheme configurations which enable merchants to specify which card schemes are accepted
+
+  - Added a new CardConfigurations, ApplePayConfiguration structs to wrap all configuration fields
+
+  - New acceptedCardScheme field
+
+  - Update Sample application to have new settings related to acceptedCardScheme
+  
+- **Public API Change**
+  - Added CardConfiguration and ApplePayConfiguration
+  - Added acceptedCardScheme field to both configurations
+  - Updated Move displayCardHolderName field to CardConfiguration model
   
 - **Bug Fixes**
 

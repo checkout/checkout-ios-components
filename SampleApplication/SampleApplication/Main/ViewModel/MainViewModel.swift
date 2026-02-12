@@ -31,7 +31,8 @@ final class MainViewModel: ObservableObject {
   @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
   @Published var selectedComponentType: CheckoutComponent = .flow
   @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
-  @Published var selectedLocale: String = CheckoutComponents.Locale.en_GB.rawValue
+  @Published var selectedLocale: LocaleOption = .locale(.en_GB)
+  @Published var paymentSessionSelectedLocale: LocaleOption = .locale(.en_GB)
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
@@ -101,20 +102,22 @@ extension MainViewModel {
                                          successURL: Constants.successURL,
                                          failureURL: Constants.failureURL,
                                          threeDS: .init(enabled: true, attemptN3D: true),
-                                         processingChannelID: EnvironmentVars.processingChannelID,
-                                         paymentMethodConfiguration: .init(applepay: .init(totalType: selectedApplePayType.rawValue)))
+                                         processingChannelID: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil,
+                                         paymentMethodConfiguration: .init(applepay: .init(totalType: selectedApplePayType.rawValue)),
+                                         locale: paymentSessionSelectedLocale.localeString)
 
-     return try await networkLayer.createPaymentSession(request: request)
+     return try await networkLayer.createPaymentSession(request: request,
+                                                        environment: selectedEnvironment)
    }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
-      publicKey: EnvironmentVars.publicKey,
+      publicKey: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxPublicKey : EnvironmentVars.productionPublicKey,
       environment: selectedEnvironment,
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
-      locale: selectedLocale,
+      locale: selectedLocale.localeString,
       translations: getTranslation(),
       callbacks: initialiseCallbacks())
 
@@ -241,7 +244,7 @@ extension MainViewModel {
     selectedPaymentMethodTypes = [.card, .applePay]
     showCardPayButton = true
     paymentButtonAction = .payment
-    selectedLocale = CheckoutComponents.Locale.en_GB.rawValue
+    selectedLocale = .locale(.en_GB)
     selectedEnvironment = .sandbox
     selectedAddressConfiguration = .prefillCustomized
     isDefaultAppearance = true
@@ -253,9 +256,9 @@ extension MainViewModel {
   }
   
   func getTranslation() -> [String: [CheckoutComponents.TranslationKey : String]] {
-    guard selectedLocale == "Customised" else { return [:] }
+    guard selectedLocale == .customised else { return [:] }
     
-    return [selectedLocale: [
+    return [selectedLocale.displayName: [
       .card: "😂",
       .cardHolderName: "🤷🏻‍♂️",
       .cardNumber: "🔢"
@@ -320,6 +323,7 @@ extension MainViewModel {
                                                                             attemptN3D: false))
     
     return try await networkLayer.submitPaymentSession(paymentSessionId: paymentSessionId,
-                                                       request: submitPaymentRequest)
+                                                       request: submitPaymentRequest,
+                                                       environment: selectedEnvironment)
   }
 }

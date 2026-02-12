@@ -38,6 +38,7 @@ extension MainView {
         environmentView
         appearanceView
         localeView
+        paymentSessionLocaleView
 
         advancedFeaturesView
         rememberMeConfigurationsView
@@ -121,16 +122,28 @@ extension MainView {
       Text("Locale:")
 
       Picker("Locale", selection: $viewModel.selectedLocale) {
-        Text("Customised")
-          .tag("Customised")
-          .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.customLocale.rawValue)
-
-        ForEach(viewModel.getLocales(), id: \.self) {
-          Text($0)
-            .accessibilityIdentifier($0)
-        }
+        ForEach(LocaleOption.allOptions, id: \.self) { option in
+              Text(option.displayName)
+                  .tag(option)
+                  .accessibilityIdentifier(option.accessibilityIdentifier)
+          }
       }
-      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.environmentPicker.rawValue)
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.localePicker.rawValue)
+    }
+  }
+  
+  var paymentSessionLocaleView: some View {
+    HStack {
+      Text("PS Locale:")
+
+      Picker("Locale", selection: $viewModel.paymentSessionSelectedLocale) {
+          ForEach(LocaleOption.paymentSessionOptions, id: \.self) { option in
+              Text(option.displayName)
+                  .tag(option)
+                  .accessibilityIdentifier(option.accessibilityIdentifier)
+          }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentSessionLocalePicker.rawValue)
     }
   }
 
@@ -169,7 +182,8 @@ extension MainView {
 
   var advancedFeaturesView: some View {
     expandableSection(title: "Advanced Features",
-                      isExpanded: $viewModel.isAdvancedFeaturesExpanded) {
+                      isExpanded: $viewModel.isAdvancedFeaturesExpanded,
+                      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.advancedFeaturesExpandable.rawValue) {
       VStack(alignment: .leading, spacing: 12) {
         cardOptionsView
         showApplePayButtonView
@@ -366,6 +380,7 @@ extension MainView {
   @ViewBuilder
   func expandableSection<Content: View>(title: String,
                                         isExpanded: Binding<Bool>,
+                                        accessibilityIdentifier: String? = nil,
                                         @ViewBuilder content: () -> Content) -> some View {
     VStack(alignment: .leading) {
       Button(action: {
@@ -384,6 +399,7 @@ extension MainView {
         .padding(.vertical, 8)
       }
       .buttonStyle(PlainButtonStyle())
+      .accessibilityIdentifier(accessibilityIdentifier ?? "")
       
       if isExpanded.wrappedValue {
         VStack(alignment: .leading, spacing: 12) {
