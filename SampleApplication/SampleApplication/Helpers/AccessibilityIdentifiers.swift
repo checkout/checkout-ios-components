@@ -16,6 +16,7 @@ enum AccessibilityIdentifier {
     case sandboxEnvironmentOption = "sandbox_environment_option"
     case productionEnvironmentOption = "production_environment_option"
     case localePicker = "locale_picker"
+    case paymentSessionLocalePicker = "payment_session_locale_picker"
     case customLocale = "custom_locale_option"
     case addressPicker = "address_picker"
     case applePayTypePicker = "applepay_type_picker"
@@ -32,6 +33,7 @@ enum AccessibilityIdentifier {
     case showRememberMeToggle = "show_remember_me_toggle"
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
     case acceptedCardSchemesPicker = "accepted_card_schemes_picker"
+    case advancedFeaturesExpandable = "advanced_features"
   }
   
   enum PaymentResultView: String {

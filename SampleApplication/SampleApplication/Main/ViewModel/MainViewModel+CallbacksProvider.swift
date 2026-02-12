@@ -112,7 +112,7 @@ extension MainViewModel {
       guard let self else { return }
       
       Task { @MainActor in
-        debugPrint("onError:  \(error.errorCode.localizedDescription)")
+        debugPrint("onError:  \(error)")
         self.paymentSucceeded = false
         // to avoid dismiss current 3DS challenge and showing every error message on the screen, only showing 3DS challenge that has failed authentication
         guard case let .cardAuthenticationFailed(message) = error.errorCode,

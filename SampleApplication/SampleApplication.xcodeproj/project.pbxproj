@@ -27,6 +27,7 @@
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
+		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
 		AB581F4F2F0D2615004F636A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
 		AB581F502F0D2615004F636A /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView.swift"; sourceTree = "<group>"; };
 		A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComponentConfiguration.swift; sourceTree = "<group>"; };
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
+		A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+LocaleOption.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */,
 				16EFA2382C650D3A00157450 /* MainViewModel.swift */,
+				A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */,
 				A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */,
 			);
 			path = ViewModel;
@@ -209,6 +212,7 @@
 				951AE33A2D527A7400519900 /* CheckoutComponents */,
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
+				A2BF61802F3E4ACA004DA006 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -271,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */,
 				A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */,
 				95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */,
 				1699DC712C74F5500069008D /* SampleApplication.swift in Sources */,
@@ -424,7 +429,7 @@
 				CODE_SIGN_ENTITLEMENTS = SampleApplication/SampleApplication.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApplication/Preview Content\"";
 				DEVELOPMENT_TEAM = E32XBQK4Q5;
 				ENABLE_PREVIEWS = YES;
@@ -465,7 +470,7 @@
 				CODE_SIGN_ENTITLEMENTS = SampleApplication/SampleApplication.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApplication/Preview Content\"";
 				DEVELOPMENT_TEAM = E32XBQK4Q5;
 				ENABLE_PREVIEWS = YES;
@@ -545,6 +550,10 @@
 			productName = CheckoutComponents;
 		};
 		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		A2BF61802F3E4ACA004DA006 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
