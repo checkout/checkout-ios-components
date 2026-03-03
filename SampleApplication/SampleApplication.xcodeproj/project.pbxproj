@@ -255,7 +255,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../public" */,
+				A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -537,9 +537,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../public" */ = {
+		A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../public;
+			relativePath = ../../checkout-ios-components;
 		};
 /* End XCLocalSwiftPackageReference section */
 
