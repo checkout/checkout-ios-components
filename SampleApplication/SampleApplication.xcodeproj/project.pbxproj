@@ -23,11 +23,6 @@
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
 		953809282D92D09E003B5C21 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953809272D92D09E003B5C21 /* NavigationHelper.swift */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
-		A20B20642F57143E004C0562 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
-		A20B20652F57143E004C0562 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
-		A20B20662F57143E004C0562 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
-		A20B20672F57143E004C0562 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
-		A20B206A2F571465004C0562 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A20B20692F571465004C0562 /* CheckoutComponents */; };
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
@@ -69,11 +64,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A20B20672F57143E004C0562 /* CheckoutComponents in Frameworks */,
-				A20B206A2F571465004C0562 /* CheckoutComponents in Frameworks */,
-				A20B20662F57143E004C0562 /* CheckoutComponents in Frameworks */,
-				A20B20652F57143E004C0562 /* CheckoutComponents in Frameworks */,
-				A20B20642F57143E004C0562 /* CheckoutComponents in Frameworks */,
 				A27312D42F475793006F7FDE /* Risk in Frameworks */,
 				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
@@ -539,7 +529,7 @@
 /* Begin XCLocalSwiftPackageReference section */
 		A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../checkout-ios-components;
+			relativePath = "../../checkout-ios-components";
 		};
 /* End XCLocalSwiftPackageReference section */
 
