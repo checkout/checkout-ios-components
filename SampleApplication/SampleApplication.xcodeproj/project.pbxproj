@@ -26,10 +26,10 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
+		A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A246560E2F44CE66001AE99A /* CheckoutComponents */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
+		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
-		AB581F4F2F0D2615004F636A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
-		AB581F502F0D2615004F636A /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,8 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB581F502F0D2615004F636A /* Risk in Frameworks */,
-				AB581F4F2F0D2615004F636A /* CheckoutComponents in Frameworks */,
+				A27312D42F475793006F7FDE /* Risk in Frameworks */,
+				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +212,8 @@
 				951AE33A2D527A7400519900 /* CheckoutComponents */,
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
-				A2BF61802F3E4ACA004DA006 /* CheckoutComponents */,
+				A246560E2F44CE66001AE99A /* CheckoutComponents */,
+				A20B20692F571465004C0562 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -244,7 +245,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				16A28E2A2E71769F003668B9 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -526,7 +527,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		16A28E2A2E71769F003668B9 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
@@ -553,7 +554,11 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
-		A2BF61802F3E4ACA004DA006 /* CheckoutComponents */ = {
+		A20B20692F571465004C0562 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};

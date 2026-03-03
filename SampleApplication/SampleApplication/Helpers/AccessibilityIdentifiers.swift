@@ -33,7 +33,12 @@ enum AccessibilityIdentifier {
     case showRememberMeToggle = "show_remember_me_toggle"
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
     case acceptedCardSchemesPicker = "accepted_card_schemes_picker"
+    case acceptedCardTypesPicker = "accepted_card_types_picker"
     case advancedFeaturesExpandable = "advanced_features"
+    case rememberMeConfigurationsExpandable = "remember_me_configurations"
+    case userEmailTextField = "user_email_text_field"
+    case userCountryCodeTextField = "user_country_code_text_field"
+    case userPhoneNumberTextField = "user_phone_number_text_field"
   }
   
   enum PaymentResultView: String {

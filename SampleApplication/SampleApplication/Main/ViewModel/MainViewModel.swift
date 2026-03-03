@@ -40,6 +40,9 @@ final class MainViewModel: ObservableObject {
   @Published var cardAcceptedCardSchemes: Set<CardScheme> = []
   @Published var applePayAcceptedCardSchemes: Set<CardScheme> = []
   @Published var rememberMeAcceptedCardSchemes: Set<CardScheme> = []
+  @Published var rememberMeAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
+  @Published var cardAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
+  @Published var applePayAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
   @Published var handleSubmitManually = false
   @Published var updatedAmount = ""
   @Published var isShowUpdateView = false
@@ -220,14 +223,17 @@ extension MainViewModel {
         email: userEmail.isEmpty ? nil : userEmail,
         phone: phoneModel
       )
-      return .init(data: data, showPayButton: showRememberMePayButton,
-                  acceptedCardSchemes: rememberMeAcceptedCardSchemes)
+      return .init(data: data,
+                   showPayButton: showRememberMePayButton,
+                   acceptedCardSchemes: rememberMeAcceptedCardSchemes,
+                   acceptedCardTypes: rememberMeAcceptedCardTypes)
     }()
 
     return .card(showPayButton: showCardPayButton,
                  paymentButtonAction: paymentButtonAction,
                  cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
-                                       acceptedCardSchemes: cardAcceptedCardSchemes),
+                                          acceptedCardSchemes: cardAcceptedCardSchemes,
+                                          acceptedCardTypes: cardAcceptedCardTypes),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
   }
@@ -235,7 +241,8 @@ extension MainViewModel {
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {
     .applePay(merchantIdentifier: "merchant.com.ios.mobile.flow.sandbox",
               showPayButton: showApplePayButton,
-              applePayConfiguration: .init(acceptedCardSchemes: applePayAcceptedCardSchemes))
+              applePayConfiguration: .init(acceptedCardSchemes: applePayAcceptedCardSchemes,
+                                           acceptedCardTypes: applePayAcceptedCardTypes))
   }
   
   func resetToDefaultConfiguration() {
