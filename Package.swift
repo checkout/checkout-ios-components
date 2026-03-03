@@ -1,14 +1,12 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "1.5.0"
+let releaseVersion = "1.6.0-rc"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "042545fcdf3c4a05edddb8a83ccfbfdad2d9b8bc5c339471456cc8331b5057ed"
-let kmpChecksum = "24b2a4abc35d8610b6a4ffbf973fdf491057260b0670c8dadc7a72dc96a1f86d"
+let sdkChecksum = "e4883d7e10bd9d5bda07c4632901864634547301d07d62a57d57a59a34ddb83d"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
-let kmpURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutKMPRememberMe.xcframework.zip"
 
 let package = Package(
   name: "CheckoutComponents",
@@ -36,21 +34,13 @@ let package = Package(
       dependencies: [
         .product(name: "Risk", package: "checkout-risk-sdk-ios"),
         .target(name: "CheckoutComponentsSDK"),
-        .target(name: "CheckoutKMPRememberMe")
       ],
       path: "CheckoutComponentsPackage"
     ),
-
-      .binaryTarget(
-        name: "CheckoutComponentsSDK",
-        url: sdkURL,
-        checksum: sdkChecksum
-      ),
-
-      .binaryTarget(
-        name: "CheckoutKMPRememberMe",
-        url: kmpURL,
-        checksum: kmpChecksum
-      )
+    .binaryTarget(
+      name: "CheckoutComponentsSDK",
+      url: sdkURL,
+      checksum: sdkChecksum
+    )
   ]
 )
