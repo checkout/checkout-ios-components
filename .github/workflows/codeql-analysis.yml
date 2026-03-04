@@ -20,9 +20,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  destination: "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.4"
+  destination: "platform=iOS Simulator,name=iPhone 17 Pro,OS=26.1"
   configuration: "Debug"
-  versionXcode: "16.4"
+  versionXcode: "26.2"
 
 jobs:
   analyze:
@@ -43,6 +43,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          lfs: true
+          fetch-depth: 0
 
       - name: Init Environment Vars
         run: bash .github/scripts/init-env-vars.sh
@@ -79,3 +81,6 @@ jobs:
       - name: Build Sample Application
         run: |
           set -o pipefail && xcodebuild -project "SampleApplication/SampleApplication.xcodeproj" -scheme "SampleApplication" -destination "${{ env.destination }}" | xcpretty
+          
+      - name: Analyze code with CodeQL
+        uses: github/codeql-action/analyze@v3
