@@ -213,7 +213,6 @@
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
 				A246560E2F44CE66001AE99A /* CheckoutComponents */,
-				A20B20692F571465004C0562 /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -245,7 +244,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				A246560D2F44CE66001AE99A /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -527,7 +526,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A20B20682F571465004C0562 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		A246560D2F44CE66001AE99A /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
@@ -551,10 +550,6 @@
 			productName = CheckoutComponents;
 		};
 		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		A20B20692F571465004C0562 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
