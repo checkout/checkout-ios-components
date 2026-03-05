@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.6.0)
+
+Released on 05.03.2026
+
+Updates:
+
+- **What's new**
+  - [ADDED] Accepted card types configurations which enable merchants to specify which card types are accepted
+  
+  - New acceptedCardTypes field
+  
+  - Update Sample application to have new settings related to acceptedCardTypes
+  
+  - Replaced KMP-based RememberMe component with a high-performance native Swift version
+  
+- **Public API Change**
+  - [ADDED] acceptedCardTypes field to Card and ApplePay configurations
+
+- **Bug Fixes**
+
+##
+
 ## [1.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.5.0)
 
 Released on 12.02.2026
