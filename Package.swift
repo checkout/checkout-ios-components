@@ -41,7 +41,6 @@ let package = Package(
       name: "CheckoutComponentsSDK",
       url: sdkURL,
       checksum: sdkChecksum
-    ),
     )
   ]
 )
