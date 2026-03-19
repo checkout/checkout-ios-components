@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.6.2](https://github.com/checkout/checkout-ios-components/releases/tag/1.6.2)
+
+Released on 19.03.2026
+
+Updates:
+
+- **Bug Fixes**
+  - [FIXED] OTP input fields issue
+
+##
+
+## [1.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/1.6.1)
+
+Released on 17.03.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] paymentId to ErrorDetails in the onError callback. 
+
+- **Bug Fixes**
+
+##
+
 ## [1.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.6.0)
 
 Released on 05.03.2026
