@@ -42,6 +42,5 @@ let package = Package(
       url: "https://github.com/checkout/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip",
       checksum: sdkChecksum
     ),
-    )
   ]
 )
