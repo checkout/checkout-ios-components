@@ -189,7 +189,8 @@ extension MainView {
         showApplePayButtonView
         applePayTypeView
         cardHolderNamePositionView
-        
+        hideSecurityCodeView
+
         cardAcceptedCardSchemesView
         applePayAcceptedCardSchemesView
         rememberMeAcceptedCardSchemesView
@@ -317,6 +318,11 @@ extension MainView {
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.displayCardholderNamePicker.rawValue)
     }
+  }
+  
+  var hideSecurityCodeView: some View {
+    Toggle("Hide Security Code (CVV)", isOn: $viewModel.hideSecurityCode)
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.hideSecurityCodeToggle.rawValue)
   }
   
   private var allCardSchemes: [CardScheme] {

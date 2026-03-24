@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.7.0)
+
+Released on 24.03.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] CVV field optionality to CardConfigurations 
+
+##
+
 ## [1.6.2](https://github.com/checkout/checkout-ios-components/releases/tag/1.6.2)
 
 Released on 19.03.2026
