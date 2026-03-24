@@ -56,6 +56,7 @@ final class MainViewModel: ObservableObject {
   @Published var userCountryCode: String = ""
   @Published var showRememberMe: Bool = true
   @Published var showRememberMePayButton: Bool = true
+  @Published var hideSecurityCode: Bool = false
 
   @Published var isDefaultAppearance = true {
     didSet {
@@ -233,7 +234,8 @@ extension MainViewModel {
                  paymentButtonAction: paymentButtonAction,
                  cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
                                           acceptedCardSchemes: cardAcceptedCardSchemes,
-                                          acceptedCardTypes: cardAcceptedCardTypes),
+                                          acceptedCardTypes: cardAcceptedCardTypes,
+                                          hideSecurityCode: hideSecurityCode),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
   }

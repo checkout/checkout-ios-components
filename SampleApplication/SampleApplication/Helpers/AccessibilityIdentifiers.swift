@@ -32,6 +32,7 @@ enum AccessibilityIdentifier {
     case submitPaymentMethodView = "submit_payment_method_view"
     case showRememberMeToggle = "show_remember_me_toggle"
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
+    case hideSecurityCodeToggle = "hide_security_code_toggle"
     case acceptedCardSchemesPicker = "accepted_card_schemes_picker"
     case acceptedCardTypesPicker = "accepted_card_types_picker"
     case advancedFeaturesExpandable = "advanced_features"
