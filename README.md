@@ -19,7 +19,7 @@
 - Swift 6
 - arm64
 >**⚠️ Note** <br>
-x86_64 support is dropped. As of April 2025, Apple requires all app submitted to the App Store to be built by Xcode 16+. Apple officially announced that macOS 26 (Tahoe) is the final version of macOS to support Intel Macs. The upcoming macOS 27 (2026) will be Apple Silicon exclusive. Apple has hinted at phasing out in early 2027.
+x86_64 support is dropped. As of April 2025, Apple requires all apps submitted to the App Store to be built by Xcode 16+. Apple officially announced that macOS 26 (Tahoe) is the final version of macOS to support Intel Macs. The upcoming macOS 27 (2026) will be Apple Silicon exclusive. Apple has hinted at phasing out in early 2027.
 
 ## Integration
 
