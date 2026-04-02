@@ -57,6 +57,7 @@ final class MainViewModel: ObservableObject {
   @Published var showRememberMe: Bool = true
   @Published var showRememberMePayButton: Bool = true
   @Published var hideSecurityCode: Bool = false
+  @Published var cardHolderNameMaxLength: UInt = 255
 
   @Published var isDefaultAppearance = true {
     didSet {
@@ -235,7 +236,8 @@ extension MainViewModel {
                  cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
                                           acceptedCardSchemes: cardAcceptedCardSchemes,
                                           acceptedCardTypes: cardAcceptedCardTypes,
-                                          hideSecurityCode: hideSecurityCode),
+                                          hideSecurityCode: hideSecurityCode,
+                                          cardholderNameMaxLength: cardHolderNameMaxLength),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
   }

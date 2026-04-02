@@ -40,6 +40,7 @@ enum AccessibilityIdentifier {
     case userEmailTextField = "user_email_text_field"
     case userCountryCodeTextField = "user_country_code_text_field"
     case userPhoneNumberTextField = "user_phone_number_text_field"
+    case cardholderNameMaxLengthInput = "cardholder_name_max_length_input"
   }
   
   enum PaymentResultView: String {

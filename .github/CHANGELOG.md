@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.0)
+
+Released on 02.04.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Cardholder name max length field to Card Configuration
+   - [ADDED] Default RememberMe configuration to Card Configuration
+   - [ADDED] New navigation flow buttons to Authentication screen of RememberMe component
+   - [FIXED] Prevent having space only input for cardholder name textField
+
+##
+
 ## [1.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.7.0)
 
 Released on 24.03.2026
