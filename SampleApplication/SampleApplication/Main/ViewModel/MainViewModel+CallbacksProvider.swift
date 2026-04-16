@@ -40,10 +40,14 @@ extension MainViewModel {
     )
   }
   
-  func onCardBinChanged() -> (@Sendable (CardMetadata) -> CheckoutComponents.CallbackResult)? {
+  func onCardBinChanged() -> (@Sendable (CardMetadata?) -> CheckoutComponents.CallbackResult)? {
     { cardMetadata -> CheckoutComponents.CallbackResult in
+      guard let cardMetadata else {
+        return .accepted
+      }
+
       debugPrint("onCardBinChange: Card bin: \(cardMetadata.bin), card scheme: \(cardMetadata.scheme)")
-    
+
       // Apply custom logic based on card scheme
       switch cardMetadata.scheme {
       case "visa":
@@ -53,12 +57,12 @@ extension MainViewModel {
       default:
         break
       }
-      
+
       // Reject credit cards
       if cardMetadata.cardType == "credit" {
         // return .rejected(message: "Credit cards are not accepted.")
       }
-      
+
       // Otherwise, allow the payment to proceed
       return .accepted
     }

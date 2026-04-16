@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.8.1](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.1)
+
+Released on 16.04.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] 3DS logging improvements 
+   - [ADDED] India to supported countries for RememberMe component
+   - [FIXED] Using handleSubmit callback with RememberMe component
+   - [FIXED] Triggering onCardBinChanged callback when CardMetaData is null
+
+##
+
 ## [1.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.0)
 
 Released on 02.04.2026
