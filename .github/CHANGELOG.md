@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.8.2](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.2)
+
+Released on 22.04.2026
+
+Updates:
+
+- **What's new**
+   - [FIXED] Triggering onCardBinChanged callback if selected RememberMe card is Mada
+
+##
+
 ## [1.8.1](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.1)
 
 Released on 16.04.2026
