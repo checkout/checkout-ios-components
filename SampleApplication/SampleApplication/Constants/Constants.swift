@@ -3,6 +3,6 @@
 import Foundation
 
 enum Constants {
-  static let successURL = "checkout-ios-components-callback://example.com/payments/success"
-  static let failureURL = "checkout-ios-components-callback://example.com/payments/failure"
+  static let successURL = "https://example.com/payments/success"
+  static let failureURL = "https://example.com/payments/failure"
 }
