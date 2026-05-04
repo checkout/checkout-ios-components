@@ -1,7 +1,7 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "1.8.3"
+let releaseVersion = "1.8.-beta3"
 let githubRepo = "checkout/checkout-ios-components"
 
 let sdkChecksum = "50e1d4667107b72624788322b6d0a539bb84d510e89bc6bbe72175f81d78ae8b"
