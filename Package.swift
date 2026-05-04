@@ -39,8 +39,9 @@ let package = Package(
     ),
     .binaryTarget(
       name: "CheckoutComponentsSDK",
-      url: sdkURL,
-      checksum: sdkChecksum
+      url: "https://github.com/checkout/checkout-ios-components/releases/download/1.8.3/CheckoutComponentsSDK.xcframework.zip",
+      checksum: "9c5f1683378d4a8175814e4de09fb2aecf3b7c9871509314174ea0f9d2dec3d1"
+    ),
     )
   ]
 )
