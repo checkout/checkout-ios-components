@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [1.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.9.0)
+
+Released on 07.05.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Keyboard management buttons to toolbar
+   - [ADDED] New feature flag for disable forwarding emails
+   - [FIXED] Triggering onCardBinChanged when user re-select Add Card view in RememberMe component
+
+##
+
 ## [1.8.3](https://github.com/checkout/checkout-ios-components/releases/tag/1.8.3)
 
 Released on 29.04.2026

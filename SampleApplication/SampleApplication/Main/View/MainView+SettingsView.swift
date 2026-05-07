@@ -123,10 +123,10 @@ extension MainView {
 
       Picker("Locale", selection: $viewModel.selectedLocale) {
         ForEach(LocaleOption.allOptions, id: \.self) { option in
-              Text(option.displayName)
-                  .tag(option)
-                  .accessibilityIdentifier(option.accessibilityIdentifier)
-          }
+          Text(option.displayName)
+            .tag(option)
+            .accessibilityIdentifier(option.accessibilityIdentifier)
+        }
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.localePicker.rawValue)
     }
@@ -137,11 +137,11 @@ extension MainView {
       Text("PS Locale:")
 
       Picker("Locale", selection: $viewModel.paymentSessionSelectedLocale) {
-          ForEach(LocaleOption.paymentSessionOptions, id: \.self) { option in
-              Text(option.displayName)
-                  .tag(option)
-                  .accessibilityIdentifier(option.accessibilityIdentifier)
-          }
+        ForEach(LocaleOption.paymentSessionOptions, id: \.self) { option in
+          Text(option.displayName)
+            .tag(option)
+            .accessibilityIdentifier(option.accessibilityIdentifier)
+        }
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentSessionLocalePicker.rawValue)
     }
@@ -227,41 +227,22 @@ extension MainView {
         if viewModel.showRememberMe {
           Toggle("Show Remember Me pay button", isOn: $viewModel.showRememberMePayButton)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showRememberMePayButtonToggle.rawValue)
-
-          userEmailView
-          countryCodeView
-          userPhoneNumberView
+          
+          Toggle(
+            "Feature Flag: Ignore Payment Session Email",
+            isOn: $viewModel.isIgnoreRememberMeEmailFeatureFlagEnabled
+          )
+          .accessibilityIdentifier(
+            AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
+          )
+          
+          rememberMeSDKSetupView
+          rememberMePaymentSessionSetupView
+          
         }
       }
       .padding(.leading, 16)
       .transition(.opacity.combined(with: .slide))
-    }
-  }
-  
-  var userEmailView: some View {
-    HStack {
-      Text("Email: ")
-      TextField("Email", text: $viewModel.userEmail)
-        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userEmailTextField.rawValue)
-        .keyboardType(.emailAddress)
-    }
-  }
-  
-  var countryCodeView: some View {
-    HStack {
-      Text("Country Code: ")
-      TextField("Country Code", text: $viewModel.userCountryCode)
-        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userCountryCodeTextField.rawValue)
-        .keyboardType(.phonePad)
-    }
-  }
-  
-  var userPhoneNumberView: some View {
-    HStack {
-      Text("Phone Number: ")
-      TextField("Phone Number", text: $viewModel.userPhoneNumber)
-        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userPhoneNumberTextField.rawValue)
-        .keyboardType(.phonePad)
     }
   }
 
@@ -467,6 +448,108 @@ extension MainView {
   }
 
 }
+
+// MARK: - RememberMe SDK Setup
+
+extension MainView {
+  
+  var rememberMeSDKSetupView: some View {
+    expandableSection(
+      title: "SDK Setup",
+      isExpanded: $viewModel.isRememberMeSDKSetupExpanded,
+      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.rememberMeSDKSetupExpandable.rawValue
+    ) {
+      VStack(alignment: .leading, spacing: 12) {
+        userEmailView
+        countryCodeView
+        userPhoneNumberView
+      }
+    }
+  }
+  
+  var userEmailView: some View {
+    HStack {
+      Text("Email: ")
+      TextField("Email", text: $viewModel.userEmail)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userEmailTextField.rawValue)
+        .keyboardType(.emailAddress)
+    }
+  }
+  
+  var countryCodeView: some View {
+    HStack {
+      Text("Country Code: ")
+      TextField("Country Code", text: $viewModel.userCountryCode)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userCountryCodeTextField.rawValue)
+        .keyboardType(.phonePad)
+    }
+  }
+  
+  var userPhoneNumberView: some View {
+    HStack {
+      Text("Phone Number: ")
+      TextField("Phone Number", text: $viewModel.userPhoneNumber)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.userPhoneNumberTextField.rawValue)
+        .keyboardType(.phonePad)
+    }
+  }
+  
+}
+
+// MARK: - RememberMe Payment Session Setup
+
+extension MainView {
+  
+  var rememberMePaymentSessionSetupView: some View {
+    expandableSection(
+      title: "Payment Session Setup",
+      isExpanded: $viewModel.isRememberMePaymentSessionSetupExpanded,
+      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.rememberMePaymentSessionSetupExpandable.rawValue
+    ) {
+      VStack(alignment: .leading, spacing: 12) {
+        paymentSessionEmailView
+        paymentSessionCountryCodeView
+        paymentSessionPhoneNumberView
+      }
+    }
+  }
+  
+  var paymentSessionEmailView: some View {
+    HStack {
+      Text("PS Email: ")
+      TextField("PS Email", text: $viewModel.paymentSessionEmail)
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.customerEmailInput.rawValue
+        )
+        .keyboardType(.emailAddress)
+    }
+  }
+
+  var paymentSessionCountryCodeView: some View {
+    HStack {
+      Text("PS Country Code: ")
+      TextField("PS Country Code", text: $viewModel.paymentSessionCountryCode)
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.customerPhoneCountryCodePicker.rawValue
+        )
+        .keyboardType(.phonePad)
+    }
+  }
+
+  var paymentSessionPhoneNumberView: some View {
+    HStack {
+      Text("PS Phone Number: ")
+      TextField("PS Phone Number", text: $viewModel.paymentSessionPhoneNumber)
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.customerPhoneNumberInput.rawValue
+        )
+        .keyboardType(.phonePad)
+    }
+  }
+  
+}
+
+// MARK: - Helping Structures
 
 extension MainView {
   @ViewBuilder

@@ -6,6 +6,7 @@ struct PaymentSessionRequest: Encodable {
   let amount: Int
   let currency: String // Three letter ISO currency code
   let billing: Billing
+  let customer: Customer?
   let successURL: String
   let failureURL: String
   let threeDS: ThreeDS
@@ -17,7 +18,7 @@ struct PaymentSessionRequest: Encodable {
     case threeDS = "3ds"
     case processingChannelID = "processing_channel_id"
     case paymentMethodConfiguration = "payment_method_configuration"
-    case amount, currency, billing, successURL, failureURL, locale
+    case amount, currency, billing, customer, successURL, failureURL, locale
   }
 }
 
@@ -27,6 +28,22 @@ struct Billing: Encodable {
 
 struct BillingAddress: Encodable {
   let country: String
+}
+
+struct Customer: Encodable {
+  let email: String?
+  let name: String
+  let phone: Phone?
+}
+
+struct Phone: Encodable {
+  let countryCode: String?
+  let number: String?
+  
+  enum CodingKeys: String, CodingKey {
+    case countryCode = "country_code"
+    case number
+  }
 }
 
 struct ThreeDS: Encodable {
