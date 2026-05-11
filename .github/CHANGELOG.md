@@ -5,16 +5,14 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
-## [1.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.9.0)
+## [1.10.0-Test](https://github.com/checkout/checkout-ios-components/releases/tag/1.10.0-Test)
 
-Released on 07.05.2026
+Released on 11.05.2026
 
 Updates:
 
 - **What's new**
-   - [ADDED] Keyboard management buttons to toolbar
-   - [ADDED] New feature flag for disable forwarding emails
-   - [FIXED] Triggering onCardBinChanged when user re-select Add Card view in RememberMe component
+   -
 
 ##
 
@@ -25,6 +23,7 @@ Released on 29.04.2026
 Updates:
 
 - **What's new**
+   -
    - [FIXED] Using handleSubmit callback with RememberMe component for Mada cards
 
 ##
