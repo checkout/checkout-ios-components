@@ -50,36 +50,18 @@ final class MainViewModel: ObservableObject {
   @Published var isAdvancedFeaturesExpanded: Bool = false
   @Published var customButtonOperation: CustomButtonOperation = .submitPayment
   
-  // RememberMe
   @Published var isRememberMeExpanded: Bool = false
-  @Published var isRememberMeSDKSetupExpanded: Bool = true
-  @Published var isRememberMePaymentSessionSetupExpanded: Bool = true
-  @Published var showRememberMe: Bool = true
-  @Published var showRememberMePayButton: Bool = true
-  // RememberMe SDK
   @Published var userEmail: String = ""
   @Published var userPhoneNumber: String = ""
   @Published var userCountryCode: String = ""
-  // RememberMe PaymentSession
-  @Published var paymentSessionEmail: String = ""
-  @Published var paymentSessionCountryCode: String = ""
-  @Published var paymentSessionPhoneNumber: String = ""
-  
+  @Published var showRememberMe: Bool = true
+  @Published var showRememberMePayButton: Bool = true
   @Published var hideSecurityCode: Bool = false
   @Published var cardHolderNameMaxLength: UInt = 255
 
   @Published var isDefaultAppearance = true {
     didSet {
       NavigationHelper.navigationBarTitleTextColor(isDefaultAppearance ? .black : .white)
-    }
-  }
-  
-  @Published var isIgnoreRememberMeEmailFeatureFlagEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        isIgnoreRememberMeEmailFeatureFlagEnabled,
-        forKey: "checkout_components_disable_forwarding_emails"
-      )
     }
   }
   
@@ -122,11 +104,6 @@ extension MainViewModel {
      let request = PaymentSessionRequest(amount: 1,
                                          currency: "GBP",
                                          billing: .init(address: .init(country: "GB")),
-                                         customer: .init(
-                                           email: paymentSessionEmailModel,
-                                           name: "customerName",
-                                           phone: paymentSessionPhoneModel
-                                         ),
                                          successURL: Constants.successURL,
                                          failureURL: Constants.failureURL,
                                          threeDS: .init(enabled: true, attemptN3D: true),
@@ -360,25 +337,4 @@ extension MainViewModel {
                                                        request: submitPaymentRequest,
                                                        environment: selectedEnvironment)
   }
-}
-
-// MARK: Private
-
-extension MainViewModel {
-  
-  private var paymentSessionEmailModel: String? {
-    paymentSessionEmail.isEmpty ? nil : paymentSessionEmail
-  }
-
-  private var paymentSessionPhoneModel: Phone? {
-    let countryCode = paymentSessionCountryCode.isEmpty ? nil : paymentSessionCountryCode
-    let number = paymentSessionPhoneNumber.isEmpty ? nil : paymentSessionPhoneNumber
-
-    guard countryCode != nil || number != nil else {
-      return nil
-    }
-
-    return Phone(countryCode: countryCode, number: number)
-  }
-  
 }
