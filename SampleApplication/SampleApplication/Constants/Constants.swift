@@ -3,6 +3,6 @@
 import Foundation
 
 enum Constants {
-  static let successURL = "https://example.com/payments/success"
-  static let failureURL = "https://example.com/payments/failure"
+  static let successURL = "cko-ios-redirect://example.com/payments/success"
+  static let failureURL = "cko-ios-redirect://example.com/payments/failure"
 }
