@@ -35,8 +35,6 @@
 		FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
 		FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
 		FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
-		FF7FD24F2FD1D5CD00926AD1 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = FF7FD24E2FD1D5CD00926AD1 /* CheckoutComponents */; };
-		FF7FD2512FD1D5CD00926AD1 /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = FF7FD2502FD1D5CD00926AD1 /* CheckoutPaymentMethods */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,12 +71,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF7FD24F2FD1D5CD00926AD1 /* CheckoutComponents in Frameworks */,
 				FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
 				FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
 				FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
 				A27312D42F475793006F7FDE /* Risk in Frameworks */,
-				FF7FD2512FD1D5CD00926AD1 /* CheckoutPaymentMethods in Frameworks */,
 				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,8 +232,6 @@
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
 				A246560E2F44CE66001AE99A /* CheckoutComponents */,
-				FF7FD24E2FD1D5CD00926AD1 /* CheckoutComponents */,
-				FF7FD2502FD1D5CD00926AD1 /* CheckoutPaymentMethods */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -269,7 +263,6 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				FF7FD24D2FD1D5CD00926AD1 /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -551,17 +544,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		FF7FD24D2FD1D5CD00926AD1 /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/checkout-ios-components";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -586,16 +568,6 @@
 		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
-		};
-		FF7FD24E2FD1D5CD00926AD1 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF7FD24D2FD1D5CD00926AD1 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
-			productName = CheckoutComponents;
-		};
-		FF7FD2502FD1D5CD00926AD1 /* CheckoutPaymentMethods */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF7FD24D2FD1D5CD00926AD1 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
-			productName = CheckoutPaymentMethods;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
