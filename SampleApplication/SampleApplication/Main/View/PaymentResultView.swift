@@ -78,6 +78,7 @@ struct PaymentResultView: View {
       presentationMode.wrappedValue.dismiss()
     }) {
       Text("Close")
+        .accessibilityIdentifier(AccessibilityIdentifier.PaymentResultView.closeButton.rawValue)
         .padding()
         .background(Color.blue)
         .foregroundColor(.white)
