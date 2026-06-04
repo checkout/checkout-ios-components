@@ -31,8 +31,6 @@ enum CheckoutComponent: String, CaseIterable {
   }
 }
 
-//otp.success@tabby.aio
-
 enum ApplePayType: String, CaseIterable {
   case final
   case pending
