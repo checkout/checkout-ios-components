@@ -8,10 +8,11 @@ import CheckoutComponentsSDK
 
 import SwiftUI
 
-enum MainViewState {
+enum MainViewState: Hashable {
   case initial
   case component
   case settings
+  case error(String)
 }
 
 struct MainView: View {
@@ -41,6 +42,9 @@ struct MainView: View {
         makeComponentView()
       case .settings:
         settingView
+      case .error(let errorMessage):
+        Text("An error occurred: \(errorMessage)")
+          .foregroundColor(.red)
       }
     }
     .padding()
@@ -109,8 +113,12 @@ extension MainView {
       Button(action: {
         Task {
           if viewState == .component { viewModel.resetToDefaultConfiguration() }
-          await viewModel.makeComponent()
-          viewState = .component
+          do {
+            try await viewModel.makeComponent()
+            viewState = .component
+          } catch {
+            viewState = .error("\(error)")
+          }
         }
       }) {
         Text("Show Flow")

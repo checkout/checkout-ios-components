@@ -12,6 +12,8 @@ enum CheckoutComponent: String, CaseIterable {
   case flow = "Flow"
   case card = "Card"
   case applePay = "Apple Pay"
+  case tabby = "Tabby"
+  case tamara = "Tamara"
 
   var accessibilityIdentifier: String {
     switch self {
@@ -21,9 +23,15 @@ enum CheckoutComponent: String, CaseIterable {
       return "card"
     case .applePay:
       return "google_apple_pay"
+    case .tabby:
+      return "tabby"
+    case .tamara:
+      return "tamara"
     }
   }
 }
+
+//otp.success@tabby.aio
 
 enum ApplePayType: String, CaseIterable {
   case final
@@ -39,8 +47,11 @@ extension MainView {
         appearanceView
         localeView
         paymentSessionLocaleView
+        countryView
+        currencyView
 
         advancedFeaturesView
+        paymentSessionConfigurationView
         rememberMeConfigurationsView
       }
       .padding(.horizontal)
@@ -67,6 +78,10 @@ extension MainView {
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.cardPaymentMethodOption.rawValue)
           Toggle("Apple Pay", isOn: $viewModel.isApplePaySelected)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.applePayPaymentMethodOption.rawValue)
+          Toggle("Tabby", isOn: $viewModel.isTabbySelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tabbyPaymentMethodOption.rawValue)
+          Toggle("Tamara", isOn: $viewModel.isTamaraSelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tamaraPaymentMethodOption.rawValue)
         }.accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentMethodPicker.rawValue)
       }
     }
@@ -147,6 +162,36 @@ extension MainView {
     }
   }
 
+  var countryView: some View {
+    HStack {
+      Text("Country:")
+
+      Picker("Country", selection: $viewModel.selectedCountry) {
+        ForEach(CountryOption.allCases, id: \.self) { option in
+          Text(option.displayName)
+            .tag(option)
+            .accessibilityIdentifier(option.accessibilityIdentifier)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.countryPicker.rawValue)
+    }
+  }
+
+  var currencyView: some View {
+    HStack {
+      Text("Currency:")
+
+      Picker("Currency", selection: $viewModel.selectedCurrency) {
+        ForEach(CurrencyOption.allCases, id: \.self) { option in
+          Text(option.displayName)
+            .tag(option)
+            .accessibilityIdentifier(option.accessibilityIdentifier)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.currencyPicker.rawValue)
+    }
+  }
+
   var environmentView: some View {
     HStack {
       Text("Environment:")
@@ -216,6 +261,19 @@ extension MainView {
     }
   }
   
+  var paymentSessionConfigurationView: some View {
+    expandableSection(title: "Payment session Configurations",
+                      isExpanded: $viewModel.isPaymentSessionConfigurationExpanded,
+                      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.paymentSessionConfigurationsExpandable.rawValue) {
+      VStack(alignment: .leading, spacing: 12) {
+        paymentSessionUsername
+        paymentSessionUserEmail
+      }
+      .padding(.leading, 16)
+      .transition(.opacity.combined(with: .slide))
+    }
+  }
+  
   var rememberMeConfigurationsView: some View {
     expandableSection(title: "RememberMe Configurations",
                       isExpanded: $viewModel.isRememberMeExpanded,
@@ -243,6 +301,24 @@ extension MainView {
       }
       .padding(.leading, 16)
       .transition(.opacity.combined(with: .slide))
+    }
+  }
+
+  var paymentSessionUsername: some View {
+    HStack {
+      Text("Customer name: ")
+      TextField("Customer name", text: $viewModel.paymentSessionUsername)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentSessionUsernameTextField.rawValue)
+        .keyboardType(.namePhonePad)
+    }
+  }
+
+  var paymentSessionUserEmail: some View {
+    HStack {
+      Text("Customer email: ")
+      TextField("Customer email", text: $viewModel.paymentSessionUserEmail)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentSessionUserEmailTextField.rawValue)
+        .keyboardType(.emailAddress)
     }
   }
 

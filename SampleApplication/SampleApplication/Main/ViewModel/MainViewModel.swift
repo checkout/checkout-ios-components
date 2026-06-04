@@ -8,9 +8,15 @@ import CheckoutComponentsSDK
 
 import SwiftUI
 
+#if canImport(CheckoutPaymentMethods)
+import CheckoutPaymentMethods
+#endif
+
 enum PaymentMethodType: CaseIterable {
   case card
   case applePay
+  case tabby
+  case tamara
 }
 
 enum CustomButtonOperation: String, CaseIterable {
@@ -33,6 +39,8 @@ final class MainViewModel: ObservableObject {
   @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
   @Published var selectedLocale: LocaleOption = .locale(.en_GB)
   @Published var paymentSessionSelectedLocale: LocaleOption = .locale(.en_GB)
+  @Published var selectedCountry: CountryOption = .gb
+  @Published var selectedCurrency: CurrencyOption = .gbp
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
@@ -49,7 +57,11 @@ final class MainViewModel: ObservableObject {
   @Published var showApplePayButton: Bool = true
   @Published var isAdvancedFeaturesExpanded: Bool = false
   @Published var customButtonOperation: CustomButtonOperation = .submitPayment
-  
+
+  @Published var isPaymentSessionConfigurationExpanded: Bool = false
+  @Published var paymentSessionUsername: String = ""
+  @Published var paymentSessionUserEmail: String = ""
+
   // RememberMe
   @Published var isRememberMeExpanded: Bool = false
   @Published var isRememberMeSDKSetupExpanded: Bool = true
@@ -87,14 +99,29 @@ final class MainViewModel: ObservableObject {
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
-  
+
+  var apmProviders: [any CheckoutComponents.PaymentMethodProvider] {
+    #if canImport(CheckoutPaymentMethods)
+    var providers: [any CheckoutComponents.PaymentMethodProvider] = []
+    if selectedPaymentMethodTypes.contains(.tabby) {
+      providers.append(CheckoutPaymentOptions.Provider.tabby)
+    }
+    if selectedPaymentMethodTypes.contains(.tamara) {
+      providers.append(CheckoutPaymentOptions.Provider.tamara)
+    }
+    return providers
+    #else
+    return []
+    #endif
+  }
+
   init() {
-    selectedPaymentMethodTypes = [.card, .applePay]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
   }
 }
 
 extension MainViewModel {
-  func makeComponent() async {
+  func makeComponent() async throws {
     do {
       let paymentSession = try await createPaymentSession()
       paymentSessionId = paymentSession.id
@@ -108,10 +135,13 @@ extension MainViewModel {
       checkoutComponentsView = renderedComponent
     } catch let error as CheckoutComponents.Error {
       errorMessage = error.localizedDescription
-      print(error.localizedDescription)
+      debugPrint(error.localizedDescription)
+      
+      throw error
     } catch {
       errorMessage = error.localizedDescription
-      print("Network error: \(error.localizedDescription).\nCheck if your keys are correct.")
+      debugPrint("Network error: \(error.localizedDescription).\nCheck if your keys are correct.")
+      throw error
     }
   }
 }
@@ -119,24 +149,59 @@ extension MainViewModel {
 extension MainViewModel {
   // Step 1: Create Payment Session
   func createPaymentSession() async throws -> PaymentSession {
-     let request = PaymentSessionRequest(amount: 1,
-                                         currency: "GBP",
-                                         billing: .init(address: .init(country: "GB")),
-                                         customer: .init(
-                                           email: paymentSessionEmailModel,
-                                           name: "customerName",
-                                           phone: paymentSessionPhoneModel
-                                         ),
-                                         successURL: Constants.successURL,
-                                         failureURL: Constants.failureURL,
-                                         threeDS: .init(enabled: true, attemptN3D: true),
-                                         processingChannelID: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil,
-                                         paymentMethodConfiguration: .init(applepay: .init(totalType: selectedApplePayType.rawValue)),
-                                         locale: paymentSessionSelectedLocale.localeString)
+    let address = Address(
+      addressLine1: "11 New Burlington Street",
+      addressLine2: "Apt 214",
+      city: "London",
+      state: "London",
+      zip: "W1S 3BE",
+      country: selectedCountry.rawValue
+    )
 
-     return try await networkLayer.createPaymentSession(request: request,
-                                                        environment: selectedEnvironment)
-   }
+    let phone = Phone(
+      countryCode: "44", number: "08002580300"
+    )
+
+    let customer = Customer(
+      email: !paymentSessionUserEmail.isEmpty ? paymentSessionUserEmail : "customer+test@checkout.com",
+      name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "",
+      phone: paymentSessionPhoneModel
+    )
+
+    let paymentSessionRequest = PaymentSessionRequest(
+      amount: 10500,
+      currency: selectedCurrency.rawValue,
+      billing: BillingType(address: address, phone: phone),
+      reference: "cf72664f31984a7ab841d51b7305dc72",
+      description: "Set of 3 masks",
+      billingDescriptor: BillingDescriptor(name: "SUPERHEROES.COM",
+                                           city: "GOTHAM"),
+      shipping: Shipping(address: address, phone: phone),
+      metadata: Metadata(couponCode: "NY2018",
+                         partnerId: 123989),
+      paymentType: nil,
+      successURL: Constants.successURL,
+      failureURL: Constants.failureURL,
+      threeDS: .init(enabled: true, attemptN3D: true),
+      processingChannelID: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil,
+      paymentMethodConfiguration: PaymentMethodConfiguration(applepay: ApplePayConfiguration(totalType: selectedApplePayType.rawValue)),
+      locale: paymentSessionSelectedLocale.localeString,
+      items: [
+        Item(name: "Guitar",
+             quantity: 1,
+             unitPrice: 3500,
+             totalAmount: 3500),
+        Item(name: "Amp",
+             quantity: 2,
+             unitPrice: 3500,
+             totalAmount: 7000)
+      ],
+      customer: customer
+    )
+
+    return try await networkLayer.createPaymentSession(request: paymentSessionRequest,
+                                                       environment: selectedEnvironment)
+  }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
@@ -147,7 +212,8 @@ extension MainViewModel {
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
       locale: selectedLocale.localeString,
       translations: getTranslation(),
-      callbacks: initialiseCallbacks())
+      callbacks: initialiseCallbacks()
+    )
 
     return CheckoutComponents(configuration: configuration)
   }
@@ -156,11 +222,19 @@ extension MainViewModel {
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
     switch selectedComponentType {
     case .flow:
-      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods))
+      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: apmProviders))
     case .card:
       return try checkoutComponentsSDK.create(getCardPaymentMethod())
     case .applePay:
       return try checkoutComponentsSDK.create(getApplePayPaymentMethod())
+    #if canImport(CheckoutPaymentMethods)
+    case .tabby:
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tabby)
+    case .tamara:
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tamara)
+    #endif
+    default:
+        return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: apmProviders))
     }
   }
 
@@ -202,18 +276,48 @@ extension MainViewModel {
       }
     }
   }
-  
+
+  var isTabbySelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.tabby) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.tabby)
+      } else {
+        selectedPaymentMethodTypes.remove(.tabby)
+      }
+    }
+  }
+
+  var isTamaraSelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.tamara) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.tamara)
+      } else {
+        selectedPaymentMethodTypes.remove(.tamara)
+      }
+    }
+  }
+
   var selectedPaymentMethodsTitle: String {
     var selectedMethods: [String] = []
-    
+
     if isCardSelected {
       selectedMethods.append("Card")
     }
-    
+
     if isApplePaySelected {
       selectedMethods.append("Apple Pay")
     }
-    
+
+    if isTabbySelected {
+      selectedMethods.append("Tabby")
+    }
+
+    if isTamaraSelected {
+      selectedMethods.append("Tamara")
+    }
+
     if selectedMethods.isEmpty {
       return "Payment Methods"
     } else {
@@ -224,15 +328,15 @@ extension MainViewModel {
   // Computed property to get actual payment methods with current configuration
   var selectedPaymentMethods: Set<CheckoutComponents.PaymentMethod> {
     var methods: Set<CheckoutComponents.PaymentMethod> = []
-    
+
     if selectedPaymentMethodTypes.contains(.card) {
       methods.insert(getCardPaymentMethod())
     }
-    
+
     if selectedPaymentMethodTypes.contains(.applePay) {
       methods.insert(getApplePayPaymentMethod())
     }
-    
+
     return methods
   }
   
@@ -275,7 +379,7 @@ extension MainViewModel {
   func resetToDefaultConfiguration() {
     checkoutComponentsView = nil
     selectedComponentType = .flow
-    selectedPaymentMethodTypes = [.card, .applePay]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
     showCardPayButton = true
     paymentButtonAction = .payment
     selectedLocale = .locale(.en_GB)

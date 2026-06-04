@@ -17,14 +17,17 @@ struct NetworkLayer {
     // Don't send requests to this API but have a wrapper on your backend to keep your private key safe.
     // Otherwise you would have your private key bundled in your application and get it leaked.
     let baseURL = environment == .sandbox ? "https://api.sandbox.checkout.com" : "https://api.checkout.com"
-    let url = URL(string: "\(baseURL)/payment-sessions")!
+    guard let url = URL(string: "\(baseURL)/payment-sessions") else {
+      throw NSError(domain: "NetworkLayer", code: 0)
+    }
     
     var request = URLRequest(url: url)
     request.httpBody = requestBody
     request.httpMethod = "POST"
     let secretKey = environment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
     request.addValue("Bearer " + secretKey, forHTTPHeaderField: "Authorization")
-    
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
     let (data, _) = try await URLSession.shared.data(for: request)
     let decoder = JSONDecoder()
     decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -49,6 +52,7 @@ struct NetworkLayer {
     request.httpMethod = "POST"
     let secretKey = environment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
     request.addValue("Bearer " + secretKey, forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
     let (data, response) = try await URLSession.shared.data(for: request)
     if let response = response as? HTTPURLResponse {

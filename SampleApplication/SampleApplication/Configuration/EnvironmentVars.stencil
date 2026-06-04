@@ -1,10 +1,8 @@
 //swiftlint:disable all
 struct EnvironmentVars {
-    /// Generated using 'EnvironmentVars.stencil' template
-    static let sandboxPublicKey = "{{ argument.COMPONENTS_SANDBOX_PUBLIC_KEY }}"
-    static let sandboxSecretKey = "{{ argument.COMPONENTS_SANDBOX_SECRET_KEY }}"
-    static let sandboxProcessingChannelID = "{{ argument.COMPONENTS_SANDBOX_PROCESSING_CHANNEL_ID }}"
-    
-    static let productionPublicKey = "{{ argument.COMPONENTS_PRODUCTION_PUBLIC_KEY }}"
-    static let productionSecretKey = "{{ argument.COMPONENTS_PRODUCTION_SECRET_KEY }}"
+    static let sandboxPublicKey = "${COMPONENTS_SANDBOX_PUBLIC_KEY}"
+    static let sandboxSecretKey = "${COMPONENTS_SANDBOX_SECRET_KEY}"
+    static let sandboxProcessingChannelID = "${COMPONENTS_SANDBOX_PROCESSING_CHANNEL_ID}"
+    static let productionPublicKey = "${COMPONENTS_PRODUCTION_PUBLIC_KEY}"
+    static let productionSecretKey = "${COMPONENTS_PRODUCTION_SECRET_KEY}"
 }
