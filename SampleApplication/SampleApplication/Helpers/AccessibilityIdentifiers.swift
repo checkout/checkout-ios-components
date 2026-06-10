@@ -22,6 +22,8 @@ enum AccessibilityIdentifier {
     case customLocale = "custom_locale_option"
     case addressPicker = "address_picker"
     case applePayTypePicker = "applepay_type_picker"
+    case applePayButtonStylePicker = "applepay_button_style_picker"
+    case applePayButtonTypePicker = "applepay_button_type_picker"
     case displayCardholderNamePicker = "display_cardholder_name_picker"
     case sdkPicker = "sdk_picker"
     case paymentMethodPicker = "payment_method_picker"
