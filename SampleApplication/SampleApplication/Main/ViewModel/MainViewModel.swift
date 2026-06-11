@@ -55,6 +55,8 @@ final class MainViewModel: ObservableObject {
   @Published var updatedAmount = ""
   @Published var isShowUpdateView = false
   @Published var showApplePayButton: Bool = true
+  @Published var applePayButtonStyle: CheckoutComponents.ApplePayButtonStyle = .black
+  @Published var applePayButtonType: CheckoutComponents.ApplePayButtonType = .plain
   @Published var isAdvancedFeaturesExpanded: Bool = false
   @Published var customButtonOperation: CustomButtonOperation = .submitPayment
 
@@ -373,7 +375,9 @@ extension MainViewModel {
     .applePay(merchantIdentifier: "merchant.com.ios.mobile.flow.sandbox",
               showPayButton: showApplePayButton,
               applePayConfiguration: .init(acceptedCardSchemes: applePayAcceptedCardSchemes,
-                                           acceptedCardTypes: applePayAcceptedCardTypes))
+                                           acceptedCardTypes: applePayAcceptedCardTypes,
+                                           buttonStyle: applePayButtonStyle,
+                                           buttonType: applePayButtonType))
   }
   
   func resetToDefaultConfiguration() {

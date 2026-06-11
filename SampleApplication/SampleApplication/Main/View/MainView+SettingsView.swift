@@ -130,6 +130,34 @@ extension MainView {
     Toggle("Show Apple Pay button", isOn: $viewModel.showApplePayButton)
   }
 
+  var applePayButtonStyleView: some View {
+    HStack {
+      Text("Apple Pay button style:")
+
+      Picker("Apple Pay button style", selection: $viewModel.applePayButtonStyle) {
+        ForEach(CheckoutComponents.ApplePayButtonStyle.allCases, id: \.self) {
+          Text($0.displayName)
+            .tag($0)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.applePayButtonStylePicker.rawValue)
+    }
+  }
+
+  var applePayButtonTypeView: some View {
+    HStack {
+      Text("Apple Pay button type:")
+
+      Picker("Apple Pay button type", selection: $viewModel.applePayButtonType) {
+        ForEach(CheckoutComponents.ApplePayButtonType.allCases, id: \.self) {
+          Text($0.displayName)
+            .tag($0)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.applePayButtonTypePicker.rawValue)
+    }
+  }
+
   var localeView: some View {
     HStack {
       Text("Locale:")
@@ -230,6 +258,8 @@ extension MainView {
       VStack(alignment: .leading, spacing: 12) {
         cardOptionsView
         showApplePayButtonView
+        applePayButtonStyleView
+        applePayButtonTypeView
         applePayTypeView
         cardHolderNamePositionView
         hideSecurityCodeView
@@ -657,6 +687,42 @@ extension MainView {
         .padding(.leading, 16)
         .transition(.opacity.combined(with: .slide))
       }
+    }
+  }
+}
+
+/ MARK: - Apple Pay display helpers
+
+extension CheckoutComponents.ApplePayButtonStyle {
+  var displayName: String {
+    switch self {
+    case .white: return "White"
+    case .whiteOutline: return "White Outline"
+    case .black: return "Black"
+    case .automatic: return "Automatic"
+    }
+  }
+}
+
+extension CheckoutComponents.ApplePayButtonType {
+  var displayName: String {
+    switch self {
+    case .plain: return "Plain"
+    case .buy: return "Buy"
+    case .setUp: return "Set Up"
+    case .inStore: return "In Store"
+    case .donate: return "Donate"
+    case .checkout: return "Checkout"
+    case .book: return "Book"
+    case .subscribe: return "Subscribe"
+    case .reload: return "Reload"
+    case .addMoney: return "Add Money"
+    case .topUp: return "Top Up"
+    case .order: return "Order"
+    case .rent: return "Rent"
+    case .support: return "Support"
+    case .contribute: return "Contribute"
+    case .tip: return "Tip"
     }
   }
 }
