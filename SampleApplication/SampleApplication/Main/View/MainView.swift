@@ -75,15 +75,20 @@ extension MainView {
           .padding()
           
         case .submitPayment:
-          switch (viewModel.showCardPayButton, viewModel.showApplePayButton){
-          case (true, true):
+          switch (viewModel.showCardPayButton, viewModel.showApplePayButton, viewModel.showAPMPayButton) {
+          case (true, true, true):
             EmptyView()
-            
+
           default:
-            Button("Submit") {
-              viewModel.submit()
+            // Staged methods (e.g. STC Pay) report `isPayButtonRequired == false`
+            // on their first stage, so keep the custom pay button hidden until
+            // the SDK signals it is required.
+            if viewModel.isPayButtonRequired {
+              Button("Submit") {
+                viewModel.submit()
+              }
+              .padding()
             }
-            .padding()
           }
         }
       }

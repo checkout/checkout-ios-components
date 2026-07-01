@@ -20,8 +20,12 @@ extension MainViewModel {
         return true
       },
 
-      onChange: { paymentMethod in
-        debugPrint("onChange: Payment method: \(paymentMethod.name), isValid: \(paymentMethod.isValid)")
+      onChange: { [weak self] paymentMethod in
+        debugPrint("onChange: Payment method: \(paymentMethod.name), isValid: \(paymentMethod.isValid), isPayButtonRequired: \(paymentMethod.isPayButtonRequired)")
+        let isPayButtonRequired = paymentMethod.isPayButtonRequired
+        Task { @MainActor in
+          self?.isPayButtonRequired = isPayButtonRequired
+        }
       },
       
       onCardBinChanged: onCardBinChanged(),

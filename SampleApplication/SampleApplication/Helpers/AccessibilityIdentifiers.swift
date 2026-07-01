@@ -31,6 +31,7 @@ enum AccessibilityIdentifier {
     case applePayPaymentMethodOption = "google_apple_pay_payment_method_option"
     case tabbyPaymentMethodOption = "tabby_payment_method_option"
     case tamaraPaymentMethodOption = "tamara_payment_method_option"
+    case stcPayPaymentMethodOption = "stc_pay_payment_method_option"
     case payButtonPicker = "pay_button_picker"
     case payment = "payment"
     case tokenize = "tokenize"
