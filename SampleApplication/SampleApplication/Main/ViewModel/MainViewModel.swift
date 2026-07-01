@@ -1,7 +1,7 @@
 //  Copyright © 2024 Checkout.com. All rights reserved.
 
 #if canImport(CheckoutComponents)
-import CheckoutComponents
+@_spi(CheckoutInternal) import CheckoutComponents
 #elseif canImport(CheckoutComponentsSDK)
 import CheckoutComponentsSDK
 #endif
@@ -17,6 +17,7 @@ enum PaymentMethodType: CaseIterable {
   case applePay
   case tabby
   case tamara
+  case stcPay
 }
 
 enum CustomButtonOperation: String, CaseIterable {
@@ -34,6 +35,7 @@ final class MainViewModel: ObservableObject {
   @Published var generatedToken: String = ""
   @Published var errorMessage: String = ""
   @Published var showCardPayButton: Bool = true
+  @Published var showAPMPayButton: Bool = true
   @Published var paymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
   @Published var selectedComponentType: CheckoutComponent = .flow
   @Published var selectedPaymentMethodTypes: Set<PaymentMethodType> = []
@@ -59,6 +61,10 @@ final class MainViewModel: ObservableObject {
   @Published var applePayButtonType: CheckoutComponents.ApplePayButtonType = .plain
   @Published var isAdvancedFeaturesExpanded: Bool = false
   @Published var customButtonOperation: CustomButtonOperation = .submitPayment
+  // Reflects the active payment method's `isPayButtonRequired` from `onChange`.
+  // Defaults to `true` to match the SDK default; staged methods like STC Pay
+  // report `false` on their first stage so the custom pay button stays hidden.
+  @Published var isPayButtonRequired: Bool = true
 
   @Published var isPaymentSessionConfigurationExpanded: Bool = false
   @Published var paymentSessionUsername: String = ""
@@ -75,7 +81,6 @@ final class MainViewModel: ObservableObject {
   @Published var userPhoneNumber: String = ""
   @Published var userCountryCode: String = ""
   // RememberMe PaymentSession
-  @Published var paymentSessionEmail: String = ""
   @Published var paymentSessionCountryCode: String = ""
   @Published var paymentSessionPhoneNumber: String = ""
   
@@ -96,7 +101,7 @@ final class MainViewModel: ObservableObject {
       )
     }
   }
-  
+
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
@@ -111,6 +116,9 @@ final class MainViewModel: ObservableObject {
     if selectedPaymentMethodTypes.contains(.tamara) {
       providers.append(CheckoutPaymentOptions.Provider.tamara)
     }
+    if selectedPaymentMethodTypes.contains(.stcPay) {
+      providers.append(CheckoutPaymentOptions.Provider.stcPay)
+    }
     return providers
     #else
     return []
@@ -118,7 +126,7 @@ final class MainViewModel: ObservableObject {
   }
 
   init() {
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay]
   }
 }
 
@@ -161,12 +169,12 @@ extension MainViewModel {
     )
 
     let phone = Phone(
-      countryCode: "44", number: "08002580300"
+      countryCode: "44", number: "7700123456"
     )
 
     let customer = Customer(
       email: !paymentSessionUserEmail.isEmpty ? paymentSessionUserEmail : "customer+test@checkout.com",
-      name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "",
+      name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "Test",
       phone: paymentSessionPhoneModel
     )
 
@@ -224,7 +232,7 @@ extension MainViewModel {
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
     switch selectedComponentType {
     case .flow:
-      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: apmProviders))
+      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: .init(providers: apmProviders, showPayButton: showAPMPayButton)))
     case .card:
       return try checkoutComponentsSDK.create(getCardPaymentMethod())
     case .applePay:
@@ -234,9 +242,9 @@ extension MainViewModel {
       return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tabby)
     case .tamara:
       return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tamara)
+    case .stcPay:
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.stcPay)
     #endif
-    default:
-        return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: apmProviders))
     }
   }
 
@@ -301,6 +309,17 @@ extension MainViewModel {
     }
   }
 
+  var isSTCPaySelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.stcPay) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.stcPay)
+      } else {
+        selectedPaymentMethodTypes.remove(.stcPay)
+      }
+    }
+  }
+
   var selectedPaymentMethodsTitle: String {
     var selectedMethods: [String] = []
 
@@ -318,6 +337,10 @@ extension MainViewModel {
 
     if isTamaraSelected {
       selectedMethods.append("Tamara")
+    }
+
+    if isSTCPaySelected {
+      selectedMethods.append("STC Pay")
     }
 
     if selectedMethods.isEmpty {
@@ -383,7 +406,7 @@ extension MainViewModel {
   func resetToDefaultConfiguration() {
     checkoutComponentsView = nil
     selectedComponentType = .flow
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay]
     showCardPayButton = true
     paymentButtonAction = .payment
     selectedLocale = .locale(.en_GB)
@@ -460,7 +483,7 @@ extension MainViewModel {
   
   func submitPaymentSession(with submitData: String) async throws -> CheckoutComponents.PaymentSessionSubmissionResult {
     let submitPaymentRequest = SubmitPaymentSessionRequest(sessionData: submitData,
-                                                           amount: 100,
+                                                           amount: 10500,
                                                            threeDS: ThreeDS(enabled: false,
                                                                             attemptN3D: false))
     
@@ -474,10 +497,6 @@ extension MainViewModel {
 
 extension MainViewModel {
   
-  private var paymentSessionEmailModel: String? {
-    paymentSessionEmail.isEmpty ? nil : paymentSessionEmail
-  }
-
   private var paymentSessionPhoneModel: Phone? {
     let countryCode = paymentSessionCountryCode.isEmpty ? nil : paymentSessionCountryCode
     let number = paymentSessionPhoneNumber.isEmpty ? nil : paymentSessionPhoneNumber

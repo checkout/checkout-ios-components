@@ -14,6 +14,7 @@ enum CheckoutComponent: String, CaseIterable {
   case applePay = "Apple Pay"
   case tabby = "Tabby"
   case tamara = "Tamara"
+  case stcPay = "STC Pay"
 
   var accessibilityIdentifier: String {
     switch self {
@@ -27,6 +28,8 @@ enum CheckoutComponent: String, CaseIterable {
       return "tabby"
     case .tamara:
       return "tamara"
+    case .stcPay:
+      return "stc_pay"
     }
   }
 }
@@ -80,6 +83,8 @@ extension MainView {
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tabbyPaymentMethodOption.rawValue)
           Toggle("Tamara", isOn: $viewModel.isTamaraSelected)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tamaraPaymentMethodOption.rawValue)
+          Toggle("STC Pay", isOn: $viewModel.isSTCPaySelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.stcPayPaymentMethodOption.rawValue)
         }.accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentMethodPicker.rawValue)
       }
     }
@@ -128,6 +133,10 @@ extension MainView {
 
   var showApplePayButtonView: some View {
     Toggle("Show Apple Pay button", isOn: $viewModel.showApplePayButton)
+  }
+
+  var showAPMPayButtonView: some View {
+    Toggle("Show APM pay button", isOn: $viewModel.showAPMPayButton)
   }
 
   var applePayButtonStyleView: some View {
@@ -258,6 +267,7 @@ extension MainView {
       VStack(alignment: .leading, spacing: 12) {
         cardOptionsView
         showApplePayButtonView
+        showAPMPayButtonView
         applePayButtonStyleView
         applePayButtonTypeView
         applePayTypeView
@@ -268,7 +278,7 @@ extension MainView {
         cardAcceptedCardSchemesView
         applePayAcceptedCardSchemesView
         rememberMeAcceptedCardSchemesView
-        
+
         cardAcceptedCardTypesView
         applePayAcceptedCardTypesView
         rememberMeAcceptedCardTypesView
@@ -296,6 +306,8 @@ extension MainView {
       VStack(alignment: .leading, spacing: 12) {
         paymentSessionUsername
         paymentSessionUserEmail
+        paymentSessionCountryCodeView
+        paymentSessionPhoneNumberView
       }
       .padding(.leading, 16)
       .transition(.opacity.combined(with: .slide))
@@ -323,7 +335,6 @@ extension MainView {
           )
           
           rememberMeSDKSetupView
-          rememberMePaymentSessionSetupView
           
         }
       }
@@ -347,6 +358,28 @@ extension MainView {
       TextField("Customer email", text: $viewModel.paymentSessionUserEmail)
         .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentSessionUserEmailTextField.rawValue)
         .keyboardType(.emailAddress)
+    }
+  }
+  
+  var paymentSessionCountryCodeView: some View {
+    HStack {
+      Text("Country Code: ")
+      TextField("Country Code", text: $viewModel.paymentSessionCountryCode)
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.customerPhoneCountryCodePicker.rawValue
+        )
+        .keyboardType(.phonePad)
+    }
+  }
+
+  var paymentSessionPhoneNumberView: some View {
+    HStack {
+      Text("Phone Number: ")
+      TextField("Phone Number", text: $viewModel.paymentSessionPhoneNumber)
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.customerPhoneNumberInput.rawValue
+        )
+        .keyboardType(.phonePad)
     }
   }
 
@@ -428,7 +461,7 @@ extension MainView {
       .americanExpress, .cartesBancaires,
       .chinaUnionPay, .dinersClub,
       .discover, .jcb,
-      .mada, .mastercard,
+      .mada, .jaywan, .mastercard,
       .visa, .maestro
     ]
   }
@@ -600,59 +633,6 @@ extension MainView {
   
 }
 
-// MARK: - RememberMe Payment Session Setup
-
-extension MainView {
-  
-  var rememberMePaymentSessionSetupView: some View {
-    expandableSection(
-      title: "Payment Session Setup",
-      isExpanded: $viewModel.isRememberMePaymentSessionSetupExpanded,
-      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.rememberMePaymentSessionSetupExpandable.rawValue
-    ) {
-      VStack(alignment: .leading, spacing: 12) {
-        paymentSessionEmailView
-        paymentSessionCountryCodeView
-        paymentSessionPhoneNumberView
-      }
-    }
-  }
-  
-  var paymentSessionEmailView: some View {
-    HStack {
-      Text("PS Email: ")
-      TextField("PS Email", text: $viewModel.paymentSessionEmail)
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.customerEmailInput.rawValue
-        )
-        .keyboardType(.emailAddress)
-    }
-  }
-
-  var paymentSessionCountryCodeView: some View {
-    HStack {
-      Text("PS Country Code: ")
-      TextField("PS Country Code", text: $viewModel.paymentSessionCountryCode)
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.customerPhoneCountryCodePicker.rawValue
-        )
-        .keyboardType(.phonePad)
-    }
-  }
-
-  var paymentSessionPhoneNumberView: some View {
-    HStack {
-      Text("PS Phone Number: ")
-      TextField("PS Phone Number", text: $viewModel.paymentSessionPhoneNumber)
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.customerPhoneNumberInput.rawValue
-        )
-        .keyboardType(.phonePad)
-    }
-  }
-  
-}
-
 // MARK: - Helping Structures
 
 extension MainView {
@@ -691,7 +671,7 @@ extension MainView {
   }
 }
 
-/ MARK: - Apple Pay display helpers
+// MARK: - Apple Pay display helpers
 
 extension CheckoutComponents.ApplePayButtonStyle {
   var displayName: String {
@@ -699,7 +679,6 @@ extension CheckoutComponents.ApplePayButtonStyle {
     case .white: return "White"
     case .whiteOutline: return "White Outline"
     case .black: return "Black"
-    case .automatic: return "Automatic"
     }
   }
 }
