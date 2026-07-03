@@ -39,6 +39,9 @@ playground.xcworkspace
 *.build
 Package.resolved
 
+## XCFramework build outputs (engine + CheckoutPaymentMethods land here)
+/archives/
+
 ## Files
 # Ignore all env.xcconfig files in any directory
 **/env.xcconfig

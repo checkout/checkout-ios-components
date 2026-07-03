@@ -45,6 +45,9 @@ extension MainView {
       VStack(alignment: .leading) {
         sdkOptionsView
         environmentView
+        #if INTERNAL_SAMPLE_APP
+        merchantKeyPresetView
+        #endif
         appearanceView
         localeView
         paymentSessionLocaleView
@@ -241,6 +244,11 @@ extension MainView {
           .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.productionEnvironmentOption.rawValue)
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.environmentPicker.rawValue)
+      #if INTERNAL_SAMPLE_APP
+      .onChange(of: viewModel.selectedEnvironment) { _ in
+        viewModel.onEnvironmentChanged()
+      }
+      #endif
     }
   }
 
@@ -332,6 +340,14 @@ extension MainView {
           )
           .accessibilityIdentifier(
             AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
+          )
+          
+          Toggle(
+            "Feature Flag: Capture CVV",
+            isOn: $viewModel.captureCvvEnabled
+          )
+          .accessibilityIdentifier(
+            AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
           )
           
           rememberMeSDKSetupView

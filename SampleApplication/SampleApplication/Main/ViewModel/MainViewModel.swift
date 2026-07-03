@@ -43,7 +43,11 @@ final class MainViewModel: ObservableObject {
   @Published var paymentSessionSelectedLocale: LocaleOption = .locale(.en_GB)
   @Published var selectedCountry: CountryOption = .gb
   @Published var selectedCurrency: CurrencyOption = .gbp
+  @Published var amount: Int = 10500
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
+  #if INTERNAL_SAMPLE_APP
+  @Published var selectedMerchantKey: MerchantKeyPreset?
+  #endif
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
   @Published var displayCardHolderName: CheckoutComponents.DisplayCardHolderName = .top
@@ -101,11 +105,25 @@ final class MainViewModel: ObservableObject {
       )
     }
   }
+  
+  @Published var captureCvvEnabled: Bool = false {
+    didSet {
+      UserDefaults.standard.set(
+        captureCvvEnabled,
+        forKey: "checkout_components_capture_cvv"
+      )
+    }
+  }
 
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
+  #if INTERNAL_SAMPLE_APP
+  let merchantKeyPresetProvider: any MerchantKeyPresetProviding
+
+  @Published var merchantKeysPreset: MerchantKeyPresets = [:]
+  #endif
 
   var apmProviders: [any CheckoutComponents.PaymentMethodProvider] {
     #if canImport(CheckoutPaymentMethods)
@@ -125,9 +143,17 @@ final class MainViewModel: ObservableObject {
     #endif
   }
 
+  #if INTERNAL_SAMPLE_APP
+  init(merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider()) {
+    self.merchantKeyPresetProvider = merchantKeyPresetProvider
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
+    Task { await loadMerchantKeyPresets() }
+  }
+  #else
   init() {
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay]
   }
+  #endif
 }
 
 extension MainViewModel {
@@ -179,7 +205,7 @@ extension MainViewModel {
     )
 
     let paymentSessionRequest = PaymentSessionRequest(
-      amount: 10500,
+      amount: amount,
       currency: selectedCurrency.rawValue,
       billing: BillingType(address: address, phone: phone),
       reference: "cf72664f31984a7ab841d51b7305dc72",
@@ -193,7 +219,7 @@ extension MainViewModel {
       successURL: Constants.successURL,
       failureURL: Constants.failureURL,
       threeDS: .init(enabled: true, attemptN3D: true),
-      processingChannelID: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil,
+      processingChannelID: resolvedProcessingChannelID,
       paymentMethodConfiguration: PaymentMethodConfiguration(applepay: ApplePayConfiguration(totalType: selectedApplePayType.rawValue)),
       locale: paymentSessionSelectedLocale.localeString,
       items: [
@@ -210,14 +236,15 @@ extension MainViewModel {
     )
 
     return try await networkLayer.createPaymentSession(request: paymentSessionRequest,
-                                                       environment: selectedEnvironment)
+                                                       environment: selectedEnvironment,
+                                                       secretKey: resolvedSecretKey)
   }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
-      publicKey: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxPublicKey : EnvironmentVars.productionPublicKey,
+      publicKey: resolvedPublicKey,
       environment: selectedEnvironment,
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
       locale: selectedLocale.localeString,
@@ -411,9 +438,13 @@ extension MainViewModel {
     paymentButtonAction = .payment
     selectedLocale = .locale(.en_GB)
     selectedEnvironment = .sandbox
+    #if INTERNAL_SAMPLE_APP
+    selectedMerchantKey = availableMerchantKeys.first
+    #endif
     selectedAddressConfiguration = .prefillCustomized
     isDefaultAppearance = true
     updatedAmount = ""
+    amount = 10500
   }
   
   func getLocales() -> [String] {
@@ -489,7 +520,8 @@ extension MainViewModel {
     
     return try await networkLayer.submitPaymentSession(paymentSessionId: paymentSessionId,
                                                        request: submitPaymentRequest,
-                                                       environment: selectedEnvironment)
+                                                       environment: selectedEnvironment,
+                                                       secretKey: resolvedSecretKey)
   }
 }
 
@@ -507,5 +539,21 @@ extension MainViewModel {
 
     return Phone(countryCode: countryCode, number: number)
   }
-  
+
 }
+
+#if !INTERNAL_SAMPLE_APP
+extension MainViewModel {
+  var resolvedPublicKey: String {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxPublicKey : EnvironmentVars.productionPublicKey
+  }
+
+  var resolvedSecretKey: String {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
+  }
+
+  var resolvedProcessingChannelID: String? {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil
+  }
+}
+#endif

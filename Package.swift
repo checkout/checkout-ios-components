@@ -43,8 +43,8 @@ let package = Package(
     ),
     .binaryTarget(
       name: "CheckoutComponentsSDK",
-      url: sdkURL,
-      checksum: sdkChecksum
+      url: "https://github.com/checkout/checkout-ios-components/releases/download/2.2.1-RC3/CheckoutComponentsSDK.xcframework.zip",
+      checksum: "df9e82c0e86c2b3766efb29021aa076a30f00f940c52d33b613a8f7e558ff0cf"
     ),
     .target(
       name: "CheckoutPaymentMethodsPackage",
@@ -55,9 +55,9 @@ let package = Package(
       path: "CheckoutPaymentMethodsPackage"
     ),
     .binaryTarget(
-      name: "CheckoutPaymentMethods",
-      url: paymentMethodsURL,
-      checksum: paymentMethodsChecksum
+      name: "CheckoutComponentsSDK",
+      url: "https://github.com/checkout/checkout-ios-components/releases/download/2.2.1-RC3/CheckoutComponentsSDK.xcframework.zip",
+      checksum: "df9e82c0e86c2b3766efb29021aa076a30f00f940c52d33b613a8f7e558ff0cf"
     ),
   ]
 )

@@ -5,6 +5,61 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 
+## [2.2.1-RC3](https://github.com/checkout/checkout-ios-components/releases/tag/2.2.1-RC3)
+
+Released on 03.07.2026
+
+Updates:
+
+- **What's new**
+   -
+
+##
+
+## [2.2.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.2.0)
+
+Released on 01.07.2026
+
+Updates:
+
+- **What's new**
+   -
+
+##
+
+## [2.1.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.1.0)
+
+Released on 10.06.2026
+
+Updates:
+
+- **What's new**
+   -
+
+##
+
+## [2.0.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.0.0)
+
+Released on 04.06.2026
+
+Updates:
+
+- **What's new**
+   -
+
+##
+
+## [2.0.0-rc](https://github.com/checkout/checkout-ios-components/releases/tag/2.0.0-rc)
+
+Released on 04.06.2026
+
+Updates:
+
+- **What's new**
+   -
+
+##
+
 ## [1.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.9.0)
 
 Released on 07.05.2026
@@ -25,6 +80,7 @@ Released on 29.04.2026
 Updates:
 
 - **What's new**
+   -
    - [FIXED] Using handleSubmit callback with RememberMe component for Mada cards
 
 ##
