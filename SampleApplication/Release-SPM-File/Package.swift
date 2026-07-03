@@ -2,13 +2,11 @@
 import PackageDescription
 
 let releaseVersion = "2.2.1-RC4"
-let githubRepo = "checkout/checkout-ios-components"
+let githubRepo = "cko-mobile/checkout-ios-components"
 
 let sdkChecksum = "076fa51c93be486dcec97620d7240b8bb3c2dfbb37f12bc73bba6afc71391239"
-let paymentMethodsChecksum = "34af117f7e80377c317a72cf9589e2098f15bfc75dfd19fae7c8820b7f646b28"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
-let paymentMethodsURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutPaymentMethods.xcframework.zip"
 
 let package = Package(
   name: "CheckoutComponents",
@@ -19,11 +17,9 @@ let package = Package(
   products: [
     .library(
       name: "CheckoutComponents",
-      targets: ["CheckoutComponentsPackage"]
-    ),
-    .library(
-      name: "CheckoutPaymentMethods",
-      targets: ["CheckoutPaymentMethodsPackage"]
+      targets: [
+        "CheckoutComponentsPackage"
+      ]
     ),
   ],
   dependencies: [
@@ -45,19 +41,6 @@ let package = Package(
       name: "CheckoutComponentsSDK",
       url: sdkURL,
       checksum: sdkChecksum
-    ),
-    .target(
-      name: "CheckoutPaymentMethodsPackage",
-      dependencies: [
-        .target(name: "CheckoutPaymentMethods"),
-        .target(name: "CheckoutComponentsPackage"),
-      ],
-      path: "CheckoutPaymentMethodsPackage"
-    ),
-    .binaryTarget(
-      name: "CheckoutPaymentMethods",
-      url: paymentMethodsURL,
-      checksum: paymentMethodsChecksum
-    ),
+    )
   ]
 )
