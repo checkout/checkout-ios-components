@@ -9,7 +9,7 @@ import CheckoutComponentsSDK
 import Foundation
 
 struct NetworkLayer {
-  func createPaymentSession(request: PaymentSessionRequest, environment: CheckoutComponents.Environment) async throws -> PaymentSession {
+  func createPaymentSession(request: PaymentSessionRequest, environment: CheckoutComponents.Environment, secretKey: String) async throws -> PaymentSession {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
     let requestBody = try encoder.encode(request)
@@ -24,7 +24,6 @@ struct NetworkLayer {
     var request = URLRequest(url: url)
     request.httpBody = requestBody
     request.httpMethod = "POST"
-    let secretKey = environment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
     request.addValue("Bearer " + secretKey, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -37,7 +36,8 @@ struct NetworkLayer {
   
   func submitPaymentSession(paymentSessionId: String,
                             request: SubmitPaymentSessionRequest,
-                            environment: CheckoutComponents.Environment) async throws -> CheckoutComponents.PaymentSessionSubmissionResult {
+                            environment: CheckoutComponents.Environment,
+                            secretKey: String) async throws -> CheckoutComponents.PaymentSessionSubmissionResult {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
     let requestBody = try encoder.encode(request)
@@ -50,10 +50,9 @@ struct NetworkLayer {
     var request = URLRequest(url: url)
     request.httpBody = requestBody
     request.httpMethod = "POST"
-    let secretKey = environment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
     request.addValue("Bearer " + secretKey, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    
+
     let (data, response) = try await URLSession.shared.data(for: request)
     if let response = response as? HTTPURLResponse {
       print(response.statusCode)

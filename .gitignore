@@ -47,3 +47,6 @@ Package.resolved
 **/EnvironmentVars.generated.swift
 
 .DS_Store
+
+# Local merchant keys (real secrets) — never commit
+SampleApplication/SampleApplication/Internal/Configuration/components-environments.xcconfig

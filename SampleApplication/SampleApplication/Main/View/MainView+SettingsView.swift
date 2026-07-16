@@ -15,6 +15,9 @@ enum CheckoutComponent: String, CaseIterable {
   case tabby = "Tabby"
   case tamara = "Tamara"
   case stcPay = "STC Pay"
+#if canImport(CheckoutKlarna)
+  case klarna = "Klarna"
+#endif
 
   var accessibilityIdentifier: String {
     switch self {
@@ -30,6 +33,10 @@ enum CheckoutComponent: String, CaseIterable {
       return "tamara"
     case .stcPay:
       return "stc_pay"
+#if canImport(CheckoutKlarna)
+    case .klarna:
+      return "klarna"
+#endif
     }
   }
 }
@@ -45,6 +52,9 @@ extension MainView {
       VStack(alignment: .leading) {
         sdkOptionsView
         environmentView
+        #if INTERNAL_SAMPLE_APP
+        merchantKeyPresetView
+        #endif
         appearanceView
         localeView
         paymentSessionLocaleView
@@ -85,6 +95,8 @@ extension MainView {
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tamaraPaymentMethodOption.rawValue)
           Toggle("STC Pay", isOn: $viewModel.isSTCPaySelected)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.stcPayPaymentMethodOption.rawValue)
+          Toggle("Klarna", isOn: $viewModel.isKlarnaSelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.klarnaPaymentMethodOption.rawValue)
         }.accessibilityIdentifier(AccessibilityIdentifier.SettingsView.paymentMethodPicker.rawValue)
       }
     }
@@ -241,6 +253,11 @@ extension MainView {
           .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.productionEnvironmentOption.rawValue)
       }
       .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.environmentPicker.rawValue)
+      #if INTERNAL_SAMPLE_APP
+      .onChange(of: viewModel.selectedEnvironment) { _ in
+        viewModel.onEnvironmentChanged()
+      }
+      #endif
     }
   }
 
@@ -332,6 +349,14 @@ extension MainView {
           )
           .accessibilityIdentifier(
             AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
+          )
+          
+          Toggle(
+            "Feature Flag: Capture CVV",
+            isOn: $viewModel.captureCvvEnabled
+          )
+          .accessibilityIdentifier(
+            AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
           )
           
           rememberMeSDKSetupView

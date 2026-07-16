@@ -1,0 +1,41 @@
+//  Copyright © 2024 Checkout.com. All rights reserved.
+//
+// INTERNAL ONLY — merchant-key preset configuration.
+//
+// To populate the in-app "Merchant" picker, copy this file to
+// `components-environments.xcconfig` (same folder) and fill in real keys. That
+// file is gitignored. This whole `Internal/` tree is excluded from the public
+// sample app (see .github/scripts/copy-files-to-public.sh).
+//
+// At build time `.github/scripts/codegen-components-environments.sh` reads
+// `components-environments.xcconfig` and writes `components_environments.json`
+// into the app bundle, which the MerchantKeyPresetProvider loads. When the file
+// is absent the JSON is empty and the "Merchant" picker is not drawn.
+//
+// Naming convention: ENV_COMPONENTS_FIELD or ENV_COMPONENTS_PRESET_FIELD
+// - ENV_COMPONENTS_FIELD          -> the "default" component for that environment
+// - ENV_COMPONENTS_PRESET_FIELD   -> a named component (e.g. "mena") for that environment
+// Missing fields are simply omitted from the generated components_environments.json.
+
+// Default components:
+PRODUCTION_COMPONENTS_PUBLIC_KEY = YOUR_PUBLIC_KEY_HERE
+PRODUCTION_COMPONENTS_SECRET_KEY = YOUR_SECRET_KEY_HERE
+
+SANDBOX_COMPONENTS_PUBLIC_KEY = YOUR_PUBLIC_KEY_HERE
+SANDBOX_COMPONENTS_SECRET_KEY = YOUR_SECRET_KEY_HERE
+SANDBOX_COMPONENTS_PROCESSING_CHANNEL_ID = YOUR_PROCESSING_CHANNEL_ID_HERE
+
+// Preset named component example (creates a "mena" component under sandbox):
+SANDBOX_COMPONENTS_MENA_PUBLIC_KEY = YOUR_PUBLIC_KEY_HERE
+SANDBOX_COMPONENTS_MENA_SECRET_KEY = YOUR_SECRET_KEY_HERE
+SANDBOX_COMPONENTS_MENA_PROCESSING_CHANNEL_ID = YOUR_PROCESSING_CHANNEL_ID_HERE
+
+// Preset named component example (creates a "klarna" component under sandbox):
+SANDBOX_COMPONENTS_KLARNA_PUBLIC_KEY = YOUR_PUBLIC_KEY_HERE
+SANDBOX_COMPONENTS_KLARNA_SECRET_KEY = YOUR_SECRET_KEY_HERE
+SANDBOX_COMPONENTS_KLARNA_PROCESSING_CHANNEL_ID = YOUR_PROCESSING_CHANNEL_ID_HERE
+
+// Add as many named presets as you need (creates a "multi" component under sandbox):
+SANDBOX_COMPONENTS_MULTI_PUBLIC_KEY = YOUR_PUBLIC_KEY_HERE
+SANDBOX_COMPONENTS_MULTI_SECRET_KEY = YOUR_SECRET_KEY_HERE
+SANDBOX_COMPONENTS_MULTI_PROCESSING_CHANNEL_ID = YOUR_PROCESSING_CHANNEL_ID_HERE

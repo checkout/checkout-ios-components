@@ -55,6 +55,40 @@ struct MainView: View {
         token: viewModel.generatedToken
       )
     }
+    .task {
+      // Hydrate from environment variables and the bundled baseline at launch.
+      await hydrateLaunchConfig(deepLinkURL: nil)
+    }
+    .onOpenURL { url in
+      // Deep Link Token has the highest precedence; re-resolve including it.
+      Task { await hydrateLaunchConfig(deepLinkURL: url) }
+    }
+  }
+}
+
+// MARK: Declarative launch configuration
+extension MainView {
+  /// Resolves the launch configuration across all delivery channels, applies
+  /// it to the view model, and — when `"render": "auto"` is present — renders
+  /// the flow immediately, bypassing the tap-to-render state (AC 1).
+  @MainActor
+  func hydrateLaunchConfig(deepLinkURL: URL?) async {
+    let config = LaunchConfigHydrator.resolve(
+      deepLinkURL: deepLinkURL,
+      environment: ProcessInfo.processInfo.environment
+    )
+
+    let shouldAutoRender = viewModel.applyLaunchConfig(config)
+
+    // Only auto-render once, and never override a flow that is already shown.
+    guard shouldAutoRender, viewState != .component else { return }
+
+    do {
+      try await viewModel.makeComponent()
+      viewState = .component
+    } catch {
+      viewState = .error("\(error)")
+    }
   }
 }
 

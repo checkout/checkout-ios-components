@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,18 +26,26 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
-		A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A246560E2F44CE66001AE99A /* CheckoutComponents */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
-		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
-		A27B7AFD2FD6F01500EF8860 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A27B7AFC2FD6F01500EF8860 /* CheckoutComponents */; };
-		A27B7B002FD6F14B00EF8860 /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A27B7AFF2FD6F14B00EF8860 /* CheckoutPaymentMethods */; };
+		A273AEB5300918DE00B84B5B /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A273AEB4300918DE00B84B5B /* CheckoutComponents */; };
+		A273AEB8300918E600B84B5B /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
-		FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
-		FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
-		FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
-		FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
+		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
+		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
+		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
+		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC10C0F2000000000000A00A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16FC05372C40170E00D75022 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16FC053E2C40170E00D75022;
+			remoteInfo = SampleApplication;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		161E3F572CE26DD10060A628 /* SampleApplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApplication.entitlements; sourceTree = "<group>"; };
@@ -65,21 +73,31 @@
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
 		A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CountryCurrencyOption.swift"; sourceTree = "<group>"; };
 		A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+LocaleOption.swift"; sourceTree = "<group>"; };
+		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
+		CC10C0F100000000000000B1 /* LaunchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LaunchConfig.json; sourceTree = "<group>"; };
+		CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FE000000000000000000000A /* Internal */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Internal; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		16FC053C2C40170E00D75022 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				A27312D42F475793006F7FDE /* Risk in Frameworks */,
-				A27B7AFD2FD6F01500EF8860 /* CheckoutComponents in Frameworks */,
-				A27B7B002FD6F14B00EF8860 /* CheckoutPaymentMethods in Frameworks */,
-				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
+				A273AEB8300918E600B84B5B /* CheckoutPaymentMethods in Frameworks */,
+				A273AEB5300918DE00B84B5B /* CheckoutComponents in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC10C0F2000000000000A007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				16FC05412C40170E00D75022 /* SampleApplication */,
+				CC10C0F2000000000000A00B /* SampleApplicationTests */,
+				FF7FD2452FD1CD3600926AD1 /* Frameworks */,
 				16FC05402C40170E00D75022 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -127,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				16FC053F2C40170E00D75022 /* SampleApplication.app */,
+				CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,6 +162,8 @@
 				16C44C552C5284CA00CE0CCE /* Configuration */,
 				16C44C472C4FC46F00CE0CCE /* NetworkLayer */,
 				A21EBD642DF9D87C00F9BC14 /* Helpers */,
+				CC10C0F100000000000000C1 /* LaunchConfig */,
+				FE000000000000000000000A /* Internal */,
 				16FC05422C40170E00D75022 /* SampleApplication.swift */,
 				16FC05462C40170F00D75022 /* Assets.xcassets */,
 				16FC05482C40170F00D75022 /* Preview Content */,
@@ -205,6 +228,30 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		CC10C0F100000000000000C1 /* LaunchConfig */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */,
+				CC10C0F100000000000000B1 /* LaunchConfig.json */,
+			);
+			path = LaunchConfig;
+			sourceTree = "<group>";
+		};
+		CC10C0F2000000000000A00B /* SampleApplicationTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */,
+			);
+			path = SampleApplicationTests;
+			sourceTree = "<group>";
+		};
+		FF7FD2452FD1CD3600926AD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -215,25 +262,44 @@
 				16FC053B2C40170E00D75022 /* Sources */,
 				16FC053C2C40170E00D75022 /* Frameworks */,
 				16FC053D2C40170E00D75022 /* Resources */,
+				FE0000000000000000000005 /* Generate components_environments.json */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				FE000000000000000000000A /* Internal */,
+			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				1695611B2D440E3E00030923 /* CheckoutComponents */,
-				951AE3372D5243E800519900 /* CheckoutComponents */,
-				951AE33A2D527A7400519900 /* CheckoutComponents */,
-				16A5BCA82D835918007B79C0 /* Risk */,
-				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
-				A246560E2F44CE66001AE99A /* CheckoutComponents */,
-				A27B7AFC2FD6F01500EF8860 /* CheckoutComponents */,
-				A27B7AFF2FD6F14B00EF8860 /* CheckoutPaymentMethods */,
+				A273AEB4300918DE00B84B5B /* CheckoutComponents */,
+				A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CC10C0F2000000000000A001 /* SampleApplicationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC10C0F2000000000000A003 /* Build configuration list for PBXNativeTarget "SampleApplicationTests" */;
+			buildPhases = (
+				CC10C0F2000000000000A006 /* Sources */,
+				CC10C0F2000000000000A007 /* Frameworks */,
+				CC10C0F2000000000000A008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC10C0F2000000000000A009 /* PBXTargetDependency */,
+			);
+			name = SampleApplicationTests;
+			packageProductDependencies = (
+				CC10C0F2000000000000A00E /* CheckoutComponents */,
+			);
+			productName = SampleApplicationTests;
+			productReference = CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -249,6 +315,10 @@
 					16FC053E2C40170E00D75022 = {
 						CreatedOnToolsVersion = 15.3;
 					};
+					CC10C0F2000000000000A001 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 16FC053E2C40170E00D75022;
+					};
 				};
 			};
 			buildConfigurationList = 16FC053A2C40170E00D75022 /* Build configuration list for PBXProject "SampleApplication" */;
@@ -261,14 +331,15 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A27B7AFB2FD6F01500EF8860 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
-				A27B7AFE2FD6F14B00EF8860 /* XCLocalSwiftPackageReference "../CheckoutPaymentMethods" */,
+				A273AEB3300918DE00B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				A273AEB6300918E600B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components/CheckoutPaymentMethods" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				16FC053E2C40170E00D75022 /* SampleApplication */,
+				CC10C0F2000000000000A001 /* SampleApplicationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,6 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */,
 				16FC054A2C40170F00D75022 /* Preview Assets.xcassets in Resources */,
 				16C44C5A2C52872D00CE0CCE /* EnvironmentVars.stencil in Resources */,
 				16C44C542C5284BF00CE0CCE /* env-example.xcconfig in Resources */,
@@ -286,13 +358,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC10C0F2000000000000A008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FE0000000000000000000005 /* Generate components_environments.json */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/SampleApplication/Internal/Configuration/components-environments.xcconfig",
+				"$(SRCROOT)/../.github/scripts/codegen-components-environments.sh",
+			);
+			name = "Generate components_environments.json";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/components_environments.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\"${SRCROOT}/../.github/scripts/codegen-components-environments.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		16FC053B2C40170E00D75022 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */,
 				A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */,
 				A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */,
 				95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */,
@@ -313,7 +418,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC10C0F2000000000000A006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CC10C0F2000000000000A009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16FC053E2C40170E00D75022 /* SampleApplication */;
+			targetProxy = CC10C0F2000000000000A00A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		16FC05612C40170F00D75022 /* Debug */ = {
@@ -475,6 +596,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "INTERNAL_SAMPLE_APP $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -517,9 +639,50 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "INTERNAL_SAMPLE_APP $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CC10C0F2000000000000A004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E32XBQK4Q5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.checkout.components.SampleApplicationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleApplication.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SampleApplication";
+			};
+			name = Debug;
+		};
+		CC10C0F2000000000000A005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E32XBQK4Q5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.checkout.components.SampleApplicationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleApplication.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SampleApplication";
 			};
 			name = Release;
 		};
@@ -544,51 +707,40 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CC10C0F2000000000000A003 /* Build configuration list for PBXNativeTarget "SampleApplicationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC10C0F2000000000000A004 /* Debug */,
+				CC10C0F2000000000000A005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A27B7AFB2FD6F01500EF8860 /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
+		A273AEB3300918DE00B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../checkout-ios-components";
 		};
-		A27B7AFE2FD6F14B00EF8860 /* XCLocalSwiftPackageReference "../CheckoutPaymentMethods" */ = {
+		A273AEB6300918E600B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components/CheckoutPaymentMethods" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../CheckoutPaymentMethods;
+			relativePath = "../../checkout-ios-components/CheckoutPaymentMethods";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
+		A273AEB4300918DE00B84B5B /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
-		16A28E2B2E71769F003668B9 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		16A5BCA82D835918007B79C0 /* Risk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Risk;
-		};
-		951AE3372D5243E800519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		A27B7AFC2FD6F01500EF8860 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		A27B7AFF2FD6F14B00EF8860 /* CheckoutPaymentMethods */ = {
+		A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutPaymentMethods;
+		};
+		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

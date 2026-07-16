@@ -1,0 +1,7 @@
+{
+  "environment": "sandbox",
+  "locale": "en-GB",
+  "currency": "GBP",
+  "render": "manual",
+  "amount": 10500
+}

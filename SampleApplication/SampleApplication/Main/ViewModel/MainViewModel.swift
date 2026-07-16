@@ -12,12 +12,17 @@ import SwiftUI
 import CheckoutPaymentMethods
 #endif
 
+#if canImport(CheckoutKlarna)
+import CheckoutKlarna
+#endif
+
 enum PaymentMethodType: CaseIterable {
   case card
   case applePay
   case tabby
   case tamara
   case stcPay
+  case klarna
 }
 
 enum CustomButtonOperation: String, CaseIterable {
@@ -43,7 +48,11 @@ final class MainViewModel: ObservableObject {
   @Published var paymentSessionSelectedLocale: LocaleOption = .locale(.en_GB)
   @Published var selectedCountry: CountryOption = .gb
   @Published var selectedCurrency: CurrencyOption = .gbp
+  @Published var amount: Int = 10500
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
+  #if INTERNAL_SAMPLE_APP
+  @Published var selectedMerchantKey: MerchantKeyPreset?
+  #endif
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
   @Published var displayCardHolderName: CheckoutComponents.DisplayCardHolderName = .top
@@ -67,8 +76,8 @@ final class MainViewModel: ObservableObject {
   @Published var isPayButtonRequired: Bool = true
 
   @Published var isPaymentSessionConfigurationExpanded: Bool = false
-  @Published var paymentSessionUsername: String = ""
-  @Published var paymentSessionUserEmail: String = ""
+  @Published var paymentSessionUsername: String = "Test"
+  @Published var paymentSessionUserEmail: String = "customer+test@checkout.com"
 
   // RememberMe
   @Published var isRememberMeExpanded: Bool = false
@@ -101,15 +110,35 @@ final class MainViewModel: ObservableObject {
       )
     }
   }
+  
+  @Published var captureCvvEnabled: Bool = false {
+    didSet {
+      UserDefaults.standard.set(
+        captureCvvEnabled,
+        forKey: "checkout_components_capture_cvv"
+      )
+    }
+  }
 
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
+  #if INTERNAL_SAMPLE_APP
+  let merchantKeyPresetProvider: any MerchantKeyPresetProviding
+
+  @Published var merchantKeysPreset: MerchantKeyPresets = [:]
+  #endif
+
+  #if canImport(CheckoutKlarna)
+  // App-switch return URL the merchant registers; Klarna returns here after any out-of-app step.
+  private var klarnaReturnURL: URL { URL(string: "cko://return")! }
+  #endif
 
   var apmProviders: [any CheckoutComponents.PaymentMethodProvider] {
-    #if canImport(CheckoutPaymentMethods)
     var providers: [any CheckoutComponents.PaymentMethodProvider] = []
+
+    #if canImport(CheckoutPaymentMethods)
     if selectedPaymentMethodTypes.contains(.tabby) {
       providers.append(CheckoutPaymentOptions.Provider.tabby)
     }
@@ -119,15 +148,30 @@ final class MainViewModel: ObservableObject {
     if selectedPaymentMethodTypes.contains(.stcPay) {
       providers.append(CheckoutPaymentOptions.Provider.stcPay)
     }
-    return providers
-    #else
-    return []
     #endif
+
+    // Klarna ships as its own optional package, so its provider is guarded separately.
+    #if canImport(CheckoutKlarna)
+    if selectedPaymentMethodTypes.contains(.klarna) {
+      providers.append(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
+                                                      theme: .light))
+    }
+    #endif
+
+    return providers
   }
 
-  init() {
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay]
+  #if INTERNAL_SAMPLE_APP
+  init(merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider()) {
+    self.merchantKeyPresetProvider = merchantKeyPresetProvider
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
+    Task { await loadMerchantKeyPresets() }
   }
+  #else
+  init() {
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
+  }
+  #endif
 }
 
 extension MainViewModel {
@@ -173,13 +217,13 @@ extension MainViewModel {
     )
 
     let customer = Customer(
-      email: !paymentSessionUserEmail.isEmpty ? paymentSessionUserEmail : "customer+test@checkout.com",
-      name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "Test",
+      email: !paymentSessionUserEmail.isEmpty ? paymentSessionUserEmail : nil,
+      name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "",
       phone: paymentSessionPhoneModel
     )
 
     let paymentSessionRequest = PaymentSessionRequest(
-      amount: 10500,
+      amount: amount,
       currency: selectedCurrency.rawValue,
       billing: BillingType(address: address, phone: phone),
       reference: "cf72664f31984a7ab841d51b7305dc72",
@@ -193,7 +237,7 @@ extension MainViewModel {
       successURL: Constants.successURL,
       failureURL: Constants.failureURL,
       threeDS: .init(enabled: true, attemptN3D: true),
-      processingChannelID: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil,
+      processingChannelID: resolvedProcessingChannelID,
       paymentMethodConfiguration: PaymentMethodConfiguration(applepay: ApplePayConfiguration(totalType: selectedApplePayType.rawValue)),
       locale: paymentSessionSelectedLocale.localeString,
       items: [
@@ -210,14 +254,15 @@ extension MainViewModel {
     )
 
     return try await networkLayer.createPaymentSession(request: paymentSessionRequest,
-                                                       environment: selectedEnvironment)
+                                                       environment: selectedEnvironment,
+                                                       secretKey: resolvedSecretKey)
   }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
-      publicKey: selectedEnvironment == .sandbox ? EnvironmentVars.sandboxPublicKey : EnvironmentVars.productionPublicKey,
+      publicKey: resolvedPublicKey,
       environment: selectedEnvironment,
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
       locale: selectedLocale.localeString,
@@ -239,11 +284,20 @@ extension MainViewModel {
       return try checkoutComponentsSDK.create(getApplePayPaymentMethod())
     #if canImport(CheckoutPaymentMethods)
     case .tabby:
-      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tabby)
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tabby,
+                                              showPayButton: showAPMPayButton)
     case .tamara:
-      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tamara)
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tamara,
+                                              showPayButton: showAPMPayButton)
     case .stcPay:
-      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.stcPay)
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.stcPay,
+                                              showPayButton: showAPMPayButton)
+    #endif
+    #if canImport(CheckoutKlarna)
+    case .klarna:
+      return try checkoutComponentsSDK.create(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
+                                                                             theme: .light),
+                                              showPayButton: showAPMPayButton)
     #endif
     }
   }
@@ -320,6 +374,17 @@ extension MainViewModel {
     }
   }
 
+  var isKlarnaSelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.klarna) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.klarna)
+      } else {
+        selectedPaymentMethodTypes.remove(.klarna)
+      }
+    }
+  }
+
   var selectedPaymentMethodsTitle: String {
     var selectedMethods: [String] = []
 
@@ -341,6 +406,10 @@ extension MainViewModel {
 
     if isSTCPaySelected {
       selectedMethods.append("STC Pay")
+    }
+
+    if isKlarnaSelected {
+      selectedMethods.append("Klarna")
     }
 
     if selectedMethods.isEmpty {
@@ -406,14 +475,18 @@ extension MainViewModel {
   func resetToDefaultConfiguration() {
     checkoutComponentsView = nil
     selectedComponentType = .flow
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
     showCardPayButton = true
     paymentButtonAction = .payment
     selectedLocale = .locale(.en_GB)
     selectedEnvironment = .sandbox
+    #if INTERNAL_SAMPLE_APP
+    selectedMerchantKey = availableMerchantKeys.first
+    #endif
     selectedAddressConfiguration = .prefillCustomized
     isDefaultAppearance = true
     updatedAmount = ""
+    amount = 10500
   }
   
   func getLocales() -> [String] {
@@ -489,7 +562,8 @@ extension MainViewModel {
     
     return try await networkLayer.submitPaymentSession(paymentSessionId: paymentSessionId,
                                                        request: submitPaymentRequest,
-                                                       environment: selectedEnvironment)
+                                                       environment: selectedEnvironment,
+                                                       secretKey: resolvedSecretKey)
   }
 }
 
@@ -507,5 +581,21 @@ extension MainViewModel {
 
     return Phone(countryCode: countryCode, number: number)
   }
-  
+
 }
+
+#if !INTERNAL_SAMPLE_APP
+extension MainViewModel {
+  var resolvedPublicKey: String {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxPublicKey : EnvironmentVars.productionPublicKey
+  }
+
+  var resolvedSecretKey: String {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxSecretKey : EnvironmentVars.productionSecretKey
+  }
+
+  var resolvedProcessingChannelID: String? {
+    selectedEnvironment == .sandbox ? EnvironmentVars.sandboxProcessingChannelID : nil
+  }
+}
+#endif
