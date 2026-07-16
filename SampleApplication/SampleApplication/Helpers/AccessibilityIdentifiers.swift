@@ -15,6 +15,7 @@ enum AccessibilityIdentifier {
     case environmentPicker = "environment_picker"
     case sandboxEnvironmentOption = "sandbox_environment_option"
     case productionEnvironmentOption = "production_environment_option"
+    case merchantKeyPresetPicker = "merchant_key_preset_picker"
     case localePicker = "locale_picker"
     case paymentSessionLocalePicker = "payment_session_locale_picker"
     case countryPicker = "country_picker"
@@ -32,6 +33,7 @@ enum AccessibilityIdentifier {
     case tabbyPaymentMethodOption = "tabby_payment_method_option"
     case tamaraPaymentMethodOption = "tamara_payment_method_option"
     case stcPayPaymentMethodOption = "stc_pay_payment_method_option"
+    case klarnaPaymentMethodOption = "klarna_payment_method_option"
     case payButtonPicker = "pay_button_picker"
     case payment = "payment"
     case tokenize = "tokenize"
@@ -55,6 +57,7 @@ enum AccessibilityIdentifier {
     case showRememberMeToggle = "show_remember_me_toggle"
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
     case ignoreRememberMeEmailFeatureFlagToggle = "ignore_remember_me_email_feature_flag_toggle"
+    case captureCvvFeatureFlagToggle = "capture_cvv_feature_flag_toggle"
 
     // SDK RememberMe config
     case rememberMeSDKSetupExpandable = "remember_me_sdk_setup"
