@@ -4,7 +4,7 @@ import PackageDescription
 let releaseVersion = "1.6.1"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "f71cff9e74f3d809b454a23ce0d17b33af2cf77ed821f406eb9f753056ff5817"
+let sdkChecksum = "6848c908cc8d50b96b63481843788aae8c0be0fb9c65cb6e413814afd4d7bae9"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 

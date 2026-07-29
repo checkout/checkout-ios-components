@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,11 @@
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
 		A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A246560E2F44CE66001AE99A /* CheckoutComponents */; };
+		A262F693301A5923007EA83E /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
+		A262F694301A5923007EA83E /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
+		A262F695301A5923007EA83E /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
+		A262F696301A5923007EA83E /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
+		A262F699301A5937007EA83E /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A262F698301A5937007EA83E /* CheckoutComponents */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
 		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
@@ -64,6 +69,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A262F696301A5923007EA83E /* CheckoutComponents in Frameworks */,
+				A262F699301A5937007EA83E /* CheckoutComponents in Frameworks */,
+				A262F695301A5923007EA83E /* CheckoutComponents in Frameworks */,
+				A262F694301A5923007EA83E /* CheckoutComponents in Frameworks */,
+				A262F693301A5923007EA83E /* CheckoutComponents in Frameworks */,
 				A27312D42F475793006F7FDE /* Risk in Frameworks */,
 				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
@@ -213,6 +223,7 @@
 				16A5BCA82D835918007B79C0 /* Risk */,
 				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
 				A246560E2F44CE66001AE99A /* CheckoutComponents */,
+				A262F698301A5937007EA83E /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -244,7 +255,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A246560D2F44CE66001AE99A /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
+				A262F697301A5937007EA83E /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -525,12 +536,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		A246560D2F44CE66001AE99A /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../checkout-ios-components";
+/* Begin XCRemoteSwiftPackageReference section */
+		A262F697301A5937007EA83E /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/checkout/checkout-ios-components";
+			requirement = {
+				kind = exactVersion;
+				version = 1.6.1;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
@@ -555,6 +570,11 @@
 		};
 		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		A262F698301A5937007EA83E /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A262F697301A5937007EA83E /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
 			productName = CheckoutComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
