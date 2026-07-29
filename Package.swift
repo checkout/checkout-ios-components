@@ -4,8 +4,8 @@ import PackageDescription
 let releaseVersion = "2.2.0"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "8b92819b2a7b63ad0d7c880b681ab4ad36824a63913b04feda3525f88fdf5428"
-let paymentMethodsChecksum = "8434b2b35f29b59a7f4d991c7579d5ea4bde1e98da23ce8c79ae3fc925abf9a8"
+let sdkChecksum = "50e94d73a56dd809649b30312f4561dc64101a4493cb8ba447f041f5ecb09666"
+let paymentMethodsChecksum = "318b1c1064ccf744c1204ab0e49d188e29c9420961e92710b46c5cf482a236d7"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let paymentMethodsURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutPaymentMethods.xcframework.zip"
