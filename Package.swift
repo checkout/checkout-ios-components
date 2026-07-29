@@ -1,10 +1,10 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "1.6.0-rc"
+let releaseVersion = "1.6.0"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "e4883d7e10bd9d5bda07c4632901864634547301d07d62a57d57a59a34ddb83d"
+let sdkChecksum = "005956b0756bc8e30c0825e052a924e08f8fd12788a855fb49581b9120892a69"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 
