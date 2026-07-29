@@ -4,8 +4,8 @@ import PackageDescription
 let releaseVersion = "1.4.0"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "9b744365e612c9c787048d221f99924230015459e979d85c98cf900c07423364"
-let kmpChecksum = "469690190df7b9b6a4e859771c0874fd82839dac5679714d3d09286306bc5f28"
+let sdkChecksum = "229e4144d43714e693949a30aad6f88438992a8c47bead01b97e34f758adb00c"
+let kmpChecksum = "e86a74348c23f441e24479a001efe8322b656fdc3a1e1a216890856ff2a5cc5b"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let kmpURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutKMPRememberMe.xcframework.zip"
