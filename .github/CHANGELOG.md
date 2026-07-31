@@ -12,7 +12,6 @@ Released on 31.07.2026
 Updates:
 
 - **What's new**
-   - [ADDED] Klarna payment method
    - [FIXED] Improved RememberMe Sign up Design spacing
 
 ##
