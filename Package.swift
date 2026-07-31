@@ -36,6 +36,10 @@ let package = Package(
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
       from: "4.0.1"
+    ),
+    .package(
+      url: "https://github.com/klarna/klarna-mobile-sdk-spm",
+      from: "2.13.0"
     )
   ],
   targets: [
