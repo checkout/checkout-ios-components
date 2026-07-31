@@ -120,6 +120,24 @@ final class MainViewModel: ObservableObject {
     }
   }
 
+  @Published var hidePrefilledDataEnabled: Bool = false {
+    didSet {
+      UserDefaults.standard.set(
+        hidePrefilledDataEnabled,
+        forKey: "checkout_components_hide_prefilled_data"
+      )
+    }
+  }
+
+  @Published var rememberMeDiscreetUIEnabled: Bool = false {
+    didSet {
+      UserDefaults.standard.set(
+        rememberMeDiscreetUIEnabled,
+        forKey: "checkout_components_use_remember_me_discreet_ui"
+      )
+    }
+  }
+
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
@@ -131,8 +149,21 @@ final class MainViewModel: ObservableObject {
   #endif
 
   #if canImport(CheckoutKlarna)
+  // Klarna
+  @Published var isKlarnaConfigurationExpanded: Bool = false
+  @Published var klarnaTheme: CheckoutKlarna.Theme = .light
+  @Published var klarnaReturnURLString: String = MainViewModel.defaultKlarnaReturnURL.absoluteString
+
   // App-switch return URL the merchant registers; Klarna returns here after any out-of-app step.
-  private var klarnaReturnURL: URL { URL(string: "cko://return")! }
+  private static let defaultKlarnaReturnURL = URL(string: "cko://return")!
+
+  private var klarnaReturnURL: URL {
+    let trimmed = klarnaReturnURLString.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty, let url = URL(string: trimmed), url.scheme != nil else {
+      return Self.defaultKlarnaReturnURL
+    }
+    return url
+  }
   #endif
 
   var apmProviders: [any CheckoutComponents.PaymentMethodProvider] {
@@ -154,7 +185,7 @@ final class MainViewModel: ObservableObject {
     #if canImport(CheckoutKlarna)
     if selectedPaymentMethodTypes.contains(.klarna) {
       providers.append(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
-                                                      theme: .light))
+                                                      theme: klarnaTheme))
     }
     #endif
 
@@ -296,7 +327,7 @@ extension MainViewModel {
     #if canImport(CheckoutKlarna)
     case .klarna:
       return try checkoutComponentsSDK.create(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
-                                                                             theme: .light),
+                                                                             theme: klarnaTheme),
                                               showPayButton: showAPMPayButton)
     #endif
     }

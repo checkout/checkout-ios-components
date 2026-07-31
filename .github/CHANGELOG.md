@@ -3,7 +3,107 @@
 All notable changes to this project will be documented in this file.
 `checkout-ios-components` adheres to [Semantic Versioning](http://semver.org/).
 
+#### 2.x Releases
+
+## [2.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.4.0)
+
+Released on 31.07.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Klarna payment method
+   - [FIXED] Improved RememberMe Sign up Design spacing
+
+##
+
+## [2.3.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.3.0)
+
+Released on 16.07.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Show CVV field for all cards in RememberMe component
+   -  [ADDED] Add card to wallet process when ApplePay is enable but there is no card in the wallet
+   -  [FIXED] Update email format regex to accept any depth email domain like @checkout.co.uk or @checkout.api.sandbox.co.uk
+   -  [FIXED] UI issues on CheckboxView
+
+##
+
+## [2.2.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.2.0)
+
+Released on 01.07.2026
+
+Updates:
+
+- [ADDED] STC Pay payment method
+- [ADDED] Support for Jaywan card scheme
+- [ADDED] Keyboard management buttons to all input fields
+- [UPDATED] Tabby and Tamara payment methods now pre-populate the phone number from the payment session
+- [UPDATED] Tamara logo updated
+- [UPDATED] Tabby, Tamara, and STC Pay now support custom payment button functionality
+- [FIXED] Issue on some CB card numbers
+
+##
+
+## [2.1.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.1.0)
+
+Released on 10.06.2026
+
+Updates:
+
+-  [ADDED] Enhanced Apple Pay configuration to enable multiple payment button types and styles 
+
+-   Includes a 1 to 1 mapping of the apple pay button provided [types](https://developer.apple.com/documentation/PassKit/PKPaymentButtonType) and [styles](https://developer.apple.com/documentation/passkit/pkpaymentbuttonstyle)
+
+- With types inclusive of buy, subscribe, plain, setup, instore, donate, checkout etc.
+- Dark and light mode support.
+
+##
+
+## [2.0.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.0.0)
+
+Released on 04.06.2026
+
+Updates:
+
+- [ADDED] Optionally importable Alternative Payment Method Support  for Redirect only methods
+- [ADDED] Tabby
+- [ADDED] Tamara
+- [NOTE] => For these payment methods we do not support onchange, handlesubmit, isvalid, isavailable and custom pay button functionality in this version (These enhancements will be available in the next release).
+- [FIXED] Design improvements
+- [FIXED] Apple Pay Sheet not dismissing in UIKit projects
+
+##
+
 #### 1.x Releases
+
+## [2.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.4.0)
+
+Released on 31.07.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Klarna payment method
+   - [FIXED] Improved RememberMe Sign up Design spacing
+
+##
+
+## [2.3.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.3.0)
+
+Released on 16.07.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Show CVV field for all cards in RememberMe component
+   -  [ADDED] Add card to wallet process when ApplePay is enable but there is no card in the wallet
+   -  [FIXED] Update email format regex to accept any depth email domain like @checkout.co.uk or @checkout.api.sandbox.co.uk
+   -  [FIXED] UI issues on CheckboxView
+
+##
 
 ## [1.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.9.0)
 
@@ -25,6 +125,7 @@ Released on 29.04.2026
 Updates:
 
 - **What's new**
+
    - [FIXED] Using handleSubmit callback with RememberMe component for Mada cards
 
 ##

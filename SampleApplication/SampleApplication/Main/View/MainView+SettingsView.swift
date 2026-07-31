@@ -6,6 +6,10 @@ import CheckoutComponents
 import CheckoutComponentsSDK
 #endif
 
+#if canImport(CheckoutKlarna)
+import CheckoutKlarna
+#endif
+
 import SwiftUI
 
 enum CheckoutComponent: String, CaseIterable {
@@ -64,6 +68,9 @@ extension MainView {
         advancedFeaturesView
         paymentSessionConfigurationView
         rememberMeConfigurationsView
+        #if canImport(CheckoutKlarna)
+        klarnaConfigurationsView
+        #endif
       }
       .padding(.horizontal)
     }
@@ -358,6 +365,22 @@ extension MainView {
           .accessibilityIdentifier(
             AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
           )
+
+          Toggle(
+            "Feature Flag: Hide Prefilled Data",
+            isOn: $viewModel.hidePrefilledDataEnabled
+          )
+          .accessibilityIdentifier(
+            AccessibilityIdentifier.SettingsView.hidePrefilledDataFeatureFlagToggle.rawValue
+          )
+
+          Toggle(
+            "Feature Flag: RM Discreet UI",
+            isOn: $viewModel.rememberMeDiscreetUIEnabled
+          )
+          .accessibilityIdentifier(
+            AccessibilityIdentifier.SettingsView.rememberMeDiscreetUIFeatureFlagToggle.rawValue
+          )
           
           rememberMeSDKSetupView
           
@@ -610,6 +633,60 @@ extension MainView {
   }
 
 }
+
+// MARK: - Klarna Configurations
+
+#if canImport(CheckoutKlarna)
+extension MainView {
+
+  var klarnaConfigurationsView: some View {
+    expandableSection(title: "Klarna Configurations",
+                      isExpanded: $viewModel.isKlarnaConfigurationExpanded,
+                      accessibilityIdentifier: AccessibilityIdentifier.SettingsView.klarnaConfigurationsExpandable.rawValue) {
+      VStack(alignment: .leading, spacing: 12) {
+        klarnaThemeView
+        klarnaReturnURLView
+      }
+      .padding(.leading, 16)
+      .transition(.opacity.combined(with: .slide))
+    }
+  }
+
+  var klarnaThemeView: some View {
+    HStack {
+      Text("Theme:")
+
+      Picker("Theme", selection: $viewModel.klarnaTheme) {
+        ForEach(CheckoutKlarna.Theme.allCases, id: \.self) {
+          Text($0.displayName)
+            .tag($0)
+        }
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.klarnaThemePicker.rawValue)
+    }
+  }
+
+  var klarnaReturnURLView: some View {
+    HStack {
+      Text("Return URL: ")
+      TextField("Return URL", text: $viewModel.klarnaReturnURLString)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.klarnaReturnURLTextField.rawValue)
+        .keyboardType(.URL)
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+    }
+  }
+}
+
+extension CheckoutKlarna.Theme {
+  var displayName: String {
+    switch self {
+    case .light: return "Light"
+    case .dark: return "Dark"
+    }
+  }
+}
+#endif
 
 // MARK: - RememberMe SDK Setup
 

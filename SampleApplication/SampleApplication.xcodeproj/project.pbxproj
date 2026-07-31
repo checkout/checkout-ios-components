@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
+		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
+		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
+		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
@@ -26,15 +30,15 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
+		A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A246560E2F44CE66001AE99A /* CheckoutComponents */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
-		A273AEB5300918DE00B84B5B /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A273AEB4300918DE00B84B5B /* CheckoutComponents */; };
-		A273AEB8300918E600B84B5B /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */; };
+		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
-		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
-		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
-		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
-		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
+		FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
+		FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
+		FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
+		FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydratorTests.swift; sourceTree = "<group>"; };
+		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
+		CC10C0F100000000000000B1 /* LaunchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LaunchConfig.json; sourceTree = "<group>"; };
 		161E3F572CE26DD10060A628 /* SampleApplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApplication.entitlements; sourceTree = "<group>"; };
 		164BC0632CDE772B00F5416F /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		16970E612E69F5B300C182DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -73,23 +81,19 @@
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
 		A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CountryCurrencyOption.swift"; sourceTree = "<group>"; };
 		A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+LocaleOption.swift"; sourceTree = "<group>"; };
-		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
-		CC10C0F100000000000000B1 /* LaunchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LaunchConfig.json; sourceTree = "<group>"; };
-		CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		FE000000000000000000000A /* Internal */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Internal; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		16FC053C2C40170E00D75022 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A273AEB8300918E600B84B5B /* CheckoutPaymentMethods in Frameworks */,
-				A273AEB5300918DE00B84B5B /* CheckoutComponents in Frameworks */,
+				FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
+				FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
+				FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
+				FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
+				A27312D42F475793006F7FDE /* Risk in Frameworks */,
+				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +108,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC10C0F2000000000000A00B /* SampleApplicationTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */,
+			);
+			path = SampleApplicationTests;
+			sourceTree = "<group>";
+		};
+		CC10C0F100000000000000C1 /* LaunchConfig */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */,
+				CC10C0F100000000000000B1 /* LaunchConfig.json */,
+			);
+			path = LaunchConfig;
+			sourceTree = "<group>";
+		};
 		164BC0662CDE776D00F5416F /* DesignToken */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +184,6 @@
 				16C44C472C4FC46F00CE0CCE /* NetworkLayer */,
 				A21EBD642DF9D87C00F9BC14 /* Helpers */,
 				CC10C0F100000000000000C1 /* LaunchConfig */,
-				FE000000000000000000000A /* Internal */,
 				16FC05422C40170E00D75022 /* SampleApplication.swift */,
 				16FC05462C40170F00D75022 /* Assets.xcassets */,
 				16FC05482C40170F00D75022 /* Preview Content */,
@@ -228,23 +248,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		CC10C0F100000000000000C1 /* LaunchConfig */ = {
-			isa = PBXGroup;
-			children = (
-				CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */,
-				CC10C0F100000000000000B1 /* LaunchConfig.json */,
-			);
-			path = LaunchConfig;
-			sourceTree = "<group>";
-		};
-		CC10C0F2000000000000A00B /* SampleApplicationTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */,
-			);
-			path = SampleApplicationTests;
-			sourceTree = "<group>";
-		};
 		FF7FD2452FD1CD3600926AD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,19 +265,19 @@
 				16FC053B2C40170E00D75022 /* Sources */,
 				16FC053C2C40170E00D75022 /* Frameworks */,
 				16FC053D2C40170E00D75022 /* Resources */,
-				FE0000000000000000000005 /* Generate components_environments.json */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				FE000000000000000000000A /* Internal */,
-			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				A273AEB4300918DE00B84B5B /* CheckoutComponents */,
-				A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */,
+				1695611B2D440E3E00030923 /* CheckoutComponents */,
+				951AE3372D5243E800519900 /* CheckoutComponents */,
+				951AE33A2D527A7400519900 /* CheckoutComponents */,
+				16A5BCA82D835918007B79C0 /* Risk */,
+				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
+				A246560E2F44CE66001AE99A /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -331,8 +334,6 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A273AEB3300918DE00B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components" */,
-				A273AEB6300918E600B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components/CheckoutPaymentMethods" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -366,31 +367,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		FE0000000000000000000005 /* Generate components_environments.json */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/SampleApplication/Internal/Configuration/components-environments.xcconfig",
-				"$(SRCROOT)/../.github/scripts/codegen-components-environments.sh",
-			);
-			name = "Generate components_environments.json";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/components_environments.json",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "\"${SRCROOT}/../.github/scripts/codegen-components-environments.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		16FC053B2C40170E00D75022 /* Sources */ = {
@@ -596,7 +572,6 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "INTERNAL_SAMPLE_APP $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -639,7 +614,6 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "INTERNAL_SAMPLE_APP $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -718,27 +692,32 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		A273AEB3300918DE00B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../checkout-ios-components";
-		};
-		A273AEB6300918E600B84B5B /* XCLocalSwiftPackageReference "../../checkout-ios-components/CheckoutPaymentMethods" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../checkout-ios-components/CheckoutPaymentMethods";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		A273AEB4300918DE00B84B5B /* CheckoutComponents */ = {
+		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
-		A273AEB7300918E600B84B5B /* CheckoutPaymentMethods */ = {
+		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutPaymentMethods;
+			productName = CheckoutComponents;
 		};
-		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
+		16A28E2B2E71769F003668B9 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		16A5BCA82D835918007B79C0 /* Risk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Risk;
+		};
+		951AE3372D5243E800519900 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};

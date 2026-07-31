@@ -58,12 +58,19 @@ enum AccessibilityIdentifier {
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
     case ignoreRememberMeEmailFeatureFlagToggle = "ignore_remember_me_email_feature_flag_toggle"
     case captureCvvFeatureFlagToggle = "capture_cvv_feature_flag_toggle"
+    case hidePrefilledDataFeatureFlagToggle = "hide_prefilled_data_feature_flag_toggle"
+    case rememberMeDiscreetUIFeatureFlagToggle = "remember_me_discreet_ui_feature_flag_toggle"
 
     // SDK RememberMe config
     case rememberMeSDKSetupExpandable = "remember_me_sdk_setup"
     case userEmailTextField = "user_email_text_field"
     case userCountryCodeTextField = "user_country_code_text_field"
     case userPhoneNumberTextField = "user_phone_number_text_field"
+
+    // Klarna
+    case klarnaConfigurationsExpandable = "klarna_configurations"
+    case klarnaThemePicker = "klarna_theme_picker"
+    case klarnaReturnURLTextField = "klarna_return_url_textfield"
 
     // RememberMe Payment Session / Customer config
     case rememberMePaymentSessionSetupExpandable = "remember_me_payment_session_setup"
