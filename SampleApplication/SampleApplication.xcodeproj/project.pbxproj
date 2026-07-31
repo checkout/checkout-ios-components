@@ -3,14 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
-		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
-		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
-		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
 		164BC0642CDE772B00F5416F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164BC0632CDE772B00F5416F /* Appearance.swift */; };
 		1699DC712C74F5500069008D /* SampleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC05422C40170E00D75022 /* SampleApplication.swift */; };
 		16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C44C4F2C526DB500CE0CCE /* NetworkLayer.swift */; };
@@ -35,6 +31,10 @@
 		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
+		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
+		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
+		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
+		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
 		FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
 		FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
 		FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
@@ -52,10 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydratorTests.swift; sourceTree = "<group>"; };
-		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
-		CC10C0F100000000000000B1 /* LaunchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LaunchConfig.json; sourceTree = "<group>"; };
 		161E3F572CE26DD10060A628 /* SampleApplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApplication.entitlements; sourceTree = "<group>"; };
 		164BC0632CDE772B00F5416F /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		16970E612E69F5B300C182DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +77,10 @@
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
 		A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CountryCurrencyOption.swift"; sourceTree = "<group>"; };
 		A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+LocaleOption.swift"; sourceTree = "<group>"; };
+		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
+		CC10C0F100000000000000B1 /* LaunchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LaunchConfig.json; sourceTree = "<group>"; };
+		CC10C0F2000000000000A002 /* SampleApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,23 +108,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CC10C0F2000000000000A00B /* SampleApplicationTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */,
-			);
-			path = SampleApplicationTests;
-			sourceTree = "<group>";
-		};
-		CC10C0F100000000000000C1 /* LaunchConfig */ = {
-			isa = PBXGroup;
-			children = (
-				CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */,
-				CC10C0F100000000000000B1 /* LaunchConfig.json */,
-			);
-			path = LaunchConfig;
-			sourceTree = "<group>";
-		};
 		164BC0662CDE776D00F5416F /* DesignToken */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +231,23 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		CC10C0F100000000000000C1 /* LaunchConfig */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */,
+				CC10C0F100000000000000B1 /* LaunchConfig.json */,
+			);
+			path = LaunchConfig;
+			sourceTree = "<group>";
+		};
+		CC10C0F2000000000000A00B /* SampleApplicationTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */,
+			);
+			path = SampleApplicationTests;
+			sourceTree = "<group>";
+		};
 		FF7FD2452FD1CD3600926AD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,6 +334,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
+				A2957B2F301CF99C00A83DEE /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -692,11 +693,18 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCSwiftPackageProductDependency section */
-		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
+/* Begin XCRemoteSwiftPackageReference section */
+		A2957B2F301CF99C00A83DEE /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/checkout/checkout-ios-components";
+			requirement = {
+				kind = exactVersion;
+				version = 2.4.0;
+			};
 		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
 		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
@@ -718,6 +726,10 @@
 			productName = CheckoutComponents;
 		};
 		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CheckoutComponents;
+		};
+		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
 		};
