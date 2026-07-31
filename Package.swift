@@ -27,6 +27,10 @@ let package = Package(
       name: "CheckoutPaymentMethods",
       targets: ["CheckoutPaymentMethodsPackage"]
     ),
+    .library(
+      name: "CheckoutKlarna",
+      targets: ["CheckoutKlarnaPackage"]
+    ),
   ],
   dependencies: [
     .package(
@@ -60,6 +64,14 @@ let package = Package(
       name: "CheckoutPaymentMethods",
       url: paymentMethodsURL,
       checksum: paymentMethodsChecksum
+    ),
+    .target(
+      name: "CheckoutKlarnaPackage",
+      dependencies: [
+        .target(name: "CheckoutKlarna"),
+        .target(name: "CheckoutComponentsPackage"),
+      ],
+      path: "CheckoutKlarnaPackage"
     ),
     .binaryTarget(
       name: "CheckoutKlarna",
