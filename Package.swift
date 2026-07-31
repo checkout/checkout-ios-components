@@ -74,6 +74,7 @@ let package = Package(
       dependencies: [
         .target(name: "CheckoutKlarna"),
         .target(name: "CheckoutComponentsPackage"),
+        .product(name: "KlarnaMobileSDK", package: "klarna-mobile-sdk-spm"),
       ],
       path: "CheckoutKlarnaPackage"
     ),
