@@ -1,7 +1,7 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.5.0-rc3"
+let releaseVersion = "2.5.0-rc4"
 let githubRepo = "checkout/checkout-ios-components"
 
 let sdkChecksum = "64610582864b26695f24b052313a71299a20e73fe3af8f4ea17500c5e6cb2c97"
@@ -82,7 +82,6 @@ let package = Package(
       name: "CheckoutKlarnaSDK",
       url: klarnaURL,
       checksum: klarnaChecksum
-    ),
-
+    )
   ]
 )
