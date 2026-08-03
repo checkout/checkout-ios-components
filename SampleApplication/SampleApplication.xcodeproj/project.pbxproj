@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,19 +26,13 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
-		A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A246560E2F44CE66001AE99A /* CheckoutComponents */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
-		A27312D42F475793006F7FDE /* Risk in Frameworks */ = {isa = PBXBuildFile; productRef = 16A5BCA82D835918007B79C0 /* Risk */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
 		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
 		CC10C0F100000000000000B2 /* LaunchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000B1 /* LaunchConfig.json */; };
 		CC10C0F2000000000000A00D /* LaunchConfigHydratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F2000000000000A00C /* LaunchConfigHydratorTests.swift */; };
 		CC10C0F2000000000000A00F /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CC10C0F2000000000000A00E /* CheckoutComponents */; };
-		FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 1695611B2D440E3E00030923 /* CheckoutComponents */; };
-		FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE3372D5243E800519900 /* CheckoutComponents */; };
-		FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 951AE33A2D527A7400519900 /* CheckoutComponents */; };
-		FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 16A28E2B2E71769F003668B9 /* CheckoutComponents */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,12 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2F6B122FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B112FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B102FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				FF2F6B0F2FC44C3C0089E837 /* CheckoutComponents in Frameworks */,
-				A27312D42F475793006F7FDE /* Risk in Frameworks */,
-				A246560F2F44CE66001AE99A /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,12 +260,6 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				1695611B2D440E3E00030923 /* CheckoutComponents */,
-				951AE3372D5243E800519900 /* CheckoutComponents */,
-				951AE33A2D527A7400519900 /* CheckoutComponents */,
-				16A5BCA82D835918007B79C0 /* Risk */,
-				16A28E2B2E71769F003668B9 /* CheckoutComponents */,
-				A246560E2F44CE66001AE99A /* CheckoutComponents */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -334,7 +316,6 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A2957B2F301CF99C00A83DEE /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -693,42 +674,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A2957B2F301CF99C00A83DEE /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/checkout-ios-components";
-			requirement = {
-				kind = exactVersion;
-				version = 2.4.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		1695611B2D440E3E00030923 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		16A28E2B2E71769F003668B9 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		16A5BCA82D835918007B79C0 /* Risk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Risk;
-		};
-		951AE3372D5243E800519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		951AE33A2D527A7400519900 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
-		A246560E2F44CE66001AE99A /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CheckoutComponents;
-		};
 		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;

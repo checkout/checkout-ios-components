@@ -12,8 +12,8 @@ import SwiftUI
 import CheckoutPaymentMethods
 #endif
 
-#if canImport(CheckoutKlarna)
-import CheckoutKlarna
+#if canImport(CheckoutKlarnaSDK)
+import CheckoutKlarnaSDK
 #endif
 
 enum PaymentMethodType: CaseIterable {
@@ -148,7 +148,7 @@ final class MainViewModel: ObservableObject {
   @Published var merchantKeysPreset: MerchantKeyPresets = [:]
   #endif
 
-  #if canImport(CheckoutKlarna)
+  #if canImport(CheckoutKlarnaSDK)
   // Klarna
   @Published var isKlarnaConfigurationExpanded: Bool = false
   @Published var klarnaTheme: CheckoutKlarna.Theme = .light
@@ -182,7 +182,7 @@ final class MainViewModel: ObservableObject {
     #endif
 
     // Klarna ships as its own optional package, so its provider is guarded separately.
-    #if canImport(CheckoutKlarna)
+    #if canImport(CheckoutKlarnaSDK)
     if selectedPaymentMethodTypes.contains(.klarna) {
       providers.append(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
                                                       theme: klarnaTheme))
@@ -324,7 +324,7 @@ extension MainViewModel {
       return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.stcPay,
                                               showPayButton: showAPMPayButton)
     #endif
-    #if canImport(CheckoutKlarna)
+    #if canImport(CheckoutKlarnaSDK)
     case .klarna:
       return try checkoutComponentsSDK.create(CheckoutKlarna.Provider.klarna(returnURL: klarnaReturnURL,
                                                                              theme: klarnaTheme),
