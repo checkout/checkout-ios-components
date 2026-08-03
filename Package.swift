@@ -29,7 +29,7 @@ let package = Package(
     ),
     .library(
       name: "CheckoutKlarnaSDK",
-      targets: ["CheckoutKlarnaSDKPackage"]
+      targets: ["CheckoutKlarnaPackage"]
     )
   ],
   dependencies: [
@@ -70,13 +70,13 @@ let package = Package(
       checksum: paymentMethodsChecksum
     ),
     .target(
-      name: "CheckoutKlarnaSDKPackage",
+      name: "CheckoutKlarnaPackage",
       dependencies: [
         .target(name: "CheckoutKlarnaSDK"),
         .target(name: "CheckoutComponentsPackage"),
         .product(name: "KlarnaMobileSDK", package: "klarna-mobile-sdk-spm"),
       ],
-      path: "CheckoutKlarnaSDKPackage"
+      path: "CheckoutKlarnaPackage"
     ),
     .binaryTarget(
       name: "CheckoutKlarnaSDK",
