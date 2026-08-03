@@ -1,14 +1,16 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.4.0"
+let releaseVersion = "2.5.0"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "97b72337779e27f76573ed89eeeaa35ba14f13406b4579dee3f456277b7fed11"
-let paymentMethodsChecksum = "53bf341fa88fdfc587035b0e77c5c618aec3a4058ffd7a1b03cd2c47ec29432d"
+let sdkChecksum = "64610582864b26695f24b052313a71299a20e73fe3af8f4ea17500c5e6cb2c97"
+let paymentMethodsChecksum = "63ab92eb67b6f5e8f58be4d2f632ccc794b399908765655e0cce50071e2db38c"
+let klarnaChecksum = "4f4f517e22d399faad8fd89bc3add9579f4418ecdfdd9fb12f3ab065b7dc241d"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let paymentMethodsURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutPaymentMethods.xcframework.zip"
+let klarnaURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutKlarnaSDK.xcframework.zip"
 
 let package = Package(
   name: "CheckoutComponents",
@@ -24,12 +26,20 @@ let package = Package(
     .library(
       name: "CheckoutPaymentMethods",
       targets: ["CheckoutPaymentMethodsPackage"]
+    ),
+    .library(
+      name: "CheckoutKlarnaSDK",
+      targets: ["CheckoutKlarnaPackage"]
     )
   ],
   dependencies: [
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
       from: "4.0.1"
+    ),
+    .package(
+      url: "https://github.com/klarna/klarna-mobile-sdk-spm",
+      from: "2.13.0"
     )
   ],
   targets: [
@@ -59,5 +69,19 @@ let package = Package(
       url: paymentMethodsURL,
       checksum: paymentMethodsChecksum
     ),
+    .target(
+      name: "CheckoutKlarnaPackage",
+      dependencies: [
+        .target(name: "CheckoutKlarnaSDK"),
+        .target(name: "CheckoutComponentsPackage"),
+        .product(name: "KlarnaMobileSDK", package: "klarna-mobile-sdk-spm"),
+      ],
+      path: "CheckoutKlarnaPackage"
+    ),
+    .binaryTarget(
+      name: "CheckoutKlarnaSDK",
+      url: klarnaURL,
+      checksum: klarnaChecksum
+    )
   ]
 )

@@ -6,8 +6,8 @@ import CheckoutComponents
 import CheckoutComponentsSDK
 #endif
 
-#if canImport(CheckoutKlarna)
-import CheckoutKlarna
+#if canImport(CheckoutKlarnaSDK)
+import CheckoutKlarnaSDK
 #endif
 
 import SwiftUI
@@ -19,7 +19,7 @@ enum CheckoutComponent: String, CaseIterable {
   case tabby = "Tabby"
   case tamara = "Tamara"
   case stcPay = "STC Pay"
-#if canImport(CheckoutKlarna)
+#if canImport(CheckoutKlarnaSDK)
   case klarna = "Klarna"
 #endif
 
@@ -37,7 +37,7 @@ enum CheckoutComponent: String, CaseIterable {
       return "tamara"
     case .stcPay:
       return "stc_pay"
-#if canImport(CheckoutKlarna)
+#if canImport(CheckoutKlarnaSDK)
     case .klarna:
       return "klarna"
 #endif
@@ -68,7 +68,7 @@ extension MainView {
         advancedFeaturesView
         paymentSessionConfigurationView
         rememberMeConfigurationsView
-        #if canImport(CheckoutKlarna)
+        #if canImport(CheckoutKlarnaSDK)
         klarnaConfigurationsView
         #endif
       }
@@ -636,7 +636,7 @@ extension MainView {
 
 // MARK: - Klarna Configurations
 
-#if canImport(CheckoutKlarna)
+#if canImport(CheckoutKlarnaSDK)
 extension MainView {
 
   var klarnaConfigurationsView: some View {

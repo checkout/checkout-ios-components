@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.5.0)
+
+Released on 03.08.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Klarna payment method
+
+##
+
 ## [2.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.4.0)
 
 Released on 31.07.2026
@@ -12,6 +23,7 @@ Released on 31.07.2026
 Updates:
 
 - **What's new**
+   - [ADDED] Klarna payment method
    - [FIXED] Improved RememberMe Sign up Design spacing
 
 ##
@@ -77,6 +89,17 @@ Updates:
 ##
 
 #### 1.x Releases
+
+## [2.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.5.0)
+
+Released on 03.08.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Klarna payment method
+
+##
 
 ## [2.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.4.0)
 
