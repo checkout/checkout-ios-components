@@ -48,6 +48,11 @@ struct MainView: View {
       }
     }
     .padding()
+    .onChange(of: viewState) { newState in
+      if newState != .component {
+        viewModel.cvvTokenizationResult = nil
+      }
+    }
     .sheet(isPresented: $viewModel.showPaymentResult) {
       PaymentResultView(
         isSuccess: viewModel.paymentSucceeded,
@@ -99,31 +104,72 @@ extension MainView {
     ScrollView {
       if let componentsView = viewModel.checkoutComponentsView {
         componentsView
-        
-        switch viewModel.customButtonOperation {
-          
-        case .tokenization:
-          Button("Merchant Tokenization") {
-            viewModel.merchantTokenizationTapped()
+
+        if viewModel.selectedComponentType == .cvv {
+          // The CVV component tokenizes through the async `tokenize()` that returns the
+          // CVV token result, so it gets its own button instead of the generic ones below.
+          Button("CVV Tokenization") {
+            viewModel.cvvTokenizationTapped()
           }
           .padding()
-          
-        case .submitPayment:
-          switch (viewModel.showCardPayButton, viewModel.showApplePayButton, viewModel.showAPMPayButton) {
-          case (true, true, true):
-            EmptyView()
 
-          default:
-            // Staged methods (e.g. STC Pay) report `isPayButtonRequired == false`
-            // on their first stage, so keep the custom pay button hidden until
-            // the SDK signals it is required.
-            if viewModel.isPayButtonRequired {
-              Button("Submit") {
-                viewModel.submit()
-              }
-              .padding()
-            }
+          cvvTokenizationResultView()
+        } else {
+          customButtonView()
+        }
+      }
+    }
+  }
+
+  @ViewBuilder
+  func cvvTokenizationResultView() -> some View {
+    switch viewModel.cvvTokenizationResult {
+    case .token(let token):
+      Text("CVV token: \(token)")
+        .accessibilityIdentifier(AccessibilityIdentifier.MainView.cvvTokenLabel.rawValue)
+        .font(.subheadline)
+        .foregroundColor(.green)
+        .multilineTextAlignment(.center)
+        .textSelection(.enabled)
+
+    case .failure(let message):
+      Text("CVV tokenization failed: \(message)")
+        .accessibilityIdentifier(AccessibilityIdentifier.MainView.cvvTokenizationErrorLabel.rawValue)
+        .font(.subheadline)
+        .foregroundColor(.red)
+        .multilineTextAlignment(.center)
+
+    case .none:
+      EmptyView()
+    }
+  }
+
+  @ViewBuilder
+  func customButtonView() -> some View {
+    switch viewModel.customButtonOperation {
+
+    case .tokenization:
+      Button("Merchant Tokenization") {
+        viewModel.merchantTokenizationTapped()
+      }
+      .padding()
+
+    case .submitPayment:
+      switch (viewModel.showCardPayButton, viewModel.showApplePayButton,
+              viewModel.showAPMPayButton, viewModel.showStoredCardPayButton) {
+      case (true, true, true, true):
+        EmptyView()
+
+      default:
+        // Staged methods (e.g. STC Pay) report `isPayButtonRequired == false`
+        // on their first stage, so keep the custom pay button hidden until
+        // the SDK signals it is required.
+        if viewModel.isPayButtonRequired {
+          Button("Submit") {
+            viewModel.submit()
           }
+          .accessibilityIdentifier(AccessibilityIdentifier.MainView.merchantSubmitButton.rawValue)
+          .padding()
         }
       }
     }
@@ -175,6 +221,19 @@ extension MainView {
           .accessibilityIdentifier(AccessibilityIdentifier.MainView.settingsButton.rawValue)
           .font(.system(size: 24))
           .foregroundStyle(.black)
+      }
+
+      Button {
+        viewModel.showCallbackLog = true
+      } label: {
+        Image(systemName: "info.circle")
+          .font(.system(size: 24))
+          .foregroundStyle(.black)
+      }
+      .accessibilityIdentifier(AccessibilityIdentifier.MainView.callbackLogButton.rawValue)
+      .accessibilityLabel("Callback Info")
+      .sheet(isPresented: $viewModel.showCallbackLog) {
+        CallbackLogView(store: viewModel.callbackInfoStore)
       }
     }
   }

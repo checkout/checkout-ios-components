@@ -30,12 +30,19 @@ enum CustomButtonOperation: String, CaseIterable {
   case submitPayment = "Submit Payment"
 }
 
+enum CVVTokenizationResult {
+  case token(String)
+  case failure(String)
+}
+
 @MainActor
 final class MainViewModel: ObservableObject {
   @Published var checkoutComponentsView: AnyView?
 
   @Published var showPaymentResult: Bool = false
   @Published var paymentSucceeded: Bool = true
+  let callbackInfoStore = CallbackInfoStore()
+  @Published var showCallbackLog: Bool = false
   @Published var paymentResultText: String = ""
   @Published var generatedToken: String = ""
   @Published var errorMessage: String = ""
@@ -78,6 +85,29 @@ final class MainViewModel: ObservableObject {
   @Published var isPaymentSessionConfigurationExpanded: Bool = false
   @Published var paymentSessionUsername: String = "Test"
   @Published var paymentSessionUserEmail: String = "customer+test@checkout.com"
+  
+  // CVV
+  @Published var isCVVExpanded: Bool = false
+  @Published var selectedCVVLengths: Set<CVVLength> = [.three, .four]
+  @Published var cvvTokenizationResult: CVVTokenizationResult?
+
+  var cvvLength: [UInt] {
+    selectedCVVLengths.map(\.rawValue).sorted()
+  }
+
+  //Saved Card
+  @Published var isStoredCardExpanded: Bool = false
+  @Published var storedCardDisplayMode: CheckoutComponents.StoredCardDisplayMode = .defaultCard
+  @Published var showStoredCardPayButton: Bool = true
+  @Published var storedCardPaymentButtonAction: CheckoutComponents.PaymentButtonAction = .payment
+  @Published var storedCardCaptureCVV: Bool = false
+  @Published var storedCardAcceptedCardSchemes: Set<CardScheme> = []
+  @Published var storedCardAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
+  @Published var storePaymentDetails: StorePaymentDetailsOption = .collectConsent
+  @Published var storedCardSource: StoredCardSource = .customerId
+  @Published var customerId: String = ""
+  @Published var instrumentIds: String = ""
+  @Published var defaultInstrumentId: String = ""
 
   // RememberMe
   @Published var isRememberMeExpanded: Bool = false
@@ -207,9 +237,15 @@ final class MainViewModel: ObservableObject {
 
 extension MainViewModel {
   func makeComponent() async throws {
+    cvvTokenizationResult = nil
+    generatedToken = ""
+
     do {
-      let paymentSession = try await createPaymentSession()
-      paymentSessionId = paymentSession.id
+      var paymentSession: PaymentSession?
+      if !selectedComponentType.isSessionless {
+        paymentSession = try await createPaymentSession()
+      }
+      paymentSessionId = paymentSession?.id ?? ""
       let checkoutComponentsSDK = try await initialiseCheckoutComponentsSDK(with: paymentSession)
       createdCheckoutComponentsSDK = checkoutComponentsSDK
       let component = try createComponent(with: checkoutComponentsSDK)
@@ -232,6 +268,30 @@ extension MainViewModel {
 }
 
 extension MainViewModel {
+  var storedCardConfiguration: StoredCardConfiguration? {
+    switch storedCardSource {
+    case .none:
+      return nil
+
+    case .instrumentIds:
+      let ids = instrumentIds
+        .split(separator: ",")
+        .map { $0.trimmingCharacters(in: .whitespaces) }
+        .filter { !$0.isEmpty }
+      guard !ids.isEmpty else {
+        return nil
+      }
+
+      let defaultId = defaultInstrumentId.trimmingCharacters(in: .whitespaces)
+      return StoredCardConfiguration(instrumentIds: ids,
+                                     defaultInstrumentId: defaultId.isEmpty ? nil : defaultId)
+
+    case .customerId:
+      let id = customerId.trimmingCharacters(in: .whitespaces)
+      return id.isEmpty ? nil : StoredCardConfiguration(customerId: id)
+    }
+  }
+
   // Step 1: Create Payment Session
   func createPaymentSession() async throws -> PaymentSession {
     let address = Address(
@@ -252,7 +312,7 @@ extension MainViewModel {
       name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "",
       phone: paymentSessionPhoneModel
     )
-
+    
     let paymentSessionRequest = PaymentSessionRequest(
       amount: amount,
       currency: selectedCurrency.rawValue,
@@ -269,7 +329,9 @@ extension MainViewModel {
       failureURL: Constants.failureURL,
       threeDS: .init(enabled: true, attemptN3D: true),
       processingChannelID: resolvedProcessingChannelID,
-      paymentMethodConfiguration: PaymentMethodConfiguration(applepay: ApplePayConfiguration(totalType: selectedApplePayType.rawValue)),
+      paymentMethodConfiguration: PaymentMethodConfiguration(card: CardConfiguration(storePaymentDetails: storePaymentDetails.requestValue),
+                                                             storedCard: storedCardConfiguration,
+                                                             applepay: ApplePayConfiguration(totalType: selectedApplePayType.rawValue)),
       locale: paymentSessionSelectedLocale.localeString,
       items: [
         Item(name: "Guitar",
@@ -290,7 +352,8 @@ extension MainViewModel {
   }
 
   // Step 2: Initialise an instance of Checkout Components SDK
-  func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession) async throws (CheckoutComponents.Error) -> CheckoutComponents {
+  // Pass `nil` to configure the SDK for sessionless components.
+  func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession?) async throws (CheckoutComponents.Error) -> CheckoutComponents {
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
       publicKey: resolvedPublicKey,
@@ -308,9 +371,17 @@ extension MainViewModel {
   func createComponent(with checkoutComponentsSDK: CheckoutComponents) throws (CheckoutComponents.Error) -> Any {
     switch selectedComponentType {
     case .flow:
-      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods, providers: .init(providers: apmProviders, showPayButton: showAPMPayButton)))
+      return try checkoutComponentsSDK.create(.flow(options: selectedPaymentMethods,
+                                                    providers: .init(providers: apmProviders,
+                                                                     showPayButton: showAPMPayButton)))
+    case .address:
+      return try checkoutComponentsSDK.create(.address(configuration: selectedAddressConfiguration.addressConfiguration!))
+    case .cvv:
+      return try checkoutComponentsSDK.create(.cvv(configuration: CardCVVConfiguration(cvvLength: cvvLength)))
     case .card:
       return try checkoutComponentsSDK.create(getCardPaymentMethod())
+    case .storedCard:
+      return try checkoutComponentsSDK.create(getStoredCardPaymentMethod())
     case .applePay:
       return try checkoutComponentsSDK.create(getApplePayPaymentMethod())
     #if canImport(CheckoutPaymentMethods)
@@ -462,6 +533,8 @@ extension MainViewModel {
       methods.insert(getApplePayPaymentMethod())
     }
 
+    methods.insert(getStoredCardPaymentMethod())
+
     return methods
   }
   
@@ -494,6 +567,22 @@ extension MainViewModel {
                  rememberMeConfiguration: rememberMeConfig)
   }
   
+  func getStoredCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
+    let storedCardConfiguration = CheckoutComponents.StoredCardConfiguration(showPayButton: showStoredCardPayButton,
+                                                                              paymentButtonAction: storedCardPaymentButtonAction,
+                                                                              captureCVV: storedCardCaptureCVV,
+                                                                              displayMode: storedCardDisplayMode,
+                                                                              acceptedCardSchemes: storedCardAcceptedCardSchemes,
+                                                                              acceptedCardTypes: storedCardAcceptedCardTypes)
+    
+    return .storedCard(storedCardConfiguration: storedCardConfiguration,
+                       cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
+                                                acceptedCardSchemes: cardAcceptedCardSchemes,
+                                                acceptedCardTypes: cardAcceptedCardTypes,
+                                                hideSecurityCode: hideSecurityCode,
+                                                cardholderNameMaxLength: cardHolderNameMaxLength))
+  }
+  
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {
     .applePay(merchantIdentifier: "merchant.com.ios.mobile.flow.sandbox",
               showPayButton: showApplePayButton,
@@ -505,6 +594,7 @@ extension MainViewModel {
   
   func resetToDefaultConfiguration() {
     checkoutComponentsView = nil
+    cvvTokenizationResult = nil
     selectedComponentType = .flow
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
     showCardPayButton = true
@@ -543,6 +633,32 @@ extension MainViewModel {
       return
     }
     component.tokenize()
+  }
+  
+  func cvvTokenizationTapped() {
+    guard let component = component as? CheckoutComponents.ActionableComponent else {
+      print("Component does not conform to Tokenizable. e.g. It might be an Address Component or alike")
+      return
+    }
+
+    cvvTokenizationResult = nil
+
+    Task {
+      let cvvTokenResult = await component.tokenize()
+
+      switch cvvTokenResult {
+      case .success(let cvvToken):
+        print(cvvToken.token)
+        cvvTokenizationResult = .token(cvvToken.token)
+      case .failure(let failure):
+        print(failure)
+        
+        if case .componentInvalid = failure.errorCode { return }
+        cvvTokenizationResult = .failure(failure.errorCode.description)
+      case .none:
+        break
+      }
+    }
   }
 }
 

@@ -63,12 +63,14 @@ struct PaymentResultView: View {
         .opacity(animateMessage ? 1 : 0)
         .animation(.easeIn(duration: 0.5).delay(1.0), value: animateMessage)
       
-      Text("Generated token: \(token)")
-        .accessibilityIdentifier(AccessibilityIdentifier.PaymentResultView.generatedTokenLabel.rawValue)
-        .font(.subheadline)
-        .foregroundColor(.gray)
-        .opacity(animateMessage ? 1 : 0)
-        .animation(.easeIn(duration: 0.5).delay(1.0), value: animateMessage)
+      if !token.isEmpty {
+        Text("Generated token: \(token)")
+          .accessibilityIdentifier(AccessibilityIdentifier.PaymentResultView.generatedTokenLabel.rawValue)
+          .font(.subheadline)
+          .foregroundColor(.gray)
+          .opacity(animateMessage ? 1 : 0)
+          .animation(.easeIn(duration: 0.5).delay(1.0), value: animateMessage)
+      }
     }
   }
 

@@ -26,7 +26,10 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
+		A21EBD6C2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
+		A2CB10022F9E00020085BAA1 /* CallbackLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */; };
+		A2CB10062F9E00060085BAA1 /* CallbackInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
 		A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */; };
 		CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */; };
@@ -68,7 +71,10 @@
 		A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView.swift"; sourceTree = "<group>"; };
 		A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComponentConfiguration.swift; sourceTree = "<group>"; };
+		A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+AcceptedCards.swift"; sourceTree = "<group>"; };
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
+		A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackLogView.swift; sourceTree = "<group>"; };
+		A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackInfoStore.swift; sourceTree = "<group>"; };
 		A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CountryCurrencyOption.swift"; sourceTree = "<group>"; };
 		A2EF10AC2F22771700CDC478 /* MainViewModel+LocaleOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+LocaleOption.swift"; sourceTree = "<group>"; };
 		CC10C0F100000000000000A1 /* LaunchConfigHydrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfigHydrator.swift; sourceTree = "<group>"; };
@@ -175,6 +181,8 @@
 			children = (
 				9513C3232C47FC0C0018BB7E /* MainView.swift */,
 				A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */,
+				A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */,
+				A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */,
 				951299012CBD788F00DC1715 /* PaymentResultView.swift */,
 				953809272D92D09E003B5C21 /* NavigationHelper.swift */,
 			);
@@ -215,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */,
+				A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -358,6 +367,9 @@
 				CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */,
 				A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */,
 				A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */,
+				A21EBD6C2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift in Sources */,
+				A2CB10022F9E00020085BAA1 /* CallbackLogView.swift in Sources */,
+				A2CB10062F9E00060085BAA1 /* CallbackInfoStore.swift in Sources */,
 				95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */,
 				1699DC712C74F5500069008D /* SampleApplication.swift in Sources */,
 				A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */,

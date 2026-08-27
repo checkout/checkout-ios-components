@@ -52,7 +52,13 @@ struct ThreeDS: Encodable {
 }
 
 struct PaymentMethodConfiguration: Encodable {
+  let card: CardConfiguration
+  let storedCard: StoredCardConfiguration?
   let applepay: ApplePayConfiguration
+}
+
+struct CardConfiguration: Encodable {
+  let storePaymentDetails: String?
 }
 
 struct ApplePayConfiguration: Encodable {
@@ -60,6 +66,26 @@ struct ApplePayConfiguration: Encodable {
   
   enum CodingKeys: String, CodingKey {
     case totalType = "total_type"
+  }
+}
+
+struct StoredCardConfiguration: Encodable {
+  let customerId: String?
+  let instrumentIds: [String]?
+  let defaultInstrumentId: String?
+
+  init(customerId: String? = nil,
+       instrumentIds: [String]? = nil,
+       defaultInstrumentId: String? = nil) {
+    self.customerId = customerId
+    self.instrumentIds = instrumentIds
+    self.defaultInstrumentId = defaultInstrumentId
+  }
+
+  enum CodingKeys: String, CodingKey {
+    case customerId = "customer_id"
+    case instrumentIds = "instrument_ids"
+    case defaultInstrumentId = "default_instrument_id"
   }
 }
 
