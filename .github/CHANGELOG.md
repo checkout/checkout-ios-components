@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.0)
+
+Released on 27.08.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Merchant Saved Card component
+   - [ADDED] CVV component
+   - [ADDED] Support for Remember Me countries: Jordan, Kuwait, Morocco, Palestine, and Tunisia
+   - [UPDATED] OnTokenised callback now includes consent checkbox value
+   - [UPDATED] Remember Me wallet now displays a Pay button for each row
+
+##
+
 ## [2.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.5.0)
 
 Released on 03.08.2026
@@ -89,6 +104,21 @@ Updates:
 ##
 
 #### 1.x Releases
+
+## [2.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.0)
+
+Released on 27.08.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Merchant Saved Card component
+   - [ADDED] CVV component
+   - [ADDED] Support for Remember Me countries: Jordan, Kuwait, Morocco, Palestine, and Tunisia
+   - [UPDATED] OnTokenised callback now includes consent checkbox value
+   - [UPDATED] Remember Me wallet now displays a Pay button for each row
+
+##
 
 ## [2.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.5.0)
 
