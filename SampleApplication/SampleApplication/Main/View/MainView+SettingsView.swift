@@ -413,48 +413,52 @@ extension MainView {
                       isExpanded: $viewModel.isRememberMeExpanded,
                       accessibilityIdentifier: AccessibilityIdentifier.SettingsView.rememberMeConfigurationsExpandable.rawValue) {
       VStack(alignment: .leading, spacing: 12) {
-        Toggle("Enable Remember Me", isOn: $viewModel.showRememberMe)
+        // The RememberMeConfiguration passed into the card component. Off means we
+        // pass nil. That does not hide Remember Me, the payment session decides
+        // that. It only means no merchant overrides.
+        Toggle("Pass RM session configuration", isOn: $viewModel.passRememberMeConfiguration)
           .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showRememberMeToggle.rawValue)
 
-        if viewModel.showRememberMe {
+        if viewModel.passRememberMeConfiguration {
           Toggle("Show Remember Me pay button", isOn: $viewModel.showRememberMePayButton)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showRememberMePayButtonToggle.rawValue)
-          
-          Toggle(
-            "Feature Flag: Ignore Payment Session Email",
-            isOn: $viewModel.isIgnoreRememberMeEmailFeatureFlagEnabled
-          )
-          .accessibilityIdentifier(
-            AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
-          )
-          
-          Toggle(
-            "Feature Flag: Capture CVV",
-            isOn: $viewModel.captureCvvEnabled
-          )
-          .accessibilityIdentifier(
-            AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
-          )
 
-          Toggle(
-            "Feature Flag: Hide Prefilled Data",
-            isOn: $viewModel.hidePrefilledDataEnabled
-          )
-          .accessibilityIdentifier(
-            AccessibilityIdentifier.SettingsView.hidePrefilledDataFeatureFlagToggle.rawValue
-          )
-
-          Toggle(
-            "Feature Flag: RM Discreet UI",
-            isOn: $viewModel.rememberMeDiscreetUIEnabled
-          )
-          .accessibilityIdentifier(
-            AccessibilityIdentifier.SettingsView.rememberMeDiscreetUIFeatureFlagToggle.rawValue
-          )
-          
           rememberMeSDKSetupView
-          
         }
+
+        // Session and staging feature flags. They change how Remember Me behaves
+        // even when no configuration is passed, so they are not gated on one.
+        Toggle(
+          "Feature Flag: Ignore Payment Session Email",
+          isOn: $viewModel.isIgnoreRememberMeEmailFeatureFlagEnabled
+        )
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
+        )
+        
+        Toggle(
+          "Feature Flag: Capture CVV",
+          isOn: $viewModel.captureCvvEnabled
+        )
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
+        )
+        
+        Toggle(
+          "Feature Flag: Hide Prefilled Data",
+          isOn: $viewModel.hidePrefilledDataEnabled
+        )
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.hidePrefilledDataFeatureFlagToggle.rawValue
+        )
+        
+        Toggle(
+          "Feature Flag: RM Discreet UI",
+          isOn: $viewModel.rememberMeDiscreetUIEnabled
+        )
+        .accessibilityIdentifier(
+          AccessibilityIdentifier.SettingsView.rememberMeDiscreetUIFeatureFlagToggle.rawValue
+        )
       }
       .padding(.leading, 16)
       .transition(.opacity.combined(with: .slide))
@@ -814,7 +818,6 @@ extension CheckoutKlarna.Theme {
 // MARK: - RememberMe SDK Setup
 
 extension MainView {
-  
   var rememberMeSDKSetupView: some View {
     expandableSection(
       title: "SDK Setup",

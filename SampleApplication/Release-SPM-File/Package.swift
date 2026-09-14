@@ -1,10 +1,10 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.6.0"
+let releaseVersion = "2.6.1"
 let githubRepo = "cko-mobile/checkout-ios-components"
 
-let sdkChecksum = "c8f6249c2d4829e022fee445a66a337be28e04a6aa2dce4d5b93242b66e725bf"
+let sdkChecksum = "14b1ab7cbcca18d21544732d1e1c69a8eafd75de26ebc44069fef6b31acab41c"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 

@@ -113,7 +113,7 @@ final class MainViewModel: ObservableObject {
   @Published var isRememberMeExpanded: Bool = false
   @Published var isRememberMeSDKSetupExpanded: Bool = true
   @Published var isRememberMePaymentSessionSetupExpanded: Bool = true
-  @Published var showRememberMe: Bool = true
+  @Published var passRememberMeConfiguration: Bool = true
   @Published var showRememberMePayButton: Bool = true
   // RememberMe SDK
   @Published var userEmail: String = ""
@@ -545,7 +545,7 @@ extension MainViewModel {
   func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
     // Build Remember Me configuration conditionally
     let rememberMeConfig: CheckoutComponents.RememberMeConfiguration? = {
-      guard showRememberMe else { return nil }
+      guard passRememberMeConfiguration else { return nil }
       let data = CheckoutComponents.RememberMeConfiguration.Data(
         email: userEmail.isEmpty ? nil : userEmail,
         phone: phoneModel
