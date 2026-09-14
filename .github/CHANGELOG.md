@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.1)
+
+Released on 14.09.2026
+
+Updates:
+
+- **What's new**
+   - [FIXED]: Wrong value for isValid property in onChange callback.
+   - [FIXED]: Position of clear icon in RememberMe search bar in RTL.
+   - [FIXED]: Unable to hide RememberMe component with passing nil to RememberMeConfiguration.
+
+##
+
 ## [2.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.0)
 
 Released on 27.08.2026
@@ -105,55 +118,16 @@ Updates:
 
 #### 1.x Releases
 
-## [2.6.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.0)
+## [2.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.1)
 
-Released on 27.08.2026
-
-Updates:
-
-- **What's new**
-   - [ADDED] Merchant Saved Card component
-   - [ADDED] CVV component
-   - [ADDED] Support for Remember Me countries: Jordan, Kuwait, Morocco, Palestine, and Tunisia
-   - [UPDATED] OnTokenised callback now includes consent checkbox value
-   - [UPDATED] Remember Me wallet now displays a Pay button for each row
-
-##
-
-## [2.5.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.5.0)
-
-Released on 03.08.2026
+Released on 14.09.2026
 
 Updates:
 
 - **What's new**
-   - [ADDED] Klarna payment method
-
-##
-
-## [2.4.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.4.0)
-
-Released on 31.07.2026
-
-Updates:
-
-- **What's new**
-   - [ADDED] Klarna payment method
-   - [FIXED] Improved RememberMe Sign up Design spacing
-
-##
-
-## [2.3.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.3.0)
-
-Released on 16.07.2026
-
-Updates:
-
-- **What's new**
-   - [ADDED] Show CVV field for all cards in RememberMe component
-   -  [ADDED] Add card to wallet process when ApplePay is enable but there is no card in the wallet
-   -  [FIXED] Update email format regex to accept any depth email domain like @checkout.co.uk or @checkout.api.sandbox.co.uk
-   -  [FIXED] UI issues on CheckboxView
+   - [FIXED]: Wrong value for isValid property in onChange callback.
+   - [FIXED]: Position of clear icon in RememberMe search bar in RTL.
+   - [FIXED]: Unable to hide RememberMe component with passing nil to RememberMeConfiguration.
 
 ##
 

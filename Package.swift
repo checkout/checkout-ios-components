@@ -1,12 +1,12 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.6.0"
+let releaseVersion = "2.6.1"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "1ebbbd4fd39a4223cbddafecee9bc7377c1a3071333b77637c50039d6f890071"
-let paymentMethodsChecksum = "481fb9062e1de0f58d513cebf1e392c4b342d4b269b6a7e73fc11867fb3398a8"
-let klarnaChecksum = "6ae7355a826489807aba82ea168f3e8446330f259c8b163f9094ea8a1cf1182a"
+let sdkChecksum = "14b1ab7cbcca18d21544732d1e1c69a8eafd75de26ebc44069fef6b31acab41c"
+let paymentMethodsChecksum = "997f1516cfcf5cdd9157bd2cbacb53f80a8f0bb5cd09bfd258c03376c0a09a4a"
+let klarnaChecksum = "4e2ae087e856f1d38558529686b5572d1d7d9fcce90858c7023a49a317d05927"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let paymentMethodsURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutPaymentMethods.xcframework.zip"

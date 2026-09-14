@@ -30,7 +30,9 @@ extension MainViewModel {
 
       onChange: { [weak self] paymentMethod in
         debugPrint("onChange: Payment method: \(paymentMethod.name), isValid: \(paymentMethod.isValid), isPayButtonRequired: \(paymentMethod.isPayButtonRequired)")
-        self?.logCallback("[CONFIG] onChange: \(paymentMethod.name)")
+        self?.logCallback(
+          "[CONFIG] onChange: \(paymentMethod.name), isValid: \(paymentMethod.isValid), isPayButtonRequired: \(paymentMethod.isPayButtonRequired)"
+        )
         let isPayButtonRequired = paymentMethod.isPayButtonRequired
         Task { @MainActor in
           self?.isPayButtonRequired = isPayButtonRequired
