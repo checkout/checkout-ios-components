@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.7.0)
+
+Released on 24.09.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Pre-fill Cardholder name field
+
+##
+
 ## [2.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.1)
 
 Released on 14.09.2026
@@ -117,6 +128,17 @@ Updates:
 ##
 
 #### 1.x Releases
+
+## [2.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.7.0)
+
+Released on 24.09.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Pre-fill Cardholder name field
+
+##
 
 ## [2.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.1)
 

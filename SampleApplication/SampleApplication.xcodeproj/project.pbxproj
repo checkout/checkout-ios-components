@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,9 @@
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
 		953809282D92D09E003B5C21 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953809272D92D09E003B5C21 /* NavigationHelper.swift */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
+		A211695730627A8C0074B113 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A211695630627A8C0074B113 /* CheckoutComponents */; };
+		A211695930627A8C0074B113 /* CheckoutKlarnaSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A211695830627A8C0074B113 /* CheckoutKlarnaSDK */; };
+		A211695B30627A8C0074B113 /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A211695A30627A8C0074B113 /* CheckoutPaymentMethods */; };
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
@@ -88,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A211695B30627A8C0074B113 /* CheckoutPaymentMethods in Frameworks */,
+				A211695930627A8C0074B113 /* CheckoutKlarnaSDK in Frameworks */,
+				A211695730627A8C0074B113 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +275,9 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
+				A211695630627A8C0074B113 /* CheckoutComponents */,
+				A211695830627A8C0074B113 /* CheckoutKlarnaSDK */,
+				A211695A30627A8C0074B113 /* CheckoutPaymentMethods */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -325,6 +334,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
+				A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -579,8 +589,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SampleApplication/SampleApplication.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApplication/Preview Content\"";
 				DEVELOPMENT_TEAM = E32XBQK4Q5;
@@ -686,7 +696,33 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/checkout/checkout-ios-components";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A211695630627A8C0074B113 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutComponents;
+		};
+		A211695830627A8C0074B113 /* CheckoutKlarnaSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutKlarnaSDK;
+		};
+		A211695A30627A8C0074B113 /* CheckoutPaymentMethods */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutPaymentMethods;
+		};
 		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;

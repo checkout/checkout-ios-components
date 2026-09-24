@@ -368,6 +368,7 @@ extension MainView {
         cardHolderNamePositionView
         hideSecurityCodeView
         cardHolderNameMaxLengthView
+        prefilledCardholderNameView
 
         cardAcceptedCardSchemesView
         applePayAcceptedCardSchemesView
@@ -739,8 +740,13 @@ extension MainView {
   }
   
   var hideSecurityCodeView: some View {
-    Toggle("Hide Security Code (CVV)", isOn: $viewModel.hideSecurityCode)
-      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.hideSecurityCodeToggle.rawValue)
+    HStack {
+      Text("Hide Security Code (CVV)")
+      Spacer()
+      Toggle("Hide Security Code (CVV)", isOn: $viewModel.hideSecurityCode)
+        .labelsHidden()
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.hideSecurityCodeToggle.rawValue)
+    }
   }
   
   var cardHolderNameMaxLengthView: some View {
@@ -752,6 +758,17 @@ extension MainView {
                 format: .number)
         .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.cardholderNameMaxLengthInput.rawValue)
         .keyboardType(.numberPad)
+    }
+  }
+
+  var prefilledCardholderNameView: some View {
+    HStack {
+      Text("Pre-populated cardholder name: ")
+
+      TextField("Pre-populated cardholder name",
+                text: $viewModel.prefilledCardholderName)
+        .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.prefilledCardholderNameInput.rawValue)
+        .autocorrectionDisabled()
     }
   }
   

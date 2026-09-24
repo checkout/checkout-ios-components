@@ -59,6 +59,7 @@ enum AccessibilityIdentifier {
     case acceptedCardTypesPicker = "accepted_card_types_picker"
     case advancedFeaturesExpandable = "advanced_features"
     case cardholderNameMaxLengthInput = "cardholder_name_max_length_input"
+    case prefilledCardholderNameInput = "prefilled_cardholder_name_input"
 
     // Payment Session
     case paymentSessionConfigurationsExpandable = "ps_configurations_button"
