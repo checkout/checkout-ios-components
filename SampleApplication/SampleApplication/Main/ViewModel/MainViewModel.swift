@@ -84,7 +84,7 @@ final class MainViewModel: ObservableObject {
 
   @Published var isPaymentSessionConfigurationExpanded: Bool = false
   @Published var paymentSessionUsername: String = "Test"
-  @Published var paymentSessionUserEmail: String = "customer+test@checkout.com"
+  @Published var paymentSessionUserEmail: String = "customer+test1@checkout.com"
   
   // CVV
   @Published var isCVVExpanded: Bool = false
@@ -125,6 +125,11 @@ final class MainViewModel: ObservableObject {
   
   @Published var hideSecurityCode: Bool = false
   @Published var cardHolderNameMaxLength: UInt = 255
+  @Published var prefilledCardholderName: String = ""
+
+  private var cardholderNameToPrefill: String? {
+    prefilledCardholderName.isEmpty ? nil : prefilledCardholderName
+  }
 
   @Published var isDefaultAppearance = true {
     didSet {
@@ -562,7 +567,8 @@ extension MainViewModel {
                                           acceptedCardSchemes: cardAcceptedCardSchemes,
                                           acceptedCardTypes: cardAcceptedCardTypes,
                                           hideSecurityCode: hideSecurityCode,
-                                          cardholderNameMaxLength: cardHolderNameMaxLength),
+                                          cardholderNameMaxLength: cardHolderNameMaxLength,
+                                          cardholderName: cardholderNameToPrefill),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfig)
   }
@@ -580,7 +586,8 @@ extension MainViewModel {
                                                 acceptedCardSchemes: cardAcceptedCardSchemes,
                                                 acceptedCardTypes: cardAcceptedCardTypes,
                                                 hideSecurityCode: hideSecurityCode,
-                                                cardholderNameMaxLength: cardHolderNameMaxLength))
+                                                cardholderNameMaxLength: cardHolderNameMaxLength,
+                                                cardholderName: cardholderNameToPrefill))
   }
   
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {

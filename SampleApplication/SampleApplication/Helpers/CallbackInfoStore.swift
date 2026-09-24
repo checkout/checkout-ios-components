@@ -7,6 +7,7 @@ import Foundation
 final class CallbackInfoStore: ObservableObject {
   @Published private(set) var entries: [String]
 
+  private var persistedEntries: [String]
   private let defaults: UserDefaults
   private static let storageKey = "callback_info"
 
@@ -19,16 +20,22 @@ final class CallbackInfoStore: ObservableObject {
 
   init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
-    self.entries = defaults.stringArray(forKey: Self.storageKey) ?? []
+    let stored = defaults.stringArray(forKey: Self.storageKey) ?? []
+    self.entries = stored
+    self.persistedEntries = stored
   }
 
-  func add(_ info: String) {
-    entries.append("\(Self.timestampFormatter.string(from: Date())) - \(info)")
-    defaults.set(entries, forKey: Self.storageKey)
+  func add(_ info: String, persist: Bool = true) {
+    let entry = "\(Self.timestampFormatter.string(from: Date())) - \(info)"
+    entries.append(entry)
+    guard persist else { return }
+    persistedEntries.append(entry)
+    defaults.set(persistedEntries, forKey: Self.storageKey)
   }
 
   func clear() {
     entries = []
+    persistedEntries = []
     defaults.removeObject(forKey: Self.storageKey)
   }
 }

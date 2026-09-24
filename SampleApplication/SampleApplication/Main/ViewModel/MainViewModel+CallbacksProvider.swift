@@ -9,9 +9,9 @@ import CheckoutComponentsSDK
 // MARK: - Callback Handlers
 
 extension MainViewModel {
-  nonisolated func logCallback(_ info: String) {
+  nonisolated func logCallback(_ info: String, persist: Bool = true) {
     Task { @MainActor in
-      self.callbackInfoStore.add(info)
+      self.callbackInfoStore.add(info, persist: persist)
     }
   }
 
@@ -95,6 +95,11 @@ extension MainViewModel {
       guard let self else { return .rejected(message: nil) }
       
       debugPrint("onTokenized: Token: \(tokenizationResult)")
+      // Quoted so an empty name is distinguishable from a missing one in the
+      // callback log: name: "Talabat" / name: "" / name: null. Not persisted:
+      // it is personal data and must not outlive the launch.
+      let loggedName = tokenizationResult.data.name.map { "\"\($0)\"" } ?? "null"
+      self.logCallback("[CONFIG] onTokenized: name: \(loggedName)", persist: false)
       
       Task { @MainActor in
         self.generatedToken = tokenizationResult.data.token
