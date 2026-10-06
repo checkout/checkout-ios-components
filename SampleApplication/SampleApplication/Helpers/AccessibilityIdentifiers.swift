@@ -76,6 +76,7 @@ enum AccessibilityIdentifier {
     case captureCvvFeatureFlagToggle = "capture_cvv_feature_flag_toggle"
     case hidePrefilledDataFeatureFlagToggle = "hide_prefilled_data_feature_flag_toggle"
     case rememberMeDiscreetUIFeatureFlagToggle = "remember_me_discreet_ui_feature_flag_toggle"
+    case storedCardsWithRememberMeFeatureFlagToggle = "stored_cards_with_remember_me_feature_flag_toggle"
 
     // Stored Card
     case storedCardConfigurationsExpandable = "stored_card_configurations"
@@ -90,6 +91,7 @@ enum AccessibilityIdentifier {
     case storedCardPaymentAction = "stored_card_payment_action"
     case storedCardTokenizeAction = "stored_card_tokenize_action"
     case storePaymentDetailsPicker = "store_payment_details_picker"
+    case storedCardConsentOverridePicker = "remember_me_consent_override_picker"
 
     // CVV
     case cvvConfigurationsExpandable = "cvv_configurations"

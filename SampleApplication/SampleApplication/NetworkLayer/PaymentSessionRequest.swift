@@ -133,7 +133,7 @@ struct Phone: Encodable {
 
 struct Shipping: Encodable {
   let address: Address
-  let phone: Phone
+  let phone: Phone?
 }
 
 struct BillingType: Encodable {
