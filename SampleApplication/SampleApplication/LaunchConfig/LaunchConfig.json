@@ -1,7 +1,25 @@
 {
   "environment": "sandbox",
   "locale": "en-GB",
-  "currency": "GBP",
   "render": "manual",
-  "amount": 10500
+  "sdkModule": "flow",
+  "amount": 10500,
+  "currency": "GBP",
+  "country": "GB",
+  "appearance": "default",
+  "customerEmail": "customer+test1@checkout.com",
+  "customerPhoneCountryCode": "44",
+  "customerPhoneNumber": "7700123456",
+  "rememberMeEmail": "",
+  "rememberMePhoneCountryCode": "",
+  "rememberMePhoneNumber": "",
+  "storedCardSource": "none",
+  "storedCardCustomerId": "cus_ltqgeglxnpcuzpruacdfh2ihjq",
+  "storedCardInstrumentIds": [],
+  "storedCardDefaultInstrumentId": "",
+  "captureStoredCardCvv": false,
+  "storedCardDisplayMode": "default",
+  "storedCardAcceptedSchemes": [],
+  "storedCardShowPayButton": true,
+  "componentCallbacks": []
 }

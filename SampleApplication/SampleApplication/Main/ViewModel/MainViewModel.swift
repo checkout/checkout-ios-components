@@ -85,6 +85,8 @@ final class MainViewModel: ObservableObject {
   @Published var isPaymentSessionConfigurationExpanded: Bool = false
   @Published var paymentSessionUsername: String = "Test"
   @Published var paymentSessionUserEmail: String = "customer+test1@checkout.com"
+  @Published var paymentSessionCountryCode: String = "44"
+  @Published var paymentSessionPhoneNumber: String = "7700123456"
   
   // CVV
   @Published var isCVVExpanded: Bool = false
@@ -104,7 +106,7 @@ final class MainViewModel: ObservableObject {
   @Published var storedCardAcceptedCardSchemes: Set<CardScheme> = []
   @Published var storedCardAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
   @Published var storePaymentDetails: StorePaymentDetailsOption = .collectConsent
-  @Published var storedCardSource: StoredCardSource = .customerId
+  @Published var storedCardSource: StoredCardSource = .none
   @Published var customerId: String = ""
   @Published var instrumentIds: String = ""
   @Published var defaultInstrumentId: String = ""
@@ -120,8 +122,6 @@ final class MainViewModel: ObservableObject {
   @Published var userPhoneNumber: String = ""
   @Published var userCountryCode: String = ""
   // RememberMe PaymentSession
-  @Published var paymentSessionCountryCode: String = ""
-  @Published var paymentSessionPhoneNumber: String = ""
   
   @Published var hideSecurityCode: Bool = false
   @Published var cardHolderNameMaxLength: UInt = 255
@@ -173,10 +173,31 @@ final class MainViewModel: ObservableObject {
     }
   }
 
+  @Published var storedCardsWithRememberMeEnabled: Bool = false {
+    didSet {
+      UserDefaults.standard.set(
+        storedCardsWithRememberMeEnabled,
+        forKey: "checkout_components_use_stored_cards_with_remember_me"
+      )
+    }
+  }
+
+  @Published var storedCardConsentOverride: StoredCardConsentOverride = .serverDefault {
+    didSet {
+      let key = "checkout_components_force_stored_card_consent_type"
+      if let value = storedCardConsentOverride.flagValue {
+        UserDefaults.standard.set(value, forKey: key)
+      } else {
+        UserDefaults.standard.removeObject(forKey: key)
+      }
+    }
+  }
+
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
+  var receivedLaunchDeepLink = false
   #if INTERNAL_SAMPLE_APP
   let merchantKeyPresetProvider: any MerchantKeyPresetProviding
 
@@ -228,16 +249,30 @@ final class MainViewModel: ObservableObject {
   }
 
   #if INTERNAL_SAMPLE_APP
+  private(set) var merchantKeyPresetsLoading: Task<Void, Never>?
+
   init(merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider()) {
     self.merchantKeyPresetProvider = merchantKeyPresetProvider
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
-    Task { await loadMerchantKeyPresets() }
+    clearStoredCardConsentOverride()
+    merchantKeyPresetsLoading = Task { await loadMerchantKeyPresets() }
+  }
+
+  func waitForMerchantKeyPresets() async {
+    await merchantKeyPresetsLoading?.value
   }
   #else
   init() {
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
+    clearStoredCardConsentOverride()
   }
+
+  func waitForMerchantKeyPresets() async {}
   #endif
+
+  private func clearStoredCardConsentOverride() {
+    UserDefaults.standard.removeObject(forKey: "checkout_components_force_stored_card_consent_type")
+  }
 }
 
 extension MainViewModel {
@@ -308,14 +343,12 @@ extension MainViewModel {
       country: selectedCountry.rawValue
     )
 
-    let phone = Phone(
-      countryCode: "44", number: "7700123456"
-    )
+    let phone = paymentSessionPhoneModel
 
     let customer = Customer(
       email: !paymentSessionUserEmail.isEmpty ? paymentSessionUserEmail : nil,
       name: !paymentSessionUsername.isEmpty ? paymentSessionUsername : "",
-      phone: paymentSessionPhoneModel
+      phone: phone
     )
     
     let paymentSessionRequest = PaymentSessionRequest(
@@ -544,23 +577,25 @@ extension MainViewModel {
   }
   
   var phoneModel: CheckoutComponents.Phone? {
-    .init(countryCode: userCountryCode, number: userPhoneNumber)
+    guard !userPhoneNumber.isEmpty else { return nil }
+    return .init(countryCode: userCountryCode, number: userPhoneNumber)
   }
   
-  func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
-    // Build Remember Me configuration conditionally
-    let rememberMeConfig: CheckoutComponents.RememberMeConfiguration? = {
-      guard passRememberMeConfiguration else { return nil }
-      let data = CheckoutComponents.RememberMeConfiguration.Data(
-        email: userEmail.isEmpty ? nil : userEmail,
-        phone: phoneModel
-      )
-      return .init(data: data,
-                   showPayButton: showRememberMePayButton,
-                   acceptedCardSchemes: rememberMeAcceptedCardSchemes,
-                   acceptedCardTypes: rememberMeAcceptedCardTypes)
-    }()
+  /// Remember Me configuration shared by the card and standalone stored-card methods, so a
+  /// standalone stored card prefills email/phone from the same source as the card component.
+  var rememberMeConfiguration: CheckoutComponents.RememberMeConfiguration? {
+    guard passRememberMeConfiguration else { return nil }
+    let data = CheckoutComponents.RememberMeConfiguration.Data(
+      email: userEmail.isEmpty ? nil : userEmail,
+      phone: phoneModel
+    )
+    return .init(data: data,
+                 showPayButton: showRememberMePayButton,
+                 acceptedCardSchemes: rememberMeAcceptedCardSchemes,
+                 acceptedCardTypes: rememberMeAcceptedCardTypes)
+  }
 
+  func getCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
     return .card(showPayButton: showCardPayButton,
                  paymentButtonAction: paymentButtonAction,
                  cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
@@ -570,17 +605,18 @@ extension MainViewModel {
                                           cardholderNameMaxLength: cardHolderNameMaxLength,
                                           cardholderName: cardholderNameToPrefill),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
-                 rememberMeConfiguration: rememberMeConfig)
+                 rememberMeConfiguration: rememberMeConfiguration)
   }
-  
+
   func getStoredCardPaymentMethod() -> CheckoutComponents.PaymentMethod {
     let storedCardConfiguration = CheckoutComponents.StoredCardConfiguration(showPayButton: showStoredCardPayButton,
                                                                               paymentButtonAction: storedCardPaymentButtonAction,
                                                                               captureCVV: storedCardCaptureCVV,
                                                                               displayMode: storedCardDisplayMode,
                                                                               acceptedCardSchemes: storedCardAcceptedCardSchemes,
-                                                                              acceptedCardTypes: storedCardAcceptedCardTypes)
-    
+                                                                              acceptedCardTypes: storedCardAcceptedCardTypes,
+                                                                              rememberMeConfiguration: rememberMeConfiguration)
+
     return .storedCard(storedCardConfiguration: storedCardConfiguration,
                        cardConfiguration: .init(displayCardHolderName: displayCardHolderName,
                                                 acceptedCardSchemes: cardAcceptedCardSchemes,
