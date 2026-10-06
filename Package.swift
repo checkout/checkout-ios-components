@@ -35,7 +35,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
-      from: "4.0.1"
+      from: "6.0.1"
     ),
     .package(
       url: "https://github.com/klarna/klarna-mobile-sdk-spm",

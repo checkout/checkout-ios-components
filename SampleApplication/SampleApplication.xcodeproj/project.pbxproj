@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,14 @@
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
+		A2A7B58B3075299100407D94 /* MainView+SettingsView+StoredCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7B5893075299100407D94 /* MainView+SettingsView+StoredCard.swift */; };
+		A2A7B58C3075299100407D94 /* MainView+SettingsView+AcceptedCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7B5863075299100407D94 /* MainView+SettingsView+AcceptedCards.swift */; };
+		A2A7B58D3075299100407D94 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7B5853075299100407D94 /* MainView+SettingsView.swift */; };
+		A2A7B58E3075299100407D94 /* MainView+SettingsView+RememberMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7B5883075299100407D94 /* MainView+SettingsView+RememberMe.swift */; };
+		A2A7B58F3075299100407D94 /* MainView+SettingsView+Klarna.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7B5873075299100407D94 /* MainView+SettingsView+Klarna.swift */; };
+		A2C1CFDA307528950078F062 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A2C1CFD9307528950078F062 /* CheckoutComponents */; };
+		A2C1CFDC307528950078F062 /* CheckoutKlarnaSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A2C1CFDB307528950078F062 /* CheckoutKlarnaSDK */; };
+		A2C1CFDE307528950078F062 /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A2C1CFDD307528950078F062 /* CheckoutPaymentMethods */; };
 		A2CB10022F9E00020085BAA1 /* CallbackLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */; };
 		A2CB10062F9E00060085BAA1 /* CallbackInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */; };
 		A2D1C7832FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */; };
@@ -69,6 +77,11 @@
 		A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComponentConfiguration.swift; sourceTree = "<group>"; };
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
+		A2A7B5853075299100407D94 /* MainView+SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView.swift"; sourceTree = "<group>"; };
+		A2A7B5863075299100407D94 /* MainView+SettingsView+AcceptedCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+AcceptedCards.swift"; sourceTree = "<group>"; };
+		A2A7B5873075299100407D94 /* MainView+SettingsView+Klarna.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+Klarna.swift"; sourceTree = "<group>"; };
+		A2A7B5883075299100407D94 /* MainView+SettingsView+RememberMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+RememberMe.swift"; sourceTree = "<group>"; };
+		A2A7B5893075299100407D94 /* MainView+SettingsView+StoredCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+StoredCard.swift"; sourceTree = "<group>"; };
 		A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackLogView.swift; sourceTree = "<group>"; };
 		A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackInfoStore.swift; sourceTree = "<group>"; };
 		A2D1C7822FBCD82C0085BAA0 /* MainViewModel+CountryCurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CountryCurrencyOption.swift"; sourceTree = "<group>"; };
@@ -84,6 +97,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C1CFDE307528950078F062 /* CheckoutPaymentMethods in Frameworks */,
+				A2C1CFDC307528950078F062 /* CheckoutKlarnaSDK in Frameworks */,
+				A2C1CFDA307528950078F062 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +191,7 @@
 		959FEF592C805CB3001D7C20 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A2DD66073073AFB3008F397F /* SettingsView */,
+				A2A7B58A3075299100407D94 /* SettingsView */,
 				9513C3232C47FC0C0018BB7E /* MainView.swift */,
 				A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */,
 				951299012CBD788F00DC1715 /* PaymentResultView.swift */,
@@ -223,6 +239,18 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		A2A7B58A3075299100407D94 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				A2A7B5853075299100407D94 /* MainView+SettingsView.swift */,
+				A2A7B5863075299100407D94 /* MainView+SettingsView+AcceptedCards.swift */,
+				A2A7B5873075299100407D94 /* MainView+SettingsView+Klarna.swift */,
+				A2A7B5883075299100407D94 /* MainView+SettingsView+RememberMe.swift */,
+				A2A7B5893075299100407D94 /* MainView+SettingsView+StoredCard.swift */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
 		CC10C0F100000000000000C1 /* LaunchConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +292,9 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
+				A2C1CFD9307528950078F062 /* CheckoutComponents */,
+				A2C1CFDB307528950078F062 /* CheckoutKlarnaSDK */,
+				A2C1CFDD307528950078F062 /* CheckoutPaymentMethods */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -320,6 +351,7 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
+				A2C1CFD8307528950078F062 /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -370,6 +402,11 @@
 				A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */,
 				16C44C732C57B95500CE0CCE /* EnvironmentVars.generated.swift in Sources */,
 				951299022CBD788F00DC1715 /* PaymentResultView.swift in Sources */,
+				A2A7B58B3075299100407D94 /* MainView+SettingsView+StoredCard.swift in Sources */,
+				A2A7B58C3075299100407D94 /* MainView+SettingsView+AcceptedCards.swift in Sources */,
+				A2A7B58D3075299100407D94 /* MainView+SettingsView.swift in Sources */,
+				A2A7B58E3075299100407D94 /* MainView+SettingsView+RememberMe.swift in Sources */,
+				A2A7B58F3075299100407D94 /* MainView+SettingsView+Klarna.swift in Sources */,
 				16C44C502C526DB500CE0CCE /* NetworkLayer.swift in Sources */,
 				164BC0642CDE772B00F5416F /* Appearance.swift in Sources */,
 				953809282D92D09E003B5C21 /* NavigationHelper.swift in Sources */,
@@ -679,7 +716,33 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A2C1CFD8307528950078F062 /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/checkout/checkout-ios-components";
+			requirement = {
+				kind = exactVersion;
+				version = "2.8.0-rc";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A2C1CFD9307528950078F062 /* CheckoutComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C1CFD8307528950078F062 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutComponents;
+		};
+		A2C1CFDB307528950078F062 /* CheckoutKlarnaSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C1CFD8307528950078F062 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutKlarnaSDK;
+		};
+		A2C1CFDD307528950078F062 /* CheckoutPaymentMethods */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C1CFD8307528950078F062 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
+			productName = CheckoutPaymentMethods;
+		};
 		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;
