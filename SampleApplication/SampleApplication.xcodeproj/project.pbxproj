@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,13 +23,8 @@
 		9513C3242C47FC0C0018BB7E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9513C3232C47FC0C0018BB7E /* MainView.swift */; };
 		953809282D92D09E003B5C21 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953809272D92D09E003B5C21 /* NavigationHelper.swift */; };
 		95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */; };
-		A211695730627A8C0074B113 /* CheckoutComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A211695630627A8C0074B113 /* CheckoutComponents */; };
-		A211695930627A8C0074B113 /* CheckoutKlarnaSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A211695830627A8C0074B113 /* CheckoutKlarnaSDK */; };
-		A211695B30627A8C0074B113 /* CheckoutPaymentMethods in Frameworks */ = {isa = PBXBuildFile; productRef = A211695A30627A8C0074B113 /* CheckoutPaymentMethods */; };
 		A21EBD622DF8007900F9BC14 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */; };
-		A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */; };
 		A21EBD6A2E005C2D00F9BC14 /* AddressComponentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */; };
-		A21EBD6C2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */; };
 		A26B7BEB2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */; };
 		A2CB10022F9E00020085BAA1 /* CallbackLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */; };
 		A2CB10062F9E00060085BAA1 /* CallbackInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */; };
@@ -72,9 +67,7 @@
 		953809272D92D09E003B5C21 /* NavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHelper.swift; sourceTree = "<group>"; };
 		95EC13972CB446A200812B24 /* MainViewModel+CallbacksProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewModel+CallbacksProvider.swift"; sourceTree = "<group>"; };
 		A21EBD612DF8007900F9BC14 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
-		A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView.swift"; sourceTree = "<group>"; };
 		A21EBD692E005C2D00F9BC14 /* AddressComponentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComponentConfiguration.swift; sourceTree = "<group>"; };
-		A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+SettingsView+AcceptedCards.swift"; sourceTree = "<group>"; };
 		A26B7BEA2E27CD1200B1E840 /* SubmitPaymentSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPaymentSessionRequest.swift; sourceTree = "<group>"; };
 		A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackLogView.swift; sourceTree = "<group>"; };
 		A2CB10052F9E00050085BAA1 /* CallbackInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackInfoStore.swift; sourceTree = "<group>"; };
@@ -91,9 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A211695B30627A8C0074B113 /* CheckoutPaymentMethods in Frameworks */,
-				A211695930627A8C0074B113 /* CheckoutKlarnaSDK in Frameworks */,
-				A211695730627A8C0074B113 /* CheckoutComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,9 +175,8 @@
 		959FEF592C805CB3001D7C20 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A2DD66073073AFB3008F397F /* SettingsView */,
 				9513C3232C47FC0C0018BB7E /* MainView.swift */,
-				A21EBD672DFAD9ED00F9BC14 /* MainView+SettingsView.swift */,
-				A21EBD6B2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift */,
 				A2CB10012F9E00010085BAA1 /* CallbackLogView.swift */,
 				951299012CBD788F00DC1715 /* PaymentResultView.swift */,
 				953809272D92D09E003B5C21 /* NavigationHelper.swift */,
@@ -275,9 +264,6 @@
 			);
 			name = SampleApplication;
 			packageProductDependencies = (
-				A211695630627A8C0074B113 /* CheckoutComponents */,
-				A211695830627A8C0074B113 /* CheckoutKlarnaSDK */,
-				A211695A30627A8C0074B113 /* CheckoutPaymentMethods */,
 			);
 			productName = SampleApplication;
 			productReference = 16FC053F2C40170E00D75022 /* SampleApplication.app */;
@@ -334,7 +320,6 @@
 			);
 			mainGroup = 16FC05362C40170E00D75022;
 			packageReferences = (
-				A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */,
 			);
 			productRefGroup = 16FC05402C40170E00D75022 /* Products */;
 			projectDirPath = "";
@@ -376,8 +361,6 @@
 			files = (
 				CC10C0F100000000000000A2 /* LaunchConfigHydrator.swift in Sources */,
 				A2EF10AD2F22771700CDC478 /* MainViewModel+LocaleOption.swift in Sources */,
-				A21EBD682DFAD9ED00F9BC14 /* MainView+SettingsView.swift in Sources */,
-				A21EBD6C2E005C2E00F9BC14 /* MainView+SettingsView+AcceptedCards.swift in Sources */,
 				A2CB10022F9E00020085BAA1 /* CallbackLogView.swift in Sources */,
 				A2CB10062F9E00060085BAA1 /* CallbackInfoStore.swift in Sources */,
 				95EC13982CB446A200812B24 /* MainViewModel+CallbacksProvider.swift in Sources */,
@@ -696,33 +679,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/checkout-ios-components";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		A211695630627A8C0074B113 /* CheckoutComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
-			productName = CheckoutComponents;
-		};
-		A211695830627A8C0074B113 /* CheckoutKlarnaSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
-			productName = CheckoutKlarnaSDK;
-		};
-		A211695A30627A8C0074B113 /* CheckoutPaymentMethods */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A211695530627A8C0074B113 /* XCRemoteSwiftPackageReference "checkout-ios-components" */;
-			productName = CheckoutPaymentMethods;
-		};
 		CC10C0F2000000000000A00E /* CheckoutComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutComponents;

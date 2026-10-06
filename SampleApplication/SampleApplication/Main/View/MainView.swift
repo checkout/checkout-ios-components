@@ -66,6 +66,7 @@ struct MainView: View {
     }
     .onOpenURL { url in
       // Deep Link Token has the highest precedence; re-resolve including it.
+      viewModel.receivedLaunchDeepLink = true
       Task { await hydrateLaunchConfig(deepLinkURL: url) }
     }
   }
@@ -82,6 +83,10 @@ extension MainView {
       deepLinkURL: deepLinkURL,
       environment: ProcessInfo.processInfo.environment
     )
+
+    await viewModel.waitForMerchantKeyPresets()
+
+    if deepLinkURL == nil, viewModel.receivedLaunchDeepLink { return }
 
     let shouldAutoRender = viewModel.applyLaunchConfig(config)
 

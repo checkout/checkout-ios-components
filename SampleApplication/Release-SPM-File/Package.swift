@@ -1,10 +1,10 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.7.0"
+let releaseVersion = "2.8.0"
 let githubRepo = "cko-mobile/checkout-ios-components"
 
-let sdkChecksum = "6d08262117552787e036542a4612f5bffd12f81f63b9117327996c19a35ddbde"
+let sdkChecksum = "7723f986bd68ae6055ac4179e2a2c863f5989f8b68b7d99b48ba84389b98d863"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 
@@ -25,7 +25,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
-      from: "4.0.1"
+      from: "6.0.1"
     )
   ],
   targets: [

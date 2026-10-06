@@ -22,8 +22,27 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
   var locale: String?
   var environment: String?
   var render: String?
+  var sdkModule: String?
   var amount: Int?
   var currency: String?
+  var country: String?
+  var merchantKey: String?
+  var appearance: String?
+  var customerEmail: String?
+  var customerPhoneCountryCode: String?
+  var customerPhoneNumber: String?
+  var rememberMeEmail: String?
+  var rememberMePhoneCountryCode: String?
+  var rememberMePhoneNumber: String?
+  var storedCardSource: String?
+  var storedCardCustomerId: String?
+  var storedCardInstrumentIds: [String]?
+  var storedCardDefaultInstrumentId: String?
+  var captureStoredCardCvv: Bool?
+  var storedCardDisplayMode: String?
+  var storedCardAcceptedSchemes: [String]?
+  var storedCardShowPayButton: Bool?
+  var componentCallbacks: [String]?
 
   static let empty = LaunchConfig()
 
@@ -40,8 +59,27 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
       locale: higher.locale ?? locale,
       environment: higher.environment ?? environment,
       render: higher.render ?? render,
+      sdkModule: higher.sdkModule ?? sdkModule,
       amount: higher.amount ?? amount,
-      currency: higher.currency ?? currency
+      currency: higher.currency ?? currency,
+      country: higher.country ?? country,
+      merchantKey: higher.merchantKey ?? merchantKey,
+      appearance: higher.appearance ?? appearance,
+      customerEmail: higher.customerEmail ?? customerEmail,
+      customerPhoneCountryCode: higher.customerPhoneCountryCode ?? customerPhoneCountryCode,
+      customerPhoneNumber: higher.customerPhoneNumber ?? customerPhoneNumber,
+      rememberMeEmail: higher.rememberMeEmail ?? rememberMeEmail,
+      rememberMePhoneCountryCode: higher.rememberMePhoneCountryCode ?? rememberMePhoneCountryCode,
+      rememberMePhoneNumber: higher.rememberMePhoneNumber ?? rememberMePhoneNumber,
+      storedCardSource: higher.storedCardSource ?? storedCardSource,
+      storedCardCustomerId: higher.storedCardCustomerId ?? storedCardCustomerId,
+      storedCardInstrumentIds: higher.storedCardInstrumentIds ?? storedCardInstrumentIds,
+      storedCardDefaultInstrumentId: higher.storedCardDefaultInstrumentId ?? storedCardDefaultInstrumentId,
+      captureStoredCardCvv: higher.captureStoredCardCvv ?? captureStoredCardCvv,
+      storedCardDisplayMode: higher.storedCardDisplayMode ?? storedCardDisplayMode,
+      storedCardAcceptedSchemes: higher.storedCardAcceptedSchemes ?? storedCardAcceptedSchemes,
+      storedCardShowPayButton: higher.storedCardShowPayButton ?? storedCardShowPayButton,
+      componentCallbacks: higher.componentCallbacks ?? componentCallbacks
     )
   }
 }
@@ -160,6 +198,17 @@ extension MainViewModel {
   /// - Returns: `true` when the payload requests automatic rendering.
   @discardableResult
   func applyLaunchConfig(_ config: LaunchConfig) -> Bool {
+    applyGeneralSettings(from: config)
+    applyPaymentSettings(from: config)
+    applyCustomerSettings(from: config)
+    applyRememberMeSettings(from: config)
+    applyStoredCardSettings(from: config)
+    applyStoredCardDisplaySettings(from: config)
+    applyAppearanceSettings(from: config)
+    return config.rendersAutomatically
+  }
+
+  private func applyGeneralSettings(from config: LaunchConfig) {
     if let localeString = config.locale,
        let locale = CheckoutComponents.Locale(rawValue: localeString) {
       selectedLocale = .locale(locale)
@@ -171,6 +220,20 @@ extension MainViewModel {
       selectedEnvironment = environment
     }
 
+    if let moduleString = config.sdkModule,
+       let module = CheckoutComponent(configValue: moduleString) {
+      selectedComponentType = module
+    }
+
+    #if INTERNAL_SAMPLE_APP
+    if let merchantKeyName = config.merchantKey,
+       let preset = availableMerchantKeys.first(where: { $0.name == merchantKeyName }) {
+      selectedMerchantKey = preset
+    }
+    #endif
+  }
+
+  private func applyPaymentSettings(from config: LaunchConfig) {
     if let currencyString = config.currency,
        let currency = CurrencyOption(rawValue: currencyString.uppercased()) {
       selectedCurrency = currency
@@ -180,7 +243,98 @@ extension MainViewModel {
       self.amount = amount
     }
 
-    return config.rendersAutomatically
+    if let countryString = config.country,
+       let country = CountryOption(rawValue: countryString.uppercased()) {
+      selectedCountry = country
+    }
+  }
+
+  private func applyCustomerSettings(from config: LaunchConfig) {
+    if let email = config.customerEmail {
+      paymentSessionUserEmail = email
+    }
+    if let countryCode = config.customerPhoneCountryCode {
+      paymentSessionCountryCode = Self.dialingCode(from: countryCode)
+    }
+    if let number = config.customerPhoneNumber {
+      paymentSessionPhoneNumber = number
+    }
+  }
+
+  private func applyRememberMeSettings(from config: LaunchConfig) {
+    if let email = config.rememberMeEmail, !email.isEmpty {
+      userEmail = email
+    }
+    if let countryCode = config.rememberMePhoneCountryCode, !countryCode.isEmpty {
+      userCountryCode = Self.dialingCode(from: countryCode)
+    }
+    if let number = config.rememberMePhoneNumber, !number.isEmpty {
+      userPhoneNumber = number
+    }
+  }
+
+  private func applyStoredCardSettings(from config: LaunchConfig) {
+    if let sourceString = config.storedCardSource, let source = StoredCardSource(configValue: sourceString) {
+      storedCardSource = source
+    }
+    if let customerId = config.storedCardCustomerId, !customerId.isEmpty {
+      self.customerId = customerId
+    }
+    if let ids = config.storedCardInstrumentIds, !ids.isEmpty {
+      instrumentIds = ids.joined(separator: ",")
+    }
+    if let defaultInstrumentId = config.storedCardDefaultInstrumentId, !defaultInstrumentId.isEmpty {
+      self.defaultInstrumentId = defaultInstrumentId
+    }
+  }
+
+  private func applyStoredCardDisplaySettings(from config: LaunchConfig) {
+    if let captureCvv = config.captureStoredCardCvv {
+      storedCardCaptureCVV = captureCvv
+    }
+    if let displayModeString = config.storedCardDisplayMode,
+       let displayMode = CheckoutComponents.StoredCardDisplayMode(configValue: displayModeString) {
+      storedCardDisplayMode = displayMode
+    }
+    if let schemes = config.storedCardAcceptedSchemes {
+      storedCardAcceptedCardSchemes = Set(schemes.compactMap { CardScheme(configValue: $0) })
+    }
+    if let showPayButton = config.storedCardShowPayButton {
+      showStoredCardPayButton = showPayButton
+    }
+  }
+
+  private func applyAppearanceSettings(from config: LaunchConfig) {
+    if let appearanceString = config.appearance,
+       let appearance = AppearancePreset(configValue: appearanceString) {
+      isDefaultAppearance = appearance == .default
+    }
+    if let callbacks = config.componentCallbacks {
+      handleSubmitManually = callbacks.contains { $0.caseInsensitiveCompare("HandleSubmit") == .orderedSame }
+    }
+  }
+
+  private static func dialingCode(from value: String) -> String {
+    if let country = CheckoutComponents.Country(iso3166Alpha2: value.uppercased()) {
+      return country.dialingCode
+    }
+    return value.hasPrefix("+") ? String(value.dropFirst()) : value
+  }
+}
+
+enum AppearancePreset: Equatable {
+  case `default`
+  case dark
+
+  init?(configValue: String) {
+    switch configValue.lowercased() {
+    case "default":
+      self = .default
+    case "dark":
+      self = .dark
+    default:
+      return nil
+    }
   }
 }
 
@@ -193,6 +347,60 @@ extension CheckoutComponents.Environment {
       self = .sandbox
     case "production", "prod", "live":
       self = .production
+    default:
+      return nil
+    }
+  }
+}
+
+extension CheckoutComponent {
+  /// Matches against `accessibilityIdentifier` rather than `rawValue`, since the latter is the
+  /// human-readable Settings picker label (e.g. `"Apple Pay"`, `"Stored Card"`).
+  init?(configValue: String) {
+    let normalised = configValue.lowercased()
+    guard let match = CheckoutComponent.allCases.first(where: { $0.accessibilityIdentifier == normalised }) else {
+      return nil
+    }
+    self = match
+  }
+}
+
+extension StoredCardSource {
+  init?(configValue: String) {
+    switch configValue.lowercased() {
+    case "none":
+      self = .none
+    case "instrumentids":
+      self = .instrumentIds
+    case "customerid":
+      self = .customerId
+    default:
+      return nil
+    }
+  }
+}
+
+extension CardScheme {
+  init?(configValue: String) {
+    let normalised = Self.normalisedName(configValue)
+    guard let match = CardScheme.selectableCases.first(where: { Self.normalisedName($0.rawValue) == normalised }) else {
+      return nil
+    }
+    self = match
+  }
+
+  private static func normalisedName(_ value: String) -> String {
+    value.lowercased().filter { $0.isLetter || $0.isNumber }
+  }
+}
+
+extension CheckoutComponents.StoredCardDisplayMode {
+  init?(configValue: String) {
+    switch configValue.lowercased() {
+    case "default":
+      self = .defaultCard
+    case "all":
+      self = .all
     default:
       return nil
     }

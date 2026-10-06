@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.8.0)
+
+Released on 06.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Saved cards with RememberMe in Flow
+   - [ADDED] Remember Me account lookup by prefilled phone number
+   - [UPDATED] Risk SDK version to 6.0.1
+
+##
+
 ## [2.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.7.0)
 
 Released on 24.09.2026
@@ -128,6 +141,19 @@ Updates:
 ##
 
 #### 1.x Releases
+
+## [2.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.8.0)
+
+Released on 06.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Saved cards with RememberMe in Flow
+   - [ADDED] Remember Me account lookup by prefilled phone number
+   - [UPDATED] Risk SDK version to 6.0.1
+
+##
 
 ## [2.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.7.0)
 
