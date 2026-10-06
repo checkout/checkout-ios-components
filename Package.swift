@@ -1,12 +1,12 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-let releaseVersion = "2.8.0"
+let releaseVersion = "2.8.0-rc"
 let githubRepo = "checkout/checkout-ios-components"
 
-let sdkChecksum = "b1d3d123ff473ff12c66817e7bad5ec94910a73443aaf7638f2365e801ab32d4"
-let paymentMethodsChecksum = "b1f0efbac0443ef95c0b0e5990e9e836e772e77f4df811b6bd8512c4163ce56b"
-let klarnaChecksum = "36cab9afa9a3c3279e8676044475c81eaded55fbc010521838522eaaf1ae3ac1"
+let sdkChecksum = "f473d4fb0706b264ebb5d98963f5fe7169d62463bda99652d38a79d3c9d48c43"
+let paymentMethodsChecksum = "a61d04fb75ed3cfc43819b3478e6931649880ebebffe4de7be0228462db428e4"
+let klarnaChecksum = "234b8bd2e58973882f9bb5c00ef7859db5e0eae7ea83d3d8c42a61a47d7a16e2"
 
 let sdkURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutComponentsSDK.xcframework.zip"
 let paymentMethodsURL = "https://github.com/\(githubRepo)/releases/download/\(releaseVersion)/CheckoutPaymentMethods.xcframework.zip"
@@ -35,7 +35,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/checkout/checkout-risk-sdk-ios",
-      from: "4.0.1"
+      exact: "6.0.1"
     ),
     .package(
       url: "https://github.com/klarna/klarna-mobile-sdk-spm",
