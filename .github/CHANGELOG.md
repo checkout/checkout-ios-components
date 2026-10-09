@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.9.0)
+
+Released on 09.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] iDeal payment method
+   - [ADDED] Knet payment method
+
+##
+
 ## [2.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.8.0)
 
 Released on 06.10.2026
@@ -141,6 +153,55 @@ Updates:
 ##
 
 #### 1.x Releases
+
+## [2.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.9.0)
+
+Released on 09.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] iDeal payment method
+   - [ADDED] Knet payment method
+
+##
+
+## [2.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.8.0)
+
+Released on 06.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Saved cards with RememberMe in Flow
+   - [ADDED] Remember Me account lookup by prefilled phone number
+   - [UPDATED] Risk SDK version to 6.0.1
+
+##
+
+## [2.7.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.7.0)
+
+Released on 24.09.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Pre-fill Cardholder name field
+
+##
+
+## [2.6.1](https://github.com/checkout/checkout-ios-components/releases/tag/2.6.1)
+
+Released on 14.09.2026
+
+Updates:
+
+- **What's new**
+   - [FIXED]: Wrong value for isValid property in onChange callback.
+   - [FIXED]: Position of clear icon in RememberMe search bar in RTL.
+   - [FIXED]: Unable to hide RememberMe component with passing nil to RememberMeConfiguration.
+
+##
 
 ## [1.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/1.9.0)
 

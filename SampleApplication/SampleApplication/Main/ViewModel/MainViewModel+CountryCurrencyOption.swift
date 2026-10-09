@@ -6,6 +6,8 @@ enum CountryOption: String, CaseIterable, Hashable {
   case gb = "GB"
   case ae = "AE"
   case sa = "SA"
+  case nl = "NL"
+  case kw = "KW"
 
   var displayName: String { rawValue }
 
@@ -18,6 +20,8 @@ enum CurrencyOption: String, CaseIterable, Hashable {
   case gbp = "GBP"
   case aed = "AED"
   case sar = "SAR"
+  case eur = "EUR"
+  case kwd = "KWD"
 
   var displayName: String { rawValue }
 
