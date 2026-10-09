@@ -21,6 +21,8 @@ enum PaymentMethodType: CaseIterable {
   case applePay
   case tabby
   case tamara
+  case ideal
+  case knet
   case stcPay
   case klarna
 }
@@ -232,6 +234,12 @@ final class MainViewModel: ObservableObject {
     if selectedPaymentMethodTypes.contains(.tamara) {
       providers.append(CheckoutPaymentOptions.Provider.tamara)
     }
+    if selectedPaymentMethodTypes.contains(.ideal) {
+      providers.append(CheckoutPaymentOptions.Provider.ideal)
+    }
+    if selectedPaymentMethodTypes.contains(.knet) {
+      providers.append(CheckoutPaymentOptions.Provider.knet)
+    }
     if selectedPaymentMethodTypes.contains(.stcPay) {
       providers.append(CheckoutPaymentOptions.Provider.stcPay)
     }
@@ -253,7 +261,7 @@ final class MainViewModel: ObservableObject {
 
   init(merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider()) {
     self.merchantKeyPresetProvider = merchantKeyPresetProvider
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .ideal, .knet]
     clearStoredCardConsentOverride()
     merchantKeyPresetsLoading = Task { await loadMerchantKeyPresets() }
   }
@@ -263,7 +271,7 @@ final class MainViewModel: ObservableObject {
   }
   #else
   init() {
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .ideal, .knet, .stcPay, .klarna]
     clearStoredCardConsentOverride()
   }
 
@@ -429,6 +437,12 @@ extension MainViewModel {
     case .tamara:
       return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.tamara,
                                               showPayButton: showAPMPayButton)
+    case .ideal:
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.ideal,
+                                              showPayButton: showAPMPayButton)
+    case .knet:
+      return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.knet,
+                                              showPayButton: showAPMPayButton)
     case .stcPay:
       return try checkoutComponentsSDK.create(CheckoutPaymentOptions.Provider.stcPay,
                                               showPayButton: showAPMPayButton)
@@ -503,6 +517,28 @@ extension MainViewModel {
     }
   }
 
+  var isIdealSelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.ideal) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.ideal)
+      } else {
+        selectedPaymentMethodTypes.remove(.ideal)
+      }
+    }
+  }
+
+  var isKnetSelected: Bool {
+    get { selectedPaymentMethodTypes.contains(.knet) }
+    set {
+      if newValue {
+        selectedPaymentMethodTypes.insert(.knet)
+      } else {
+        selectedPaymentMethodTypes.remove(.knet)
+      }
+    }
+  }
+
   var isSTCPaySelected: Bool {
     get { selectedPaymentMethodTypes.contains(.stcPay) }
     set {
@@ -542,6 +578,14 @@ extension MainViewModel {
 
     if isTamaraSelected {
       selectedMethods.append("Tamara")
+    }
+
+    if isIdealSelected {
+      selectedMethods.append("iDEAL")
+    }
+
+    if isKnetSelected {
+      selectedMethods.append("KNET")
     }
 
     if isSTCPaySelected {
@@ -639,7 +683,7 @@ extension MainViewModel {
     checkoutComponentsView = nil
     cvvTokenizationResult = nil
     selectedComponentType = .flow
-    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .stcPay, .klarna]
+    selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .ideal, .knet, .stcPay, .klarna]
     showCardPayButton = true
     paymentButtonAction = .payment
     selectedLocale = .locale(.en_GB)

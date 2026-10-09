@@ -21,6 +21,8 @@ enum CheckoutComponent: String, CaseIterable {
   case applePay = "Apple Pay"
   case tabby = "Tabby"
   case tamara = "Tamara"
+  case ideal = "iDEAL"
+  case knet = "KNET"
   case stcPay = "STC Pay"
 #if canImport(CheckoutKlarnaSDK)
   case klarna = "Klarna"
@@ -50,6 +52,10 @@ enum CheckoutComponent: String, CaseIterable {
       return "tabby"
     case .tamara:
       return "tamara"
+    case .ideal:
+      return "ideal"
+    case .knet:
+      return "knet"
     case .stcPay:
       return "stc_pay"
 #if canImport(CheckoutKlarnaSDK)
@@ -128,6 +134,10 @@ extension MainView {
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tabbyPaymentMethodOption.rawValue)
           Toggle("Tamara", isOn: $viewModel.isTamaraSelected)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.tamaraPaymentMethodOption.rawValue)
+          Toggle("iDEAL", isOn: $viewModel.isIdealSelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.idealPaymentMethodOption.rawValue)
+          Toggle("KNET", isOn: $viewModel.isKnetSelected)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.knetPaymentMethodOption.rawValue)
           Toggle("STC Pay", isOn: $viewModel.isSTCPaySelected)
             .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.stcPayPaymentMethodOption.rawValue)
           Toggle("Klarna", isOn: $viewModel.isKlarnaSelected)
