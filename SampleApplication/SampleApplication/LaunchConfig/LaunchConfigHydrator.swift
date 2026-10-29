@@ -14,7 +14,7 @@ import Foundation
 ///
 /// Mirrors the JSON schema shared with the Android sample app:
 /// ```json
-/// { "locale": "ar", "environment": "sandbox", "render": "auto", "amount": 10500, "currency": "GBP" }
+/// { "locale": "ar", "environment": "sandbox", "render": "auto", "paymentSessionAmount": 10500 }
 /// ```
 /// Every field is optional so that partial configurations from different
 /// sources can be merged together (see `LaunchConfig.overlaying(_:)`).
@@ -22,18 +22,16 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
   var locale: String?
   var environment: String?
   var render: String?
-  var sdkModule: String?
-  var amount: Int?
-  var currency: String?
-  var country: String?
+  var selectedComponent: String?
+  var paymentSessionAmount: Int?
+  var paymentSessionCurrency: String?
+  var paymentSessionCountry: String?
   var merchantKey: String?
   var appearance: String?
-  var customerEmail: String?
-  var customerPhoneCountryCode: String?
-  var customerPhoneNumber: String?
+  var paymentSessionEmail: String?
+  var paymentSessionPhone: Phone?
   var rememberMeEmail: String?
-  var rememberMePhoneCountryCode: String?
-  var rememberMePhoneNumber: String?
+  var rememberMePhoneNumber: Phone?
   var storedCardSource: String?
   var storedCardCustomerId: String?
   var storedCardInstrumentIds: [String]?
@@ -43,6 +41,63 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
   var storedCardAcceptedSchemes: [String]?
   var storedCardShowPayButton: Bool?
   var componentCallbacks: [String]?
+  var customTranslations: Bool?
+  var paymentSessionLocale: String?
+  var stagingKeys: [String]?
+  var paymentMethods: [String]?
+  var paymentSessionName: String?
+  var storePaymentDetails: String?
+  var showPayButton: Bool?
+  var paymentButtonAction: String?
+  var displayCardHolderName: String?
+  var cardholderNameMaxLength: Int?
+  var hideSecurityCode: Bool?
+  var prefilledCardholderName: String?
+  var acceptedCardSchemes: [String]?
+  var acceptedCardTypes: [String]?
+  var applePaySettings: ApplePaySettings?
+  var showUpdateAmountSection: Bool?
+  var showApmPayButton: Bool?
+  var klarnaTheme: String?
+  var klarnaReturnUrl: String?
+  var showRememberMePayButton: Bool?
+  var rememberMeCardSchemes: [String]?
+  var rememberMeCardTypes: [String]?
+  var storedCardAcceptedTypes: [String]?
+  var storedCardPaymentButtonAction: String?
+  var storedCardConsentOverride: String?
+  var addressConfig: String?
+  var customButtonOperation: String?
+  var cvvLengths: [Int]?
+
+  struct Phone: Decodable, Equatable, Sendable {
+    var countryCode: String?
+    var number: String?
+
+    func overlaying(_ higher: Phone) -> Phone {
+      Phone(countryCode: higher.countryCode ?? countryCode, number: higher.number ?? number)
+    }
+  }
+
+  struct ApplePaySettings: Decodable, Equatable, Sendable {
+    var showApplePayButton: Bool?
+    var acceptedCardSchemes: [String]?
+    var acceptedCardTypes: [String]?
+    var buttonStyle: String?
+    var buttonType: String?
+    var totalType: String?
+
+    func overlaying(_ higher: ApplePaySettings) -> ApplePaySettings {
+      ApplePaySettings(
+        showApplePayButton: higher.showApplePayButton ?? showApplePayButton,
+        acceptedCardSchemes: higher.acceptedCardSchemes ?? acceptedCardSchemes,
+        acceptedCardTypes: higher.acceptedCardTypes ?? acceptedCardTypes,
+        buttonStyle: higher.buttonStyle ?? buttonStyle,
+        buttonType: higher.buttonType ?? buttonType,
+        totalType: higher.totalType ?? totalType
+      )
+    }
+  }
 
   static let empty = LaunchConfig()
 
@@ -55,22 +110,20 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
   /// corresponding field in `self`. Used to apply the precedence hierarchy:
   /// a higher-priority source overlays a lower-priority baseline.
   func overlaying(_ higher: LaunchConfig) -> LaunchConfig {
-    LaunchConfig(
+    var merged = LaunchConfig(
       locale: higher.locale ?? locale,
       environment: higher.environment ?? environment,
       render: higher.render ?? render,
-      sdkModule: higher.sdkModule ?? sdkModule,
-      amount: higher.amount ?? amount,
-      currency: higher.currency ?? currency,
-      country: higher.country ?? country,
+      selectedComponent: higher.selectedComponent ?? selectedComponent,
+      paymentSessionAmount: higher.paymentSessionAmount ?? paymentSessionAmount,
+      paymentSessionCurrency: higher.paymentSessionCurrency ?? paymentSessionCurrency,
+      paymentSessionCountry: higher.paymentSessionCountry ?? paymentSessionCountry,
       merchantKey: higher.merchantKey ?? merchantKey,
       appearance: higher.appearance ?? appearance,
-      customerEmail: higher.customerEmail ?? customerEmail,
-      customerPhoneCountryCode: higher.customerPhoneCountryCode ?? customerPhoneCountryCode,
-      customerPhoneNumber: higher.customerPhoneNumber ?? customerPhoneNumber,
+      paymentSessionEmail: higher.paymentSessionEmail ?? paymentSessionEmail,
+      paymentSessionPhone: Self.merge(paymentSessionPhone, higher.paymentSessionPhone) { $0.overlaying($1) },
       rememberMeEmail: higher.rememberMeEmail ?? rememberMeEmail,
-      rememberMePhoneCountryCode: higher.rememberMePhoneCountryCode ?? rememberMePhoneCountryCode,
-      rememberMePhoneNumber: higher.rememberMePhoneNumber ?? rememberMePhoneNumber,
+      rememberMePhoneNumber: Self.merge(rememberMePhoneNumber, higher.rememberMePhoneNumber) { $0.overlaying($1) },
       storedCardSource: higher.storedCardSource ?? storedCardSource,
       storedCardCustomerId: higher.storedCardCustomerId ?? storedCardCustomerId,
       storedCardInstrumentIds: higher.storedCardInstrumentIds ?? storedCardInstrumentIds,
@@ -81,6 +134,47 @@ struct LaunchConfig: Decodable, Equatable, Sendable {
       storedCardShowPayButton: higher.storedCardShowPayButton ?? storedCardShowPayButton,
       componentCallbacks: higher.componentCallbacks ?? componentCallbacks
     )
+    merged.overlaySettings(from: higher, over: self)
+    return merged
+  }
+
+  private mutating func overlaySettings(from higher: LaunchConfig, over lower: LaunchConfig) {
+    customTranslations = higher.customTranslations ?? lower.customTranslations
+    paymentSessionLocale = higher.paymentSessionLocale ?? lower.paymentSessionLocale
+    stagingKeys = higher.stagingKeys ?? lower.stagingKeys
+    paymentMethods = higher.paymentMethods ?? lower.paymentMethods
+    paymentSessionName = higher.paymentSessionName ?? lower.paymentSessionName
+    storePaymentDetails = higher.storePaymentDetails ?? lower.storePaymentDetails
+    showPayButton = higher.showPayButton ?? lower.showPayButton
+    paymentButtonAction = higher.paymentButtonAction ?? lower.paymentButtonAction
+    displayCardHolderName = higher.displayCardHolderName ?? lower.displayCardHolderName
+    cardholderNameMaxLength = higher.cardholderNameMaxLength ?? lower.cardholderNameMaxLength
+    hideSecurityCode = higher.hideSecurityCode ?? lower.hideSecurityCode
+    prefilledCardholderName = higher.prefilledCardholderName ?? lower.prefilledCardholderName
+    acceptedCardSchemes = higher.acceptedCardSchemes ?? lower.acceptedCardSchemes
+    acceptedCardTypes = higher.acceptedCardTypes ?? lower.acceptedCardTypes
+    applePaySettings = Self.merge(lower.applePaySettings, higher.applePaySettings) { $0.overlaying($1) }
+    showUpdateAmountSection = higher.showUpdateAmountSection ?? lower.showUpdateAmountSection
+    showApmPayButton = higher.showApmPayButton ?? lower.showApmPayButton
+    klarnaTheme = higher.klarnaTheme ?? lower.klarnaTheme
+    klarnaReturnUrl = higher.klarnaReturnUrl ?? lower.klarnaReturnUrl
+    showRememberMePayButton = higher.showRememberMePayButton ?? lower.showRememberMePayButton
+    rememberMeCardSchemes = higher.rememberMeCardSchemes ?? lower.rememberMeCardSchemes
+    rememberMeCardTypes = higher.rememberMeCardTypes ?? lower.rememberMeCardTypes
+    storedCardAcceptedTypes = higher.storedCardAcceptedTypes ?? lower.storedCardAcceptedTypes
+    storedCardPaymentButtonAction = higher.storedCardPaymentButtonAction ?? lower.storedCardPaymentButtonAction
+    storedCardConsentOverride = higher.storedCardConsentOverride ?? lower.storedCardConsentOverride
+    addressConfig = higher.addressConfig ?? lower.addressConfig
+    customButtonOperation = higher.customButtonOperation ?? lower.customButtonOperation
+    cvvLengths = higher.cvvLengths ?? lower.cvvLengths
+  }
+
+  /// Nested objects merge member by member, so a partial override keeps the lower source's other members.
+  private static func merge<Value>(_ lower: Value?, _ higher: Value?, _ overlay: (Value, Value) -> Value) -> Value? {
+    guard let lower, let higher else {
+      return higher ?? lower
+    }
+    return overlay(lower, higher)
   }
 }
 
@@ -185,224 +279,5 @@ enum LaunchConfigHydrator {
     }
 
     return Data(base64Encoded: base64)
-  }
-}
-
-// MARK: - State Mutation
-
-extension MainViewModel {
-  /// Applies a resolved launch configuration to the `@Published` state of the
-  /// view model. Unknown or unmappable values are ignored so the existing
-  /// (hardcoded) defaults survive — Graceful Degradation, AC 2.
-  ///
-  /// - Returns: `true` when the payload requests automatic rendering.
-  @discardableResult
-  func applyLaunchConfig(_ config: LaunchConfig) -> Bool {
-    applyGeneralSettings(from: config)
-    applyPaymentSettings(from: config)
-    applyCustomerSettings(from: config)
-    applyRememberMeSettings(from: config)
-    applyStoredCardSettings(from: config)
-    applyStoredCardDisplaySettings(from: config)
-    applyAppearanceSettings(from: config)
-    return config.rendersAutomatically
-  }
-
-  private func applyGeneralSettings(from config: LaunchConfig) {
-    if let localeString = config.locale,
-       let locale = CheckoutComponents.Locale(rawValue: localeString) {
-      selectedLocale = .locale(locale)
-      paymentSessionSelectedLocale = .locale(locale)
-    }
-
-    if let environmentString = config.environment,
-       let environment = CheckoutComponents.Environment(configValue: environmentString) {
-      selectedEnvironment = environment
-    }
-
-    if let moduleString = config.sdkModule,
-       let module = CheckoutComponent(configValue: moduleString) {
-      selectedComponentType = module
-    }
-
-    #if INTERNAL_SAMPLE_APP
-    if let merchantKeyName = config.merchantKey,
-       let preset = availableMerchantKeys.first(where: { $0.name == merchantKeyName }) {
-      selectedMerchantKey = preset
-    }
-    #endif
-  }
-
-  private func applyPaymentSettings(from config: LaunchConfig) {
-    if let currencyString = config.currency,
-       let currency = CurrencyOption(rawValue: currencyString.uppercased()) {
-      selectedCurrency = currency
-    }
-
-    if let amount = config.amount {
-      self.amount = amount
-    }
-
-    if let countryString = config.country,
-       let country = CountryOption(rawValue: countryString.uppercased()) {
-      selectedCountry = country
-    }
-  }
-
-  private func applyCustomerSettings(from config: LaunchConfig) {
-    if let email = config.customerEmail {
-      paymentSessionUserEmail = email
-    }
-    if let countryCode = config.customerPhoneCountryCode {
-      paymentSessionCountryCode = Self.dialingCode(from: countryCode)
-    }
-    if let number = config.customerPhoneNumber {
-      paymentSessionPhoneNumber = number
-    }
-  }
-
-  private func applyRememberMeSettings(from config: LaunchConfig) {
-    if let email = config.rememberMeEmail, !email.isEmpty {
-      userEmail = email
-    }
-    if let countryCode = config.rememberMePhoneCountryCode, !countryCode.isEmpty {
-      userCountryCode = Self.dialingCode(from: countryCode)
-    }
-    if let number = config.rememberMePhoneNumber, !number.isEmpty {
-      userPhoneNumber = number
-    }
-  }
-
-  private func applyStoredCardSettings(from config: LaunchConfig) {
-    if let sourceString = config.storedCardSource, let source = StoredCardSource(configValue: sourceString) {
-      storedCardSource = source
-    }
-    if let customerId = config.storedCardCustomerId, !customerId.isEmpty {
-      self.customerId = customerId
-    }
-    if let ids = config.storedCardInstrumentIds, !ids.isEmpty {
-      instrumentIds = ids.joined(separator: ",")
-    }
-    if let defaultInstrumentId = config.storedCardDefaultInstrumentId, !defaultInstrumentId.isEmpty {
-      self.defaultInstrumentId = defaultInstrumentId
-    }
-  }
-
-  private func applyStoredCardDisplaySettings(from config: LaunchConfig) {
-    if let captureCvv = config.captureStoredCardCvv {
-      storedCardCaptureCVV = captureCvv
-    }
-    if let displayModeString = config.storedCardDisplayMode,
-       let displayMode = CheckoutComponents.StoredCardDisplayMode(configValue: displayModeString) {
-      storedCardDisplayMode = displayMode
-    }
-    if let schemes = config.storedCardAcceptedSchemes {
-      storedCardAcceptedCardSchemes = Set(schemes.compactMap { CardScheme(configValue: $0) })
-    }
-    if let showPayButton = config.storedCardShowPayButton {
-      showStoredCardPayButton = showPayButton
-    }
-  }
-
-  private func applyAppearanceSettings(from config: LaunchConfig) {
-    if let appearanceString = config.appearance,
-       let appearance = AppearancePreset(configValue: appearanceString) {
-      isDefaultAppearance = appearance == .default
-    }
-    if let callbacks = config.componentCallbacks {
-      handleSubmitManually = callbacks.contains { $0.caseInsensitiveCompare("HandleSubmit") == .orderedSame }
-    }
-  }
-
-  private static func dialingCode(from value: String) -> String {
-    if let country = CheckoutComponents.Country(iso3166Alpha2: value.uppercased()) {
-      return country.dialingCode
-    }
-    return value.hasPrefix("+") ? String(value.dropFirst()) : value
-  }
-}
-
-enum AppearancePreset: Equatable {
-  case `default`
-  case dark
-
-  init?(configValue: String) {
-    switch configValue.lowercased() {
-    case "default":
-      self = .default
-    case "dark":
-      self = .dark
-    default:
-      return nil
-    }
-  }
-}
-
-extension CheckoutComponents.Environment {
-  /// Maps a launch-config string (`"sandbox"` / `"production"`) to an
-  /// `Environment`, returning nil for unrecognised values.
-  init?(configValue: String) {
-    switch configValue.lowercased() {
-    case "sandbox":
-      self = .sandbox
-    case "production", "prod", "live":
-      self = .production
-    default:
-      return nil
-    }
-  }
-}
-
-extension CheckoutComponent {
-  /// Matches against `accessibilityIdentifier` rather than `rawValue`, since the latter is the
-  /// human-readable Settings picker label (e.g. `"Apple Pay"`, `"Stored Card"`).
-  init?(configValue: String) {
-    let normalised = configValue.lowercased()
-    guard let match = CheckoutComponent.allCases.first(where: { $0.accessibilityIdentifier == normalised }) else {
-      return nil
-    }
-    self = match
-  }
-}
-
-extension StoredCardSource {
-  init?(configValue: String) {
-    switch configValue.lowercased() {
-    case "none":
-      self = .none
-    case "instrumentids":
-      self = .instrumentIds
-    case "customerid":
-      self = .customerId
-    default:
-      return nil
-    }
-  }
-}
-
-extension CardScheme {
-  init?(configValue: String) {
-    let normalised = Self.normalisedName(configValue)
-    guard let match = CardScheme.selectableCases.first(where: { Self.normalisedName($0.rawValue) == normalised }) else {
-      return nil
-    }
-    self = match
-  }
-
-  private static func normalisedName(_ value: String) -> String {
-    value.lowercased().filter { $0.isLetter || $0.isNumber }
-  }
-}
-
-extension CheckoutComponents.StoredCardDisplayMode {
-  init?(configValue: String) {
-    switch configValue.lowercased() {
-    case "default":
-      self = .defaultCard
-    case "all":
-      self = .all
-    default:
-      return nil
-    }
   }
 }

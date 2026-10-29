@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [2.10.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.10.0)
+
+Released on 29.10.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] onAuthorized callback
+   - [FIXED] background colour from design token
+
+##
+
 ## [2.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.9.0)
 
 Released on 09.10.2026
@@ -153,18 +165,6 @@ Updates:
 ##
 
 #### 1.x Releases
-
-## [2.9.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.9.0)
-
-Released on 09.10.2026
-
-Updates:
-
-- **What's new**
-   - [ADDED] iDeal payment method
-   - [ADDED] Knet payment method
-
-##
 
 ## [2.8.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.8.0)
 

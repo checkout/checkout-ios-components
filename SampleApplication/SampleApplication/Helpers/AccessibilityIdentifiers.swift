@@ -56,6 +56,7 @@ enum AccessibilityIdentifier {
     case showPayButtonPicker = "show_pay_button_picker"
     case submitPaymentPicker = "submit_payment_picker"
     case submitPaymentMethodView = "submit_payment_method_view"
+    case onAuthorizedRejectToggle = "on_authorized_reject_toggle"
     case hideSecurityCodeToggle = "hide_security_code_toggle"
     case acceptedCardSchemesPicker = "accepted_card_schemes_picker"
     case acceptedCardTypesPicker = "accepted_card_types_picker"
