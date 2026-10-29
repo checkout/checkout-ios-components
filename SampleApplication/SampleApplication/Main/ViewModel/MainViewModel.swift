@@ -72,6 +72,7 @@ final class MainViewModel: ObservableObject {
   @Published var cardAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
   @Published var applePayAcceptedCardTypes: Set<CheckoutComponents.CardType> = []
   @Published var handleSubmitManually = false
+  @Published var rejectPaymentOnAuthorized = false
   @Published var updatedAmount = ""
   @Published var isShowUpdateView = false
   @Published var showApplePayButton: Bool = true

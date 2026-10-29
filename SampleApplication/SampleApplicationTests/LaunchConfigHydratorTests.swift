@@ -15,20 +15,20 @@ final class LaunchConfigHydratorTests: XCTestCase {
   // MARK: - LaunchConfig.overlaying
 
   func test_overlaying_higherPriorityNonNilFieldsWin() {
-    let base = LaunchConfig(locale: "en-GB", environment: "sandbox", render: nil, amount: 10500, currency: "GBP")
-    let higher = LaunchConfig(locale: "ar", environment: nil, render: "auto", amount: nil, currency: nil)
+    let base = LaunchConfig(locale: "en-GB", environment: "sandbox", render: nil, paymentSessionAmount: 10500, paymentSessionCurrency: "GBP")
+    let higher = LaunchConfig(locale: "ar", environment: nil, render: "auto", paymentSessionAmount: nil, paymentSessionCurrency: nil)
 
     let result = base.overlaying(higher)
 
     XCTAssertEqual(result.locale, "ar")          // overridden
     XCTAssertEqual(result.environment, "sandbox") // base survives (higher is nil)
     XCTAssertEqual(result.render, "auto")         // added by higher
-    XCTAssertEqual(result.amount, 10500)          // base survives
-    XCTAssertEqual(result.currency, "GBP")        // base survives
+    XCTAssertEqual(result.paymentSessionAmount, 10500)          // base survives
+    XCTAssertEqual(result.paymentSessionCurrency, "GBP")        // base survives
   }
 
   func test_overlaying_emptyHigher_returnsBaseUnchanged() {
-    let base = LaunchConfig(locale: "ar", environment: "production", render: "auto", amount: 99, currency: "AED")
+    let base = LaunchConfig(locale: "ar", environment: "production", render: "auto", paymentSessionAmount: 99, paymentSessionCurrency: "AED")
     XCTAssertEqual(base.overlaying(.empty), base)
   }
 
@@ -88,10 +88,10 @@ final class LaunchConfigHydratorTests: XCTestCase {
   // MARK: - Environment variable source
 
   func test_environmentConfig_parsesJSONString() {
-    let env = ["LAUNCH_CONFIG": #"{"environment":"production","amount":250}"#]
+    let env = ["LAUNCH_CONFIG": #"{"environment":"production","paymentSessionAmount":250}"#]
     let config = LaunchConfigHydrator.environmentConfig(env)
     XCTAssertEqual(config?.environment, "production")
-    XCTAssertEqual(config?.amount, 250)
+    XCTAssertEqual(config?.paymentSessionAmount, 250)
   }
 
   func test_environmentConfig_missingKey_returnsNil() {
@@ -108,8 +108,8 @@ final class LaunchConfigHydratorTests: XCTestCase {
     // The host app bundle ships LaunchConfig.json.
     let config = LaunchConfigHydrator.bundledConfig(in: .main)
     XCTAssertEqual(config?.environment, "sandbox")
-    XCTAssertEqual(config?.currency, "GBP")
-    XCTAssertEqual(config?.amount, 10500)
+    XCTAssertEqual(config?.paymentSessionCurrency, "GBP")
+    XCTAssertEqual(config?.paymentSessionAmount, 10500)
   }
 
   // MARK: - Precedence (resolve)
@@ -122,8 +122,8 @@ final class LaunchConfigHydratorTests: XCTestCase {
 
     XCTAssertEqual(resolved.locale, "ar")            // deep link wins over env
     XCTAssertEqual(resolved.environment, "production") // env wins over bundled
-    XCTAssertEqual(resolved.currency, "GBP")          // bundled baseline survives
-    XCTAssertEqual(resolved.amount, 10500)            // bundled baseline survives
+    XCTAssertEqual(resolved.paymentSessionCurrency, "GBP")          // bundled baseline survives
+    XCTAssertEqual(resolved.paymentSessionAmount, 10500)            // bundled baseline survives
   }
 
   func test_resolve_noExternalSources_fallsBackToBundledBaseline() {
@@ -146,7 +146,7 @@ final class LaunchConfigHydratorTests: XCTestCase {
 
   func test_applyLaunchConfig_mutatesPublishedState() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(locale: "ar", environment: "production", render: "auto", amount: 42, currency: "AED")
+    let config = LaunchConfig(locale: "ar", environment: "production", render: "auto", paymentSessionAmount: 42, paymentSessionCurrency: "AED")
 
     let shouldAutoRender = viewModel.applyLaunchConfig(config)
 
@@ -160,7 +160,7 @@ final class LaunchConfigHydratorTests: XCTestCase {
 
   func test_applyLaunchConfig_ignoresUnknownValuesAndKeepsDefaults() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(locale: "klingon", environment: "mars", render: nil, amount: nil, currency: "XYZ")
+    let config = LaunchConfig(locale: "klingon", environment: "mars", render: nil, paymentSessionAmount: nil, paymentSessionCurrency: "XYZ")
 
     let shouldAutoRender = viewModel.applyLaunchConfig(config)
 
@@ -185,7 +185,7 @@ final class LaunchConfigHydratorTests: XCTestCase {
     XCTAssertFalse(viewModel.paymentSessionCountryCode.isEmpty)
     XCTAssertFalse(viewModel.paymentSessionPhoneNumber.isEmpty)
 
-    let config = LaunchConfig(customerEmail: "", customerPhoneCountryCode: "", customerPhoneNumber: "")
+    let config = LaunchConfig(paymentSessionEmail: "", paymentSessionPhone: .init(countryCode: "", number: ""))
     viewModel.applyLaunchConfig(config)
 
     // An explicit "" is a request to clear the default, not to be ignored,
@@ -212,15 +212,15 @@ final class LaunchConfigHydratorTests: XCTestCase {
   // MARK: - Customer identity, Remember Me and stored card fields
 
   func test_overlaying_newFields_higherPriorityWins() {
-    let base = LaunchConfig(customerEmail: "base@example.com", storedCardSource: "instrumentIds",
+    let base = LaunchConfig(paymentSessionEmail: "base@example.com", storedCardSource: "instrumentIds",
                             storedCardInstrumentIds: ["src_base"], storedCardDisplayMode: "default")
-    let higher = LaunchConfig(customerPhoneNumber: "7784123123", storedCardSource: "customerId",
+    let higher = LaunchConfig(paymentSessionPhone: .init(number: "7784123123"), storedCardSource: "customerId",
                               storedCardCustomerId: "cus_higher", storedCardDisplayMode: "all")
 
     let result = base.overlaying(higher)
 
-    XCTAssertEqual(result.customerEmail, "base@example.com")
-    XCTAssertEqual(result.customerPhoneNumber, "7784123123")
+    XCTAssertEqual(result.paymentSessionEmail, "base@example.com")
+    XCTAssertEqual(result.paymentSessionPhone?.number, "7784123123")
     XCTAssertEqual(result.storedCardSource, "customerId")
     XCTAssertEqual(result.storedCardCustomerId, "cus_higher")
     XCTAssertEqual(result.storedCardInstrumentIds, ["src_base"])
@@ -230,12 +230,10 @@ final class LaunchConfigHydratorTests: XCTestCase {
   func test_decode_readsCustomerAndRememberMeAndStoredCardFields() {
     let json = """
     {
-      "customerEmail": "jane@example.com",
-      "customerPhoneCountryCode": "+44",
-      "customerPhoneNumber": "7784123123",
+      "paymentSessionEmail": "jane@example.com",
+      "paymentSessionPhone": { "countryCode": "+44", "number": "7784123123" },
       "rememberMeEmail": "jane@example.com",
-      "rememberMePhoneCountryCode": "+44",
-      "rememberMePhoneNumber": "7784123123",
+      "rememberMePhoneNumber": { "countryCode": "+44", "number": "7784123123" },
       "storedCardSource": "customerId",
       "storedCardCustomerId": "cus_123",
       "storedCardInstrumentIds": ["src_a", "src_b"],
@@ -246,9 +244,9 @@ final class LaunchConfigHydratorTests: XCTestCase {
     """
     let config = try? JSONDecoder().decode(LaunchConfig.self, from: Data(json.utf8))
 
-    XCTAssertEqual(config?.customerEmail, "jane@example.com")
-    XCTAssertEqual(config?.customerPhoneCountryCode, "+44")
-    XCTAssertEqual(config?.rememberMePhoneNumber, "7784123123")
+    XCTAssertEqual(config?.paymentSessionEmail, "jane@example.com")
+    XCTAssertEqual(config?.paymentSessionPhone?.countryCode, "+44")
+    XCTAssertEqual(config?.rememberMePhoneNumber?.number, "7784123123")
     XCTAssertEqual(config?.storedCardSource, "customerId")
     XCTAssertEqual(config?.storedCardInstrumentIds, ["src_a", "src_b"])
     XCTAssertEqual(config?.captureStoredCardCvv, true)
@@ -258,12 +256,10 @@ final class LaunchConfigHydratorTests: XCTestCase {
   func test_applyLaunchConfig_mutatesCustomerRememberMeAndStoredCardState() {
     let viewModel = MainViewModel()
     let config = LaunchConfig(
-      customerEmail: "jane@example.com",
-      customerPhoneCountryCode: "+44",
-      customerPhoneNumber: "7784123123",
+      paymentSessionEmail: "jane@example.com",
+      paymentSessionPhone: .init(countryCode: "+44", number: "7784123123"),
       rememberMeEmail: "jane@example.com",
-      rememberMePhoneCountryCode: "+44",
-      rememberMePhoneNumber: "7784123123",
+      rememberMePhoneNumber: .init(countryCode: "+44", number: "7784123123"),
       storedCardSource: "customerId",
       storedCardCustomerId: "cus_123",
       captureStoredCardCvv: true,
@@ -286,7 +282,7 @@ final class LaunchConfigHydratorTests: XCTestCase {
 
   func test_applyLaunchConfig_phoneCountryCode_resolvesIso3166Alpha2ToDialingCode() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(customerPhoneCountryCode: "GB", rememberMePhoneCountryCode: "gb")
+    let config = LaunchConfig(paymentSessionPhone: .init(countryCode: "GB"), rememberMePhoneNumber: .init(countryCode: "gb"))
 
     viewModel.applyLaunchConfig(config)
 
@@ -314,7 +310,8 @@ final class LaunchConfigHydratorTests: XCTestCase {
   func test_storedCardSourceInit_mapsAndroidWireValuesCaseInsensitively() {
     XCTAssertEqual(StoredCardSource(configValue: "customerId"), .customerId)
     XCTAssertEqual(StoredCardSource(configValue: "INSTRUMENTIDS"), .instrumentIds)
-    XCTAssertEqual(StoredCardSource(configValue: "none"), .none)
+    // Spelled out: a bare `.none` would read as Optional.none.
+    XCTAssertEqual(StoredCardSource(configValue: "none"), StoredCardSource.none)
     XCTAssertNil(StoredCardSource(configValue: "not_a_source"))
   }
 
@@ -326,33 +323,33 @@ final class LaunchConfigHydratorTests: XCTestCase {
     XCTAssertNil(CheckoutComponents.StoredCardDisplayMode(configValue: "not_a_mode"))
   }
 
-  // MARK: - sdkModule
+  // MARK: - selectedComponent
 
-  func test_overlaying_sdkModule_higherPriorityWins() {
-    let base = LaunchConfig(sdkModule: "card")
-    let higher = LaunchConfig(sdkModule: "flow")
+  func test_overlaying_selectedComponent_higherPriorityWins() {
+    let base = LaunchConfig(selectedComponent: "card")
+    let higher = LaunchConfig(selectedComponent: "flow")
 
-    XCTAssertEqual(base.overlaying(higher).sdkModule, "flow")
-    XCTAssertEqual(base.overlaying(.empty).sdkModule, "card")
+    XCTAssertEqual(base.overlaying(higher).selectedComponent, "flow")
+    XCTAssertEqual(base.overlaying(.empty).selectedComponent, "card")
   }
 
-  func test_decode_readsSdkModule() {
-    let config = try? JSONDecoder().decode(LaunchConfig.self, from: Data(#"{"sdkModule":"card"}"#.utf8))
-    XCTAssertEqual(config?.sdkModule, "card")
+  func test_decode_readsSelectedComponent() {
+    let config = try? JSONDecoder().decode(LaunchConfig.self, from: Data(#"{"selectedComponent":"card"}"#.utf8))
+    XCTAssertEqual(config?.selectedComponent, "card")
   }
 
   func test_applyLaunchConfig_mutatesSelectedComponentType() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(sdkModule: "card")
+    let config = LaunchConfig(selectedComponent: "card")
 
     viewModel.applyLaunchConfig(config)
 
     XCTAssertEqual(viewModel.selectedComponentType, .card)
   }
 
-  func test_applyLaunchConfig_unknownSdkModule_keepsDefault() {
+  func test_applyLaunchConfig_unknownSelectedComponent_keepsDefault() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(sdkModule: "not_a_module")
+    let config = LaunchConfig(selectedComponent: "not_a_module")
 
     viewModel.applyLaunchConfig(config)
 
@@ -461,6 +458,32 @@ extension LaunchConfigHydratorTests {
     XCTAssertTrue(viewModel.handleSubmitManually)
   }
 
+  func test_applyLaunchConfig_componentCallbacksWithOnAuthorizedReject_enablesRejection() {
+    let viewModel = MainViewModel()
+    XCTAssertFalse(viewModel.rejectPaymentOnAuthorized)
+
+    viewModel.applyLaunchConfig(LaunchConfig(componentCallbacks: ["HandleTap", "OnAuthorizedReject"]))
+
+    XCTAssertTrue(viewModel.rejectPaymentOnAuthorized)
+  }
+
+  func test_applyLaunchConfig_componentCallbacksWithoutOnAuthorizedReject_disablesRejection() {
+    let viewModel = MainViewModel()
+    viewModel.rejectPaymentOnAuthorized = true
+
+    viewModel.applyLaunchConfig(LaunchConfig(componentCallbacks: ["HandleSubmit"]))
+
+    XCTAssertFalse(viewModel.rejectPaymentOnAuthorized)
+  }
+
+  func test_applyLaunchConfig_componentCallbacksMatchOnAuthorizedRejectCaseInsensitively() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(componentCallbacks: ["onauthorizedreject"]))
+
+    XCTAssertTrue(viewModel.rejectPaymentOnAuthorized)
+  }
+
   func test_applyLaunchConfig_unknownAppearance_keepsDefault() {
     let viewModel = MainViewModel()
 
@@ -524,41 +547,41 @@ extension LaunchConfigHydratorTests {
   // MARK: - country and merchantKey
 
   func test_overlaying_countryAndMerchantKey_higherPriorityWins() {
-    let base = LaunchConfig(country: "GB", merchantKey: "base-merchant")
-    let higher = LaunchConfig(country: "AE", merchantKey: "higher-merchant")
+    let base = LaunchConfig(paymentSessionCountry: "GB", merchantKey: "base-merchant")
+    let higher = LaunchConfig(paymentSessionCountry: "AE", merchantKey: "higher-merchant")
 
     let result = base.overlaying(higher)
 
-    XCTAssertEqual(result.country, "AE")
+    XCTAssertEqual(result.paymentSessionCountry, "AE")
     XCTAssertEqual(result.merchantKey, "higher-merchant")
   }
 
   func test_overlaying_countryAndMerchantKey_baseSurvivesWhenHigherIsNil() {
-    let base = LaunchConfig(country: "GB", merchantKey: "base-merchant")
+    let base = LaunchConfig(paymentSessionCountry: "GB", merchantKey: "base-merchant")
     let higher = LaunchConfig()
 
     let result = base.overlaying(higher)
 
-    XCTAssertEqual(result.country, "GB")
+    XCTAssertEqual(result.paymentSessionCountry, "GB")
     XCTAssertEqual(result.merchantKey, "base-merchant")
   }
 
   func test_decode_readsCountryAndMerchantKey() {
     let json = """
     {
-      "country": "AE",
+      "paymentSessionCountry": "AE",
       "merchantKey": "qa-merchant"
     }
     """
     let config = try? JSONDecoder().decode(LaunchConfig.self, from: Data(json.utf8))
 
-    XCTAssertEqual(config?.country, "AE")
+    XCTAssertEqual(config?.paymentSessionCountry, "AE")
     XCTAssertEqual(config?.merchantKey, "qa-merchant")
   }
 
   func test_applyLaunchConfig_mutatesSelectedCountry() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(country: "AE")
+    let config = LaunchConfig(paymentSessionCountry: "AE")
 
     viewModel.applyLaunchConfig(config)
 
@@ -567,7 +590,7 @@ extension LaunchConfigHydratorTests {
 
   func test_applyLaunchConfig_unknownCountry_keepsDefault() {
     let viewModel = MainViewModel()
-    let config = LaunchConfig(country: "FR")
+    let config = LaunchConfig(paymentSessionCountry: "FR")
 
     viewModel.applyLaunchConfig(config)
 
@@ -575,10 +598,368 @@ extension LaunchConfigHydratorTests {
   }
 }
 
-private struct MockMerchantKeyPresetProvider: MerchantKeyPresetProviding {
-  let presets: MerchantKeyPresets
+// MARK: - Shared base config and the remaining settings
 
-  func load() async -> MerchantKeyPresets {
-    presets
+extension LaunchConfigHydratorTests {
+
+  func test_decode_sharedBaseConfig_appliesEverySetting() throws {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(try decode(Self.sharedBaseJSON))
+
+    XCTAssertEqual(viewModel.selectedComponentType, .flow)
+    XCTAssertEqual(viewModel.selectedLocale, .locale(.en_GB))
+    XCTAssertEqual(viewModel.amount, 10500)
+    XCTAssertEqual(viewModel.selectedCurrency, .gbp)
+    XCTAssertEqual(viewModel.paymentSessionUserEmail, "customer+test1@checkout.com")
+    XCTAssertEqual(viewModel.paymentSessionCountryCode, "44")
+    XCTAssertEqual(viewModel.paymentSessionPhoneNumber, "7700123456")
+    XCTAssertTrue(viewModel.isShowUpdateView)
+    XCTAssertTrue(viewModel.showCardPayButton)
+    XCTAssertEqual(viewModel.paymentButtonAction, .payment)
+    XCTAssertEqual(viewModel.displayCardHolderName, .top)
+    XCTAssertEqual(viewModel.cardHolderNameMaxLength, 50)
+    XCTAssertFalse(viewModel.hideSecurityCode)
+    XCTAssertEqual(viewModel.cardAcceptedCardSchemes, [.visa, .mastercard])
+    XCTAssertEqual(viewModel.cardAcceptedCardTypes, [.credit, .debit])
+    XCTAssertTrue(viewModel.showApplePayButton)
+    XCTAssertEqual(viewModel.applePayAcceptedCardSchemes, [])
+    XCTAssertTrue(viewModel.showRememberMePayButton)
+    XCTAssertEqual(viewModel.userEmail, "ckoautomationtest@checkout.com")
+    XCTAssertEqual(viewModel.userCountryCode, "44")
+    XCTAssertEqual(viewModel.userPhoneNumber, "7700900900")
+    XCTAssertEqual(viewModel.rememberMeAcceptedCardSchemes, [.mastercard])
+    XCTAssertEqual(viewModel.rememberMeAcceptedCardTypes, [.credit, .debit])
   }
+
+  func test_decode_wronglyTypedValue_rejectsThePayload() {
+    // Strict decoding: a phone sent as a plain string, as the old native schema did, fails the whole payload.
+    let json = #"{"locale": "ar", "rememberMePhoneNumber": "7784123123"}"#
+    XCTAssertNil(LaunchConfigHydrator.environmentConfig(["LAUNCH_CONFIG": json]))
+  }
+
+  func test_overlaying_remainingSettings_higherPriorityWinsAndBaseSurvives() {
+    let base = LaunchConfig(showPayButton: true, applePaySettings: .init(showApplePayButton: true), cvvLengths: [3])
+    let higher = LaunchConfig(showPayButton: false, acceptedCardSchemes: [])
+
+    let result = base.overlaying(higher)
+
+    XCTAssertEqual(result.showPayButton, false)
+    XCTAssertEqual(result.acceptedCardSchemes, [])
+    XCTAssertEqual(result.applePaySettings, .init(showApplePayButton: true))
+    XCTAssertEqual(result.cvvLengths, [3])
+    XCTAssertEqual(base.overlaying(.empty), base)
+  }
+
+  func test_applyLaunchConfig_localesComponentAndPaymentMethods() throws {
+    let arabic = try XCTUnwrap(CheckoutComponents.Locale(rawValue: "ar"))
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(
+      locale: "en-GB", selectedComponent: "applePay", paymentSessionLocale: "ar",
+      paymentMethods: ["card", "googlepay", "klarna", "remember_me"]
+    ))
+
+    XCTAssertEqual(viewModel.selectedLocale, .locale(.en_GB))
+    XCTAssertEqual(viewModel.paymentSessionSelectedLocale, .locale(arabic))
+    XCTAssertEqual(viewModel.selectedComponentType, .applePay)
+    XCTAssertEqual(viewModel.selectedPaymentMethodTypes, [.card, .applePay, .klarna])
+  }
+
+  func test_applyLaunchConfig_customTranslations_selectsCustomisedLocaleOnly() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(locale: "en-GB", customTranslations: true))
+
+    XCTAssertEqual(viewModel.selectedLocale, .customised)
+    XCTAssertEqual(viewModel.paymentSessionSelectedLocale, .locale(.en_GB))
+  }
+
+  func test_applyLaunchConfig_cardSettings() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(
+      showPayButton: false, paymentButtonAction: "tokenize", displayCardHolderName: "hidden",
+      cardholderNameMaxLength: 8, hideSecurityCode: true, prefilledCardholderName: "Jane Doe",
+      acceptedCardSchemes: ["americanExpress", "unknown"], acceptedCardTypes: ["deferred_debit"],
+      customButtonOperation: "tokenization", cvvLengths: [4, 7]
+    ))
+
+    XCTAssertFalse(viewModel.showCardPayButton)
+    XCTAssertEqual(viewModel.paymentButtonAction, .tokenization)
+    XCTAssertEqual(viewModel.displayCardHolderName, .hidden)
+    XCTAssertEqual(viewModel.cardHolderNameMaxLength, 8)
+    XCTAssertTrue(viewModel.hideSecurityCode)
+    XCTAssertEqual(viewModel.prefilledCardholderName, "Jane Doe")
+    XCTAssertEqual(viewModel.cardAcceptedCardSchemes, [.americanExpress])
+    XCTAssertEqual(viewModel.cardAcceptedCardTypes, [.deferredDebit])
+    XCTAssertEqual(viewModel.customButtonOperation, .tokenization)
+    XCTAssertEqual(viewModel.selectedCVVLengths, [.four])
+  }
+
+  func test_applyLaunchConfig_outOfRangeCardValues_keepDefaults() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(cardholderNameMaxLength: 0, cvvLengths: []))
+
+    XCTAssertEqual(viewModel.cardHolderNameMaxLength, 255)
+    XCTAssertEqual(viewModel.selectedCVVLengths, [.three, .four])
+  }
+
+  func test_applyLaunchConfig_walletAndKlarnaSettings() throws {
+    let viewModel = MainViewModel()
+    let config = try decode("""
+    {
+      "applePaySettings": {
+        "showApplePayButton": false, "acceptedCardTypes": ["credit"],
+        "buttonStyle": "white_outline", "buttonType": "add_money", "totalType": "pending"
+      },
+      "showUpdateAmountSection": true, "showApmPayButton": false, "klarnaTheme": "dark", "klarnaReturnUrl": "app://klarna"
+    }
+    """)
+
+    viewModel.applyLaunchConfig(config)
+
+    XCTAssertFalse(viewModel.showApplePayButton)
+    XCTAssertEqual(viewModel.applePayAcceptedCardTypes, [.credit])
+    XCTAssertEqual(viewModel.applePayButtonStyle, .whiteOutline)
+    XCTAssertEqual(viewModel.applePayButtonType, .addMoney)
+    XCTAssertEqual(viewModel.selectedApplePayType, .pending)
+    XCTAssertTrue(viewModel.isShowUpdateView)
+    XCTAssertFalse(viewModel.showAPMPayButton)
+    #if canImport(CheckoutKlarnaSDK)
+    XCTAssertEqual(viewModel.klarnaTheme, .dark)
+    XCTAssertEqual(viewModel.klarnaReturnURLString, "app://klarna")
+    #endif
+  }
+
+  func test_applyLaunchConfig_sessionRememberMeStoredCardAndAddressSettings() {
+    addTeardownBlock {
+      UserDefaults.standard.removeObject(forKey: "checkout_components_force_stored_card_consent_type")
+    }
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(
+      paymentSessionName: "Test User", storePaymentDetails: "undefined",
+      showRememberMePayButton: false, rememberMeCardTypes: ["prepaid"], storedCardAcceptedTypes: ["debit"],
+      storedCardPaymentButtonAction: "tokenization", storedCardConsentOverride: "implicit", addressConfig: "no_prefill"
+    ))
+
+    XCTAssertEqual(viewModel.paymentSessionUsername, "Test User")
+    XCTAssertEqual(viewModel.storePaymentDetails, .undefined)
+    XCTAssertFalse(viewModel.showRememberMePayButton)
+    XCTAssertEqual(viewModel.rememberMeAcceptedCardTypes, [.prepaid])
+    XCTAssertEqual(viewModel.storedCardAcceptedCardTypes, [.debit])
+    XCTAssertEqual(viewModel.storedCardPaymentButtonAction, .tokenization)
+    XCTAssertEqual(viewModel.storedCardConsentOverride, .implicit)
+    XCTAssertEqual(viewModel.selectedAddressConfiguration, .noPrefill)
+  }
+
+  func test_applyLaunchConfig_emptyAddressConfig_isRejectedForStandaloneAddress() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(render: "auto", selectedComponent: "address", addressConfig: "empty"))
+
+    XCTAssertEqual(viewModel.selectedComponentType, .address)
+    XCTAssertEqual(viewModel.selectedAddressConfiguration, .prefillCustomized)
+    XCTAssertNotNil(viewModel.selectedAddressConfiguration.addressConfiguration)
+  }
+
+  func test_applyLaunchConfig_emptyAddressConfig_isAcceptedForCard() {
+    let viewModel = MainViewModel()
+
+    viewModel.applyLaunchConfig(LaunchConfig(selectedComponent: "card", addressConfig: "empty"))
+
+    XCTAssertEqual(viewModel.selectedAddressConfiguration, .empty)
+  }
+
+  func test_overlaying_partialPhones_mergeMembersAcrossSources() {
+    let environment = LaunchConfig(
+      paymentSessionPhone: .init(countryCode: "971", number: "500000000"),
+      rememberMePhoneNumber: .init(countryCode: "44", number: "7700900900")
+    )
+    let deepLink = LaunchConfig(
+      paymentSessionPhone: .init(number: "511111111"),
+      rememberMePhoneNumber: .init(countryCode: "", number: nil)
+    )
+
+    let result = environment.overlaying(deepLink)
+
+    XCTAssertEqual(result.paymentSessionPhone, .init(countryCode: "971", number: "511111111"))
+    XCTAssertEqual(result.rememberMePhoneNumber, .init(countryCode: "", number: "7700900900"))
+
+    let viewModel = MainViewModel()
+    viewModel.applyLaunchConfig(result)
+    XCTAssertEqual(viewModel.paymentSessionCountryCode, "971")
+    XCTAssertEqual(viewModel.paymentSessionPhoneNumber, "511111111")
+    XCTAssertEqual(viewModel.userPhoneNumber, "7700900900")
+  }
+
+  func test_overlaying_partialApplePaySettings_keepLowerMembers() {
+    let environment = LaunchConfig(applePaySettings: .init(
+      showApplePayButton: false, acceptedCardSchemes: ["visa"], acceptedCardTypes: [], buttonStyle: "black"
+    ))
+    let deepLink = LaunchConfig(applePaySettings: .init(buttonStyle: "white_outline"))
+
+    let result = environment.overlaying(deepLink)
+
+    XCTAssertEqual(result.applePaySettings, .init(
+      showApplePayButton: false, acceptedCardSchemes: ["visa"], acceptedCardTypes: [], buttonStyle: "white_outline"
+    ))
+
+    let viewModel = MainViewModel()
+    viewModel.applyLaunchConfig(result)
+    XCTAssertFalse(viewModel.showApplePayButton)
+    XCTAssertEqual(viewModel.applePayAcceptedCardSchemes, [.visa])
+    XCTAssertEqual(viewModel.applePayButtonStyle, .whiteOutline)
+  }
+
+  func test_applyLaunchConfig_stagingKeys_replaceTheFlagSelection() {
+    preserveStagingFlagDefaults()
+    let viewModel = MainViewModel()
+    viewModel.hidePrefilledDataEnabled = true
+
+    viewModel.applyLaunchConfig(LaunchConfig(
+      stagingKeys: ["enable_capture_rm_saved_card_cvv", "ENABLE-REMEMBER-ME-DISCREET-UI", "enable_custom_tabs"]
+    ))
+
+    XCTAssertTrue(viewModel.captureCvvEnabled)
+    XCTAssertTrue(viewModel.rememberMeDiscreetUIEnabled)
+    XCTAssertFalse(viewModel.hidePrefilledDataEnabled)   // unlisted, so switched off
+    XCTAssertFalse(viewModel.isIgnoreRememberMeEmailFeatureFlagEnabled)
+    XCTAssertFalse(viewModel.storedCardsWithRememberMeEnabled)
+  }
+
+  func test_applyLaunchConfig_stagingKeys_emptyClearsAndAbsentLeavesAlone() {
+    preserveStagingFlagDefaults()
+    let viewModel = MainViewModel()
+    viewModel.storedCardsWithRememberMeEnabled = true
+
+    viewModel.applyLaunchConfig(LaunchConfig(locale: "ar"))
+    XCTAssertTrue(viewModel.storedCardsWithRememberMeEnabled)
+
+    viewModel.applyLaunchConfig(LaunchConfig(stagingKeys: []))
+    XCTAssertFalse(viewModel.storedCardsWithRememberMeEnabled)
+  }
+
+  func test_bundledConfig_matchesTheViewModelDefaults() throws {
+    preserveStagingFlagDefaults()
+    let bundled = try XCTUnwrap(LaunchConfigHydrator.bundledConfig(in: .main))
+    let defaults = MainViewModel()
+    let hydrated = MainViewModel()
+
+    hydrated.applyLaunchConfig(bundled)
+
+    // Every setting the bundled file drives, so it can only restate the defaults.
+    func same<Value: Equatable>(_ keyPath: KeyPath<MainViewModel, Value>, line: UInt = #line) {
+      XCTAssertEqual(hydrated[keyPath: keyPath], defaults[keyPath: keyPath], line: line)
+    }
+    same(\.selectedEnvironment)
+    same(\.selectedLocale)
+    same(\.paymentSessionSelectedLocale)
+    same(\.selectedComponentType)
+    same(\.isDefaultAppearance)
+    same(\.amount)
+    same(\.selectedCurrency)
+    same(\.selectedCountry)
+    same(\.paymentSessionUserEmail)
+    same(\.paymentSessionUsername)
+    same(\.paymentSessionCountryCode)
+    same(\.paymentSessionPhoneNumber)
+    same(\.storePaymentDetails)
+    same(\.showCardPayButton)
+    same(\.paymentButtonAction)
+    same(\.displayCardHolderName)
+    same(\.cardHolderNameMaxLength)
+    same(\.hideSecurityCode)
+    same(\.prefilledCardholderName)
+    same(\.cardAcceptedCardSchemes)
+    same(\.cardAcceptedCardTypes)
+    same(\.selectedAddressConfiguration)
+    same(\.customButtonOperation)
+    same(\.selectedCVVLengths)
+    same(\.showApplePayButton)
+    same(\.applePayAcceptedCardSchemes)
+    same(\.applePayAcceptedCardTypes)
+    same(\.applePayButtonStyle)
+    same(\.applePayButtonType)
+    same(\.selectedApplePayType)
+    same(\.isShowUpdateView)
+    same(\.showAPMPayButton)
+    #if canImport(CheckoutKlarnaSDK)
+    same(\.klarnaTheme)
+    same(\.klarnaReturnURLString)
+    #endif
+    same(\.showRememberMePayButton)
+    same(\.userEmail)
+    same(\.userCountryCode)
+    same(\.userPhoneNumber)
+    same(\.rememberMeAcceptedCardSchemes)
+    same(\.rememberMeAcceptedCardTypes)
+    same(\.storedCardSource)
+    same(\.customerId)
+    same(\.instrumentIds)
+    same(\.defaultInstrumentId)
+    same(\.storedCardCaptureCVV)
+    same(\.storedCardDisplayMode)
+    same(\.storedCardAcceptedCardSchemes)
+    same(\.storedCardAcceptedCardTypes)
+    same(\.showStoredCardPayButton)
+    same(\.storedCardPaymentButtonAction)
+    same(\.storedCardConsentOverride)
+    same(\.handleSubmitManually)
+    same(\.isIgnoreRememberMeEmailFeatureFlagEnabled)
+    same(\.captureCvvEnabled)
+    same(\.hidePrefilledDataEnabled)
+    same(\.rememberMeDiscreetUIEnabled)
+    same(\.storedCardsWithRememberMeEnabled)
+  }
+
+  func test_checkoutComponentInit_acceptsCaseNames() {
+    XCTAssertEqual(CheckoutComponent(configValue: "applePay"), .applePay)
+    XCTAssertEqual(CheckoutComponent(configValue: "googlePay"), .applePay)
+    XCTAssertEqual(CheckoutComponent(configValue: "tabby"), .tabby)
+    XCTAssertEqual(CheckoutComponent(configValue: "storedCard"), .storedCard)
+  }
+
+  // MARK: - Helpers
+
+  private func decode(_ json: String) throws -> LaunchConfig {
+    try JSONDecoder().decode(LaunchConfig.self, from: Data(json.utf8))
+  }
+
+  /// The flags persist to UserDefaults in `didSet`, so restore whatever the suite started with.
+  private func preserveStagingFlagDefaults() {
+    let keys = [
+      "checkout_components_disable_forwarding_emails",
+      "checkout_components_capture_cvv",
+      "checkout_components_hide_prefilled_data",
+      "checkout_components_use_remember_me_discreet_ui",
+      "checkout_components_use_stored_cards_with_remember_me"
+    ]
+    let saved = keys.map { ($0, UserDefaults.standard.object(forKey: $0)) }
+    addTeardownBlock {
+      for (key, value) in saved {
+        UserDefaults.standard.set(value, forKey: key)
+      }
+    }
+  }
+
+  private static let sharedBaseJSON = """
+  {
+    "environment": "sandbox", "locale": "en-GB", "selectedComponent": "flow",
+    "paymentSessionAmount": 10500, "paymentSessionCurrency": "GBP",
+    "paymentSessionEmail": "customer+test1@checkout.com",
+    "paymentSessionPhone": { "countryCode": "44", "number": "7700123456" },
+    "showUpdateAmountSection": true, "showPayButton": true, "paymentButtonAction": "payment",
+    "displayCardHolderName": "top", "cardholderNameMaxLength": 50, "hideSecurityCode": false,
+    "acceptedCardSchemes": ["visa", "mastercard"], "acceptedCardTypes": ["credit", "debit"],
+    "applePaySettings": { "showApplePayButton": true, "acceptedCardSchemes": [], "acceptedCardTypes": [] },
+    "googlePaySettings": { "acceptedCardSchemes": [], "acceptedCardTypes": [] },
+    "isRememberMeEnabled": false, "showRememberMePayButton": true,
+    "rememberMeEmail": "ckoautomationtest@checkout.com",
+    "rememberMePhoneNumber": { "countryCode": "44", "number": "7700900900" },
+    "rememberMeCardSchemes": ["mastercard"], "rememberMeCardTypes": ["credit", "debit"]
+  }
+  """
 }

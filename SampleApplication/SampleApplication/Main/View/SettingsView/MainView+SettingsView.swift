@@ -189,6 +189,11 @@ extension MainView {
     }
   }
 
+  var onAuthorizedRejectView: some View {
+    Toggle("onAuthorized: reject payment", isOn: $viewModel.rejectPaymentOnAuthorized)
+      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.onAuthorizedRejectToggle.rawValue)
+  }
+
   var showApplePayButtonView: some View {
     Toggle("Show Apple Pay button", isOn: $viewModel.showApplePayButton)
   }
@@ -346,6 +351,8 @@ extension MainView {
         cardAcceptedCardTypesView
         applePayAcceptedCardTypesView
         rememberMeAcceptedCardTypesView
+
+        onAuthorizedRejectView
 
         VStack(alignment: .leading, spacing: 12) {
           submitPaymentMethodView
@@ -528,7 +535,7 @@ extension MainView {
         .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.hideSecurityCodeToggle.rawValue)
     }
   }
-  
+
   var cardHolderNameMaxLengthView: some View {
     HStack {
       Text("Cardholder Name max length: ")

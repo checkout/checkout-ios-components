@@ -50,6 +50,8 @@ extension MainViewModel {
         }
       },
 
+      onAuthorized: onAuthorized(),
+
       onTokenized: onTokenized(),
       
       handleSubmit: handleSubmit(),
@@ -90,6 +92,23 @@ extension MainViewModel {
     }
   }
   
+  func onAuthorized() -> (@Sendable (CheckoutComponents.WalletAuthorization) -> CheckoutComponents.CallbackResult)? {
+    let rejectPayment = rejectPaymentOnAuthorized
+
+    return { [weak self] authorization in
+      // Not persisted: `displayName` carries the card's last four digits, and it must not
+      // outlive the launch.
+      self?.logCallback(
+        "[CONFIG] onAuthorized: displayName: \(authorization.displayName ?? "null"), " +
+        "scheme: \(authorization.scheme ?? "null"), " +
+        "cardType: \(authorization.cardType ?? "null")",
+        persist: false
+      )
+
+      return rejectPayment ? .rejected(message: "Payment rejected by onAuthorized.") : .accepted
+    }
+  }
+
   func onTokenized() -> (@Sendable (CheckoutComponents.TokenizationResult) -> CheckoutComponents.CallbackResult)? {
     { [weak self] tokenizationResult in
       guard let self else { return .rejected(message: nil) }
