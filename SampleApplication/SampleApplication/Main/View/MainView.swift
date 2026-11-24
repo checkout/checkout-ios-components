@@ -60,39 +60,27 @@ struct MainView: View {
         token: viewModel.generatedToken
       )
     }
+    #if INTERNAL_SAMPLE_APP
     .task {
       // Hydrate from environment variables and the bundled baseline at launch.
       await hydrateLaunchConfig(deepLinkURL: nil)
     }
     .onOpenURL { url in
       // Deep Link Token has the highest precedence; re-resolve including it.
+      // Set before the Task is queued, so a launch-time pass resuming first
+      // still sees it and can't auto-render over the deep link.
       viewModel.receivedLaunchDeepLink = true
       Task { await hydrateLaunchConfig(deepLinkURL: url) }
     }
+    #endif
   }
 }
 
-// MARK: Declarative launch configuration
+// MARK: Rendering
 extension MainView {
-  /// Resolves the launch configuration across all delivery channels, applies
-  /// it to the view model, and — when `"render": "auto"` is present — renders
-  /// the flow immediately, bypassing the tap-to-render state (AC 1).
+  /// Builds the component and shows it, or shows the error.
   @MainActor
-  func hydrateLaunchConfig(deepLinkURL: URL?) async {
-    let config = LaunchConfigHydrator.resolve(
-      deepLinkURL: deepLinkURL,
-      environment: ProcessInfo.processInfo.environment
-    )
-
-    await viewModel.waitForMerchantKeyPresets()
-
-    if deepLinkURL == nil, viewModel.receivedLaunchDeepLink { return }
-
-    let shouldAutoRender = viewModel.applyLaunchConfig(config)
-
-    // Only auto-render once, and never override a flow that is already shown.
-    guard shouldAutoRender, viewState != .component else { return }
-
+  func renderComponent() async {
     do {
       try await viewModel.makeComponent()
       viewState = .component
@@ -101,6 +89,21 @@ extension MainView {
     }
   }
 }
+
+#if INTERNAL_SAMPLE_APP
+// MARK: Declarative launch configuration
+extension MainView {
+  /// Applies the launch configuration, and renders the flow when it asks for
+  /// `"render": "auto"`, bypassing the tap-to-render state.
+  @MainActor
+  func hydrateLaunchConfig(deepLinkURL: URL?) async {
+    let shouldAutoRender = await viewModel.hydrateLaunchConfig(deepLinkURL: deepLinkURL)
+    // Only auto-render once, and never override a flow that is already shown.
+    guard shouldAutoRender, viewState != .component else { return }
+    await renderComponent()
+  }
+}
+#endif
 
 // MARK: Create an initial view to trigger the component creation
 extension MainView {
@@ -203,12 +206,7 @@ extension MainView {
       Button(action: {
         Task {
           if viewState == .component { viewModel.resetToDefaultConfiguration() }
-          do {
-            try await viewModel.makeComponent()
-            viewState = .component
-          } catch {
-            viewState = .error("\(error)")
-          }
+          await renderComponent()
         }
       }) {
         Text("Show Flow")

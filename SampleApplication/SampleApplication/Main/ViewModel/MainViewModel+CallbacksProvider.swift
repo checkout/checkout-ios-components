@@ -119,6 +119,7 @@ extension MainViewModel {
       // it is personal data and must not outlive the launch.
       let loggedName = tokenizationResult.data.name.map { "\"\($0)\"" } ?? "null"
       self.logCallback("[CONFIG] onTokenized: name: \(loggedName)", persist: false)
+      self.logCallback("[CONFIG] onTokenized: deviceSessionId: \(tokenizationResult.risk?.deviceSessionId ?? "nil")", persist: false)
       
       Task { @MainActor in
         self.generatedToken = tokenizationResult.data.token

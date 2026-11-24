@@ -59,8 +59,10 @@ final class MainViewModel: ObservableObject {
   @Published var selectedCurrency: CurrencyOption = .gbp
   @Published var amount: Int = 10500
   @Published var selectedEnvironment: CheckoutComponents.Environment = .sandbox
+  @Published var baseURLPrefix: String = ""
   #if INTERNAL_SAMPLE_APP
   @Published var selectedMerchantKey: MerchantKeyPreset?
+  @Published var isDevFlagsExpanded: Bool = false
   #endif
   @Published var selectedAddressConfiguration: AddressComponentConfiguration = .prefillCustomized
   @Published var selectedApplePayType: ApplePayType = .final
@@ -127,6 +129,7 @@ final class MainViewModel: ObservableObject {
   // RememberMe PaymentSession
   
   @Published var hideSecurityCode: Bool = false
+  @Published var includeRiskDataInTokenization = false
   @Published var cardHolderNameMaxLength: UInt = 255
   @Published var prefilledCardholderName: String = ""
 
@@ -140,69 +143,14 @@ final class MainViewModel: ObservableObject {
     }
   }
   
-  @Published var isIgnoreRememberMeEmailFeatureFlagEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        isIgnoreRememberMeEmailFeatureFlagEnabled,
-        forKey: "checkout_components_disable_forwarding_emails"
-      )
-    }
-  }
-  
-  @Published var captureCvvEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        captureCvvEnabled,
-        forKey: "checkout_components_capture_cvv"
-      )
-    }
-  }
-
-  @Published var hidePrefilledDataEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        hidePrefilledDataEnabled,
-        forKey: "checkout_components_hide_prefilled_data"
-      )
-    }
-  }
-
-  @Published var rememberMeDiscreetUIEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        rememberMeDiscreetUIEnabled,
-        forKey: "checkout_components_use_remember_me_discreet_ui"
-      )
-    }
-  }
-
-  @Published var storedCardsWithRememberMeEnabled: Bool = false {
-    didSet {
-      UserDefaults.standard.set(
-        storedCardsWithRememberMeEnabled,
-        forKey: "checkout_components_use_stored_cards_with_remember_me"
-      )
-    }
-  }
-
-  @Published var storedCardConsentOverride: StoredCardConsentOverride = .serverDefault {
-    didSet {
-      let key = "checkout_components_force_stored_card_consent_type"
-      if let value = storedCardConsentOverride.flagValue {
-        UserDefaults.standard.set(value, forKey: key)
-      } else {
-        UserDefaults.standard.removeObject(forKey: key)
-      }
-    }
-  }
-
   var paymentSessionId = ""
   var createdCheckoutComponentsSDK: CheckoutComponents?
   private var component: Any?
   private let networkLayer = NetworkLayer()
-  var receivedLaunchDeepLink = false
   #if INTERNAL_SAMPLE_APP
+  var receivedLaunchDeepLink = false
   let merchantKeyPresetProvider: any MerchantKeyPresetProviding
+  let devFlagSettings: DevFlagSettings
 
   @Published var merchantKeysPreset: MerchantKeyPresets = [:]
   #endif
@@ -260,10 +208,13 @@ final class MainViewModel: ObservableObject {
   #if INTERNAL_SAMPLE_APP
   private(set) var merchantKeyPresetsLoading: Task<Void, Never>?
 
-  init(merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider()) {
+  init(
+    merchantKeyPresetProvider: any MerchantKeyPresetProviding = MerchantKeyPresetProvider(),
+    devFlagSettings: DevFlagSettings = DevFlagSettings()
+  ) {
     self.merchantKeyPresetProvider = merchantKeyPresetProvider
+    self.devFlagSettings = devFlagSettings
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .ideal, .knet]
-    clearStoredCardConsentOverride()
     merchantKeyPresetsLoading = Task { await loadMerchantKeyPresets() }
   }
 
@@ -273,15 +224,8 @@ final class MainViewModel: ObservableObject {
   #else
   init() {
     selectedPaymentMethodTypes = [.card, .applePay, .tabby, .tamara, .ideal, .knet, .stcPay, .klarna]
-    clearStoredCardConsentOverride()
   }
-
-  func waitForMerchantKeyPresets() async {}
   #endif
-
-  private func clearStoredCardConsentOverride() {
-    UserDefaults.standard.removeObject(forKey: "checkout_components_force_stored_card_consent_type")
-  }
 }
 
 extension MainViewModel {
@@ -395,21 +339,38 @@ extension MainViewModel {
 
     return try await networkLayer.createPaymentSession(request: paymentSessionRequest,
                                                        environment: selectedEnvironment,
+                                                       baseURLPrefix: baseURLPrefix,
                                                        secretKey: resolvedSecretKey)
   }
 
   // Step 2: Initialise an instance of Checkout Components SDK
   // Pass `nil` to configure the SDK for sessionless components.
   func initialiseCheckoutComponentsSDK(with paymentSession: PaymentSession?) async throws (CheckoutComponents.Error) -> CheckoutComponents {
+    // The binary SDK (Release-SPM-File) has no dev flag API, so only the source SDK gets dev flags.
+    #if INTERNAL_SAMPLE_APP && canImport(CheckoutComponents)
     let configuration = try await CheckoutComponents.Configuration(
       paymentSession: paymentSession,
       publicKey: resolvedPublicKey,
       environment: selectedEnvironment,
+      baseURLPrefix: baseURLPrefix,
+      appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
+      locale: selectedLocale.localeString,
+      translations: getTranslation(),
+      callbacks: initialiseCallbacks(),
+      devFlagKeys: devFlagSettings.enabledKeys
+    )
+    #else
+    let configuration = try await CheckoutComponents.Configuration(
+      paymentSession: paymentSession,
+      publicKey: resolvedPublicKey,
+      environment: selectedEnvironment,
+      baseURLPrefix: baseURLPrefix,
       appearance: isDefaultAppearance ? .init() : DarkTheme().designToken,
       locale: selectedLocale.localeString,
       translations: getTranslation(),
       callbacks: initialiseCallbacks()
     )
+    #endif
 
     return CheckoutComponents(configuration: configuration)
   }
@@ -648,7 +609,8 @@ extension MainViewModel {
                                           acceptedCardTypes: cardAcceptedCardTypes,
                                           hideSecurityCode: hideSecurityCode,
                                           cardholderNameMaxLength: cardHolderNameMaxLength,
-                                          cardholderName: cardholderNameToPrefill),
+                                          cardholderName: cardholderNameToPrefill,
+                                          includeRiskDataInTokenization: includeRiskDataInTokenization),
                  addressConfiguration: selectedAddressConfiguration.addressConfiguration,
                  rememberMeConfiguration: rememberMeConfiguration)
   }
@@ -668,7 +630,8 @@ extension MainViewModel {
                                                 acceptedCardTypes: cardAcceptedCardTypes,
                                                 hideSecurityCode: hideSecurityCode,
                                                 cardholderNameMaxLength: cardHolderNameMaxLength,
-                                                cardholderName: cardholderNameToPrefill))
+                                                cardholderName: cardholderNameToPrefill,
+                                                includeRiskDataInTokenization: includeRiskDataInTokenization))
   }
   
   func getApplePayPaymentMethod() -> CheckoutComponents.PaymentMethod {

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 
 #### 2.x Releases
 
+## [3.0.0](https://github.com/checkout/checkout-ios-components/releases/tag/3.0.0)
+
+Released on 24.11.2026
+
+Updates:
+
+- **What's new**
+   - [ADDED] Merchant-specific subdomain (MSSD) routing via baseUrlPrefix
+   - [ADDED] Optional Risk data, including the device session ID, in tokenisation results
+   - [ADDED] Hide redirect info text when pay button is hidden or component is standalone
+   - [FIXED] Autofill OTP from keyboard toolbar
+   - [FIXED] Re-entry OTP code prevent user login to RememberMe component
+   - [FIXED] Focus the Remember Me input after tapping Edit
+   - [FIXED] Fit phone country code text in its field
+   - [FIXED] Trigger onError callback when user dismiss ASWebAuthentication for APMs
+
+##
+
 ## [2.10.0](https://github.com/checkout/checkout-ios-components/releases/tag/2.10.0)
 
 Released on 29.10.2026

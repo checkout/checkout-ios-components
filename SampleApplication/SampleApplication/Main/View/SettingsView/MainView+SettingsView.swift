@@ -28,8 +28,8 @@ enum CheckoutComponent: String, CaseIterable {
   case klarna = "Klarna"
 #endif
 
-  /// Address and CVV are `SessionlessComponent` cases, so the SDK renders them with just the
-  /// public key and the sample app skips the payment session call for them.
+  /// Address and CVV are `SessionlessComponent` cases, so the sample app skips the
+  /// payment session call for them. CVV still requires a public key and nonblank prefix.
   var isSessionless: Bool {
     self == .address || self == .cvv
   }
@@ -91,12 +91,23 @@ extension MainView {
         #if INTERNAL_SAMPLE_APP
         merchantKeyPresetView
         #endif
+        HStack {
+          Text("Base URL prefix:")
+          TextField("Merchant prefix (MSSD)", text: $viewModel.baseURLPrefix)
+            .textFieldStyle(.roundedBorder)
+            .textInputAutocapitalization(.never)
+            .disableAutocorrection(true)
+            .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.baseURLPrefixTextField.rawValue)
+        }
         appearanceView
         localeView
         paymentSessionLocaleView
         countryView
         currencyView
 
+        #if INTERNAL_SAMPLE_APP && canImport(CheckoutComponents)
+        devFlagsView
+        #endif
         advancedFeaturesView
         paymentSessionConfigurationView
         rememberMeConfigurationsView
@@ -152,6 +163,7 @@ extension MainView {
       // Show card pay button as a toggle/switch
       Toggle("Show card pay button", isOn: $viewModel.showCardPayButton)
         .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.showPayButtonPicker.rawValue)
+      Toggle("Include risk data in tokenization", isOn: $viewModel.includeRiskDataInTokenization)
 
       // Payment button action picker - only visible when showCardPayButton is true
       if viewModel.showCardPayButton {
