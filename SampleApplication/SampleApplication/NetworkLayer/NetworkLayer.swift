@@ -9,15 +9,22 @@ import CheckoutComponentsSDK
 import Foundation
 
 struct NetworkLayer {
-  func createPaymentSession(request: PaymentSessionRequest, environment: CheckoutComponents.Environment, secretKey: String) async throws -> PaymentSession {
+  func createPaymentSession(request: PaymentSessionRequest,
+                            environment: CheckoutComponents.Environment,
+                            baseURLPrefix: String,
+                            secretKey: String) async throws -> PaymentSession {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
     let requestBody = try encoder.encode(request)
     
     // Don't send requests to this API but have a wrapper on your backend to keep your private key safe.
     // Otherwise you would have your private key bundled in your application and get it leaked.
-    let baseURL = environment == .sandbox ? "https://api.sandbox.checkout.com" : "https://api.checkout.com"
-    guard let url = URL(string: "\(baseURL)/payment-sessions") else {
+    let domain = environment == .sandbox ? "api.sandbox.checkout.com" : "api.checkout.com"
+    var components = URLComponents()
+    components.scheme = "https"
+    components.host = "\(baseURLPrefix).\(domain)"
+    components.path = "/payment-sessions"
+    guard let url = components.url else {
       throw NSError(domain: "NetworkLayer", code: 0)
     }
     

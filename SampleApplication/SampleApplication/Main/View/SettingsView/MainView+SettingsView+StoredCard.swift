@@ -29,24 +29,6 @@ enum StorePaymentDetailsOption: String, CaseIterable {
   }
 }
 
-enum StoredCardConsentOverride: String, CaseIterable {
-  case serverDefault
-  case explicit
-  case implicit
-
-  var displayName: String {
-    switch self {
-    case .serverDefault: return "Server default"
-    case .explicit: return "Force explicit"
-    case .implicit: return "Force implicit"
-    }
-  }
-
-  var flagValue: String? {
-    self == .serverDefault ? nil : rawValue
-  }
-}
-
 enum StoredCardSource: String, CaseIterable {
   /// Omits `stored_card` from the request.
   case none
@@ -106,8 +88,6 @@ extension MainView {
         storedCardCaptureCVVView
         storedCardAcceptedCardSchemesView
         storedCardAcceptedCardTypesView
-        storedCardWithRMFeatureFlag
-        storedCardConsentOverrideView
       }
     }
     .transition(.opacity.combined(with: .slide))
@@ -209,31 +189,6 @@ extension MainView {
       Text("Default instrument id: ")
       TextField("Optional", text: $viewModel.defaultInstrumentId)
         .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.defaultInstrumentIdTextField.rawValue)
-    }
-  }
-  
-  var storedCardWithRMFeatureFlag: some View {
-    Toggle(
-      "Feature Flag: Stored Cards With RM",
-      isOn: $viewModel.storedCardsWithRememberMeEnabled
-    )
-    .accessibilityIdentifier(
-      AccessibilityIdentifier.SettingsView.storedCardsWithRememberMeFeatureFlagToggle.rawValue
-    )
-  }
-  
-  var storedCardConsentOverrideView: some View {
-    HStack {
-      Text("Consent mode:")
-
-      Picker("Consent mode", selection: $viewModel.storedCardConsentOverride) {
-        ForEach(StoredCardConsentOverride.allCases, id: \.self) {
-          Text($0.displayName)
-            .tag($0)
-            .accessibilityIdentifier($0.rawValue)
-        }
-      }
-      .accessibilityIdentifier(AccessibilityIdentifier.SettingsView.storedCardConsentOverridePicker.rawValue)
     }
   }
 }

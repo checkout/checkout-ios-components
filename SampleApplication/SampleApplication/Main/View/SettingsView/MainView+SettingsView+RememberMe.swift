@@ -26,40 +26,6 @@ extension MainView {
           
           rememberMeSDKSetupView
         }
-
-        // Session and staging feature flags. They change how Remember Me behaves
-        // even when no configuration is passed, so they are not gated on one.
-        Toggle(
-          "Feature Flag: Ignore Payment Session Email",
-          isOn: $viewModel.isIgnoreRememberMeEmailFeatureFlagEnabled
-        )
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.ignoreRememberMeEmailFeatureFlagToggle.rawValue
-        )
-        
-        Toggle(
-          "Feature Flag: Capture CVV",
-          isOn: $viewModel.captureCvvEnabled
-        )
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.captureCvvFeatureFlagToggle.rawValue
-        )
-        
-        Toggle(
-          "Feature Flag: Hide Prefilled Data",
-          isOn: $viewModel.hidePrefilledDataEnabled
-        )
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.hidePrefilledDataFeatureFlagToggle.rawValue
-        )
-        
-        Toggle(
-          "Feature Flag: RM Discreet UI",
-          isOn: $viewModel.rememberMeDiscreetUIEnabled
-        )
-        .accessibilityIdentifier(
-          AccessibilityIdentifier.SettingsView.rememberMeDiscreetUIFeatureFlagToggle.rawValue
-        )
       }
       .padding(.leading, 16)
       .transition(.opacity.combined(with: .slide))

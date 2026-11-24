@@ -30,6 +30,7 @@ enum AccessibilityIdentifier {
     case sandboxEnvironmentOption = "sandbox_environment_option"
     case productionEnvironmentOption = "production_environment_option"
     case merchantKeyPresetPicker = "merchant_key_preset_picker"
+    case baseURLPrefixTextField = "base_url_prefix_textfield"
     case localePicker = "locale_picker"
     case paymentSessionLocalePicker = "payment_session_locale_picker"
     case countryPicker = "country_picker"
@@ -75,11 +76,6 @@ enum AccessibilityIdentifier {
     case rememberMeConfigurationsExpandable = "remember_me_configurations"
     case showRememberMeToggle = "show_remember_me_toggle"
     case showRememberMePayButtonToggle = "show_remember_me_pay_button_toggle"
-    case ignoreRememberMeEmailFeatureFlagToggle = "ignore_remember_me_email_feature_flag_toggle"
-    case captureCvvFeatureFlagToggle = "capture_cvv_feature_flag_toggle"
-    case hidePrefilledDataFeatureFlagToggle = "hide_prefilled_data_feature_flag_toggle"
-    case rememberMeDiscreetUIFeatureFlagToggle = "remember_me_discreet_ui_feature_flag_toggle"
-    case storedCardsWithRememberMeFeatureFlagToggle = "stored_cards_with_remember_me_feature_flag_toggle"
 
     // Stored Card
     case storedCardConfigurationsExpandable = "stored_card_configurations"
@@ -94,7 +90,6 @@ enum AccessibilityIdentifier {
     case storedCardPaymentAction = "stored_card_payment_action"
     case storedCardTokenizeAction = "stored_card_tokenize_action"
     case storePaymentDetailsPicker = "store_payment_details_picker"
-    case storedCardConsentOverridePicker = "remember_me_consent_override_picker"
 
     // CVV
     case cvvConfigurationsExpandable = "cvv_configurations"

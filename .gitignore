@@ -42,6 +42,15 @@ Package.resolved
 ## XCFramework build outputs (engine + CheckoutPaymentMethods land here)
 /archives/
 
+## Tuist project for CheckoutComponentsSDK (make -C Distribution generate)
+/Distribution/CheckoutComponentsSDK-Tuist.xcodeproj
+/Distribution/CheckoutComponentsSDK.xcworkspace
+/Distribution/Derived/
+/Distribution/Tuist/Derived/
+/Distribution/Tuist/.swiftpm/
+/Distribution/.package.resolved
+/Distribution/graph.dot
+
 ## Files
 # Ignore all env.xcconfig files in any directory
 **/env.xcconfig
